@@ -1,0 +1,69 @@
+name: CI
+
+on:
+  push:
+    branches:
+      - main
+      - dev
+
+  pull_request:
+    branches:
+      - main
+      - dev
+
+permissions:
+  actions: read
+  contents: read
+
+jobs:
+  main:
+    runs-on: ubuntu-24.04
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+        with:
+          filter: tree:0
+          fetch-depth: 0
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 24.21.0
+          cache: "npm"
+
+      - name: Install dependencies
+        run: npm ci --legacy-peer-deps
+
+      - name: Set Git Safe Directory
+        run: git config --global --add safe.directory '*'
+
+      # 1. Xác định commit base và head để Nx so sánh sự thay đổi (Affected)
+      - name: Track SHA for Nx Affected
+        if: ${{ !env.ACT }}
+        uses: nrwl/nx-set-shas@v4
+
+      # 2. Thêm biến môi trường
+      - name: Add Env Variable
+        run: |
+          cat << 'EOF' > apps/web/.env
+          ${{ secrets.WEB_ENV_FILE }}
+          EOF
+
+          cat << 'EOF' > apps/api/.env
+          ${{ secrets.API_ENV_FILE }}
+          EOF
+
+      # 3. Kiểm tra Lint cho các project bị ảnh hưởng
+      - name: Lint affected projects
+        env:
+          NX_DAEMON: "false"
+          NX_NO_CLOUD: "true"
+        run: npx nx affected -t lint --verbose
+
+      # 4. Chạy Unit Test cho các project bị ảnh hưởng
+      - name: Test affected projects
+        run: npx nx affected -t test
+
+      # 5. Build các project bị ảnh hưởng
+      - name: Build affected projects
+        run: npx nx affected -t build
