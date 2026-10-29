@@ -9,7 +9,7 @@
     "url": "https://github.com/EvoVocab/evovocab-platform.git"
   },
   "scripts": {
-    "setup": "npm i & shx cp apps/web/.env.example apps/web/.env & shx cp apps/api/.env.example apps/api/.env & shx cp docker-compose.example.yml docker-compose.yml",
+    "setup": "shx cp apps/web/.env.example apps/web/.env & shx cp apps/api/.env.example apps/api/.env & shx cp docker-compose.example.yml docker-compose.yml",
     "setup:deploy": "bash ./scripts/setup_deploy.sh",
     "api:docker:up": "docker compose -f docker-compose.yml up -d --build",
     "api:docker:down": "docker compose -f docker-compose.yml down",
