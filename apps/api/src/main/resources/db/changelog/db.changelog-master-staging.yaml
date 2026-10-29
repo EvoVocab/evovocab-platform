@@ -1,0 +1,7 @@
+# Ví dụ về cách sử dụng Liquibase để quản lý cơ sở dữ liệu trong dự án Spring Boot.
+# Tệp này là tệp chính của Liquibase, nơi bạn có thể bao gồm các thay đổi cơ sở dữ liệu từ các tệp khác.
+# databaseChangeLog:
+#   - include:
+#       file: sprint-01/20261025-01-create-table-users.sql
+#       relativeToChangelogFile: true
+databaseChangeLog: []

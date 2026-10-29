@@ -1,0 +1,134 @@
+name: Deploy
+
+on:
+  workflow_run:
+    workflows: ["CI"]
+    types: [completed]
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  build:
+    if: ${{ github.event.workflow_run.conclusion == 'success' || github.event_name == 'workflow_dispatch' }}
+    runs-on: ubuntu-24.04
+    outputs:
+      deploy_web: ${{ steps.check_affected.outputs.deploy_web }}
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+        with:
+          ref: ${{ env.ACT && '' || (github.event.workflow_run.head_sha || github.sha) }}
+          filter: tree:0
+          fetch-depth: 0
+
+      - name: Add Env Variables
+        run: |
+          cat << 'EOF' > apps/web/.env
+          ${{ secrets.WEB_ENV_FILE }}
+          EOF
+          cat << 'EOF' > apps/api/.env
+          ${{ secrets.API_ENV_FILE }}
+          EOF
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 24.21.0
+          cache: "npm"
+
+      - name: Install dependencies
+        run: npm ci --legacy-peer-deps
+
+      - name: Derive appropriate SHAs for base and head
+        if: ${{ github.event_name != 'workflow_dispatch' }}
+        uses: nrwl/nx-set-shas@v4
+        with:
+          main-branch-name: "main"
+
+      - name: Check affected projects
+        id: check_affected
+        run: |
+          if [ "${{ github.event_name }}" = "workflow_dispatch" ]; then
+            echo "deploy_web=true" >> $GITHUB_OUTPUT
+            echo "deploy_api=true" >> $GITHUB_OUTPUT
+            exit 0
+          fi
+
+          echo "Base SHA: $NX_BASE"
+          echo "Head SHA: $NX_HEAD"
+
+          AFFECTED_PROJECTS=$(npx nx show projects --affected --base=$NX_BASE --head=$NX_HEAD)
+          echo "Affected projects: $AFFECTED_PROJECTS"
+
+          if echo "$AFFECTED_PROJECTS" | grep -q "\bweb\b"; then
+            echo "deploy_web=true" >> $GITHUB_OUTPUT
+          else
+            echo "deploy_web=false" >> $GITHUB_OUTPUT
+          fi
+
+          if echo "$AFFECTED_PROJECTS" | grep -q "\bapi\b"; then
+            echo "deploy_api=true" >> $GITHUB_OUTPUT
+          else
+            echo "deploy_api=false" >> $GITHUB_OUTPUT
+          fi
+
+      - name: Build Web App
+        if: steps.check_affected.outputs.deploy_web == 'true'
+        run: npx nx build web
+
+      - name: Setup Pages
+        if: ${{ !env.ACT && steps.check_affected.outputs.deploy_web == 'true' }}
+        uses: actions/configure-pages@v5
+
+      - name: Upload artifact
+        if: ${{ !env.ACT && steps.check_affected.outputs.deploy_web == 'true' }}
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: "apps/web/dist"
+
+      - name: Deploy code to VPS via SSH
+        if: steps.check_affected.outputs.deploy_api == 'true'
+        uses: appleboy/ssh-action@v1.0.3
+        with:
+          host: ${{ secrets.VPS_HOST }}
+          username: ${{ secrets.VPS_USERNAME }}
+          key: ${{ secrets.VPS_SSH_KEY }}
+          port: ${{ secrets.VPS_PORT }}
+          script: |
+            set -e
+            cd /var/www/evovocab-platform
+
+            git fetch --all
+            git reset --hard origin/main
+
+            cat << 'EOF' > apps/web/.env
+            ${{ secrets.WEB_ENV_FILE }}
+            EOF
+            cat << 'EOF' > apps/api/.env
+            ${{ secrets.API_ENV_FILE }}
+            EOF
+
+            docker compose -f docker-compose.prod.yml up -d --build
+            docker image prune -f
+
+  deploy-web:
+    needs: build
+    if: ${{ needs.build.outputs.deploy_web == 'true' }}
+    runs-on: ubuntu-24.04
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4

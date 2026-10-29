@@ -1,0 +1,11 @@
+node_modules/
+dist/
+.nx/
+.git/
+.idea/
+.vscode/
+.gradle/
+**/out/
+!apps/
+!libs/
+!gradle/

@@ -1,0 +1,90 @@
+import groovy.json.JsonSlurper
+
+plugins {
+    id 'java'
+    alias (libs.plugins.spring.boot) apply true
+    alias (libs.plugins.dependency.management) apply true
+    alias (libs.plugins.liquibase) apply true
+}
+
+def rootPkg = new JsonSlurper().parse(file("${rootDir}/package.json"))
+def rootPkgVersion = rootPkg.version
+def workspacePkg =  new JsonSlurper().parse(file("../../package.json"))
+
+group = 'com.evovocab'
+version = rootPkgVersion + '-SNAPSHOT'
+description = workspacePkg.description
+
+java {
+    toolchain {
+        languageVersion = JavaLanguageVersion.of(libs.versions.java.get())
+    }
+}
+
+repositories {
+    mavenCentral()
+}
+
+configurations {
+    configureEach {
+        // Loại bỏ logging mặc định của Spring Boot để sử dụng Log4j2
+        exclude group: 'org.springframework.boot', module: 'spring-boot-starter-logging'
+    }
+}
+
+dependencies {
+    implementation libs.spring.boot.starter.web
+    implementation libs.spring.boot.starter.data.jpa
+    implementation libs.spring.boot.starter.security
+    implementation libs.spring.boot.starter.validation
+    implementation libs.spring.boot.starter.actuator
+
+    // --- Log4j2 ---
+    implementation libs.spring.boot.starter.log4j2
+    implementation libs.disruptor
+    implementation libs.jackson.dataformat.yaml
+
+    // --- Database & Migration ---
+    implementation libs.liquibase.core
+    runtimeOnly libs.mysql
+
+    implementation libs.mapstruct
+    compileOnly libs.lombok
+
+    // Cấu hình Annotation Processor (Thứ tự khai báo rất quan trọng)
+    annotationProcessor libs.lombok
+    annotationProcessor libs.lombok.mapstruct.binding
+    annotationProcessor libs.mapstruct.processor
+
+    // --- Security / JWT ---
+    implementation libs.jjwt.api
+    runtimeOnly libs.jjwt.impl
+    runtimeOnly libs.jjwt.jackson
+
+    // --- Tài liệu API (Swagger) ---
+    implementation libs.springdoc.openapi.ui
+
+    // --- Testing ---
+    testImplementation libs.spring.boot.starter.test
+    testImplementation libs.spring.security.test
+    testImplementation libs.h2.db
+    testRuntimeOnly libs.junit.platform.launcher
+}
+
+tasks.named('test') {
+    useJUnitPlatform()
+    systemProperty 'spring.profiles.active', System.getProperty('spring.profiles.active', 'test')
+}
+tasks.named('jar') {
+    enabled = false
+}
+
+springBoot {
+    buildInfo {
+        properties {
+            additional = [
+                    'description': project.description
+            ]
+        }
+    }
+}

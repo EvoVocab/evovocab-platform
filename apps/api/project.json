@@ -1,0 +1,50 @@
+{
+  "name": "@evovocab/api",
+  "$schema": "../../node_modules/nx/schemas/project-schema.json",
+  "sourceRoot": "apps/api/src",
+  "tags": [],
+  "targets": {
+    "build": {
+      "executor": "@nxrocks/nx-spring-boot:build",
+      "options": {
+        "root": "apps/api"
+      },
+      "configurations": {
+        "test": {
+          "args": ["-Dspring.profiles.active=test"]
+        },
+        "dev": {
+          "args": ["-Dspring.profiles.active=dev"]
+        },
+        "staging": {
+          "args": ["-Dspring.profiles.active=staging"]
+        },
+        "prod": {
+          "args": ["-Dspring.profiles.active=prod"]
+        }
+      }
+    },
+    "test": {
+      "executor": "@nxrocks/nx-spring-boot:test",
+      "options": {
+        "root": "apps/api",
+        "args": ["-Dspring.profiles.active=test"]
+      }
+    },
+    "serve": {
+      "executor": "@nxrocks/nx-spring-boot:serve",
+      "options": {
+        "root": "apps/api",
+        "args": ["--args=--spring.profiles.active=dev"]
+      },
+      "configurations": {
+        "staging": {
+          "args": ["--args=--spring.profiles.active=staging"]
+        },
+        "prod": {
+          "args": ["--args=--spring.profiles.active=prod"]
+        }
+      }
+    }
+  }
+}
