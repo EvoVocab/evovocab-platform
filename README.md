@@ -118,7 +118,7 @@ Dự án cung cấp sẵn Docker Compose để dễ dàng dựng môi trường 
 ```bash
 npm run docker:up (Chạy đầy đủ dự án từ api tới database bằng docker)
 npm run db:docker:up (Chỉ chạy database bằng docker)
-nx serve api (Chỉ chạy api bằng môi trường trên hệ thống đang chạy)
+npx nx serve api (Chỉ chạy api bằng môi trường trên hệ thống đang chạy)
 ```
 
 _(Để tắt các container, hãy chạy: `npm run api:docker:down`)_
@@ -127,7 +127,7 @@ _(Để tắt các container, hãy chạy: `npm run api:docker:down`)_
 Sử dụng công cụ Nx CLI để khởi chạy ứng dụng web tại môi trường phát triển cục bộ:
 
 ```bash
-nx serve web
+npx nx serve web
 ```
 
 Truy cập ứng dụng tại địa chỉ: `http://localhost:4200` (hoặc port được hiển thị trên console).
