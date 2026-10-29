@@ -11,8 +11,9 @@
   "scripts": {
     "setup": "shx cp apps/web/.env.example apps/web/.env & shx cp apps/api/.env.example apps/api/.env & shx cp docker-compose.example.yml docker-compose.yml",
     "setup:deploy": "bash ./scripts/setup_deploy.sh",
-    "api:docker:up": "docker compose -f docker-compose.yml up -d --build",
-    "api:docker:down": "docker compose -f docker-compose.yml down",
+    "db:docker:up": "docker compose -f docker-compose.yml up -d mysql-db --build",
+    "docker:up": "docker compose -f docker-compose.yml up -d --build",
+    "docker:down": "docker compose -f docker-compose.yml down",
     "typecheck": "nx run-many --target=typecheck --all",
     "analyst": "knip --no-config-hints",
     "prepare": "husky"
