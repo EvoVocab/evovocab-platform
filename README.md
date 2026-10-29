@@ -116,7 +116,9 @@ npm run setup
 Dự án cung cấp sẵn Docker Compose để dễ dàng dựng môi trường API:
 
 ```bash
-npm run api:docker:up
+npm run docker:up (Chạy đầy đủ dự án từ api tới database bằng docker)
+npm run db:docker:up (Chỉ chạy database bằng docker)
+nx serve api (Chỉ chạy api bằng môi trường trên hệ thống đang chạy)
 ```
 
 _(Để tắt các container, hãy chạy: `npm run api:docker:down`)_
