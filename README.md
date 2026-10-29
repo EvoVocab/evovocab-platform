@@ -127,7 +127,7 @@ _(Để tắt các container, hãy chạy: `npm run api:docker:down`)_
 Sử dụng công cụ Nx CLI để khởi chạy ứng dụng web tại môi trường phát triển cục bộ:
 
 ```bash
-npx nx serve web
+nx serve web
 ```
 
 Truy cập ứng dụng tại địa chỉ: `http://localhost:4200` (hoặc port được hiển thị trên console).
