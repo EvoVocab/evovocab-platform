@@ -108,6 +108,7 @@ cd evovocab-platform
 Chạy lệnh setup có sẵn để tự động tải các gói phụ thuộc và sao chép các file `.env.example` thành `.env` cho cả `apps/web` và `apps/api`.
 
 ```bash
+npm i
 npm run setup
 ```
 
