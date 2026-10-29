@@ -88,7 +88,7 @@ evovocab-platform/
 
 Trước khi bắt đầu, hãy đảm bảo máy tính của bạn đã cài đặt các công cụ sau:
 
-- [Node.js](https://nodejs.org/) (Phiên bản >= 20.0.0 khuyến nghị)
+- [Node.js](https://nodejs.org/) (Phiên bản >= 22.19.0 khuyến nghị)
 - [npm](https://www.npmjs.com/) hoặc [yarn](https://yarnpkg.com/)
 - [Java JDK](https://adoptium.net/) (Khuyến nghị phiên bản 17+ cho Spring Boot)
 - [Docker](https://www.docker.com/) & Docker Compose (Dành cho việc chạy API/Database nội bộ)
