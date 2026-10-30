@@ -1,1 +1,1 @@
-nx affected -t test
+npx nx affected -t test build

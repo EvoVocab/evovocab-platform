@@ -1,2 +1,2 @@
-nx format:write --uncommitted
-nx affected -t lint
+npx nx format:write --uncommitted
+npx nx affected -t lint
