@@ -98,8 +98,7 @@
   "workspaces": [
     "packages/*",
     "apps/*",
-    "libs/*",
-    "libs/shared/*"
+    "libs/*"
   ],
   "overrides": {
     "axios": ">=1.19.1",
