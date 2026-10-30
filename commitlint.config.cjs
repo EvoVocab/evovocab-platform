@@ -18,7 +18,11 @@ module.exports = {
         'revert',
       ],
     ],
-    'scope-enum': [2, 'always', ['web', 'api', 'web-e2e', 'ui', 'deps', 'release', 'repo', 'ci']],
+    'scope-enum': [
+      2,
+      'always',
+      ['web', 'api', 'web-e2e', 'ui', 'store', 'deps', 'release', 'repo', 'ci'],
+    ],
     'scope-empty': [2, 'never'],
     'subject-case': [2, 'always', ['lower-case', 'sentence-case']],
     'subject-full-stop': [2, 'never', '.'],
