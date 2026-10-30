@@ -141,8 +141,6 @@ Cảm ơn tất cả các thành viên đã và đang đóng góp để xây d�
 | <img src="https://github.com/VanManhPhan.png" width="40" style="border-radius:50%"/> | **Phan Văn Mạnh** | Fullstack | [@VanManhPhan](https://github.com/VanManhPhan) |
 |  <img src="https://github.com/osamuharu.png" width="40" style="border-radius:50%"/>  | **Huỳnh Nam Kha** | Fullstack | [@osamuharu](https://github.com/osamuharu)     |
 
-_(Lưu ý: Bạn hãy thay thế nội dung trong ngoặc vuông bằng thông tin thực tế của đội ngũ)_
-
 ---
 
 ## 📄 Giấy phép
