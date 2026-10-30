@@ -26,7 +26,6 @@
 - [Công nghệ sử dụng](#-công-nghệ-sử-dụng)
 - [Yêu cầu hệ thống](#-yêu-cầu-hệ-thống)
 - [Hướng dẫn cài đặt & Chạy dự án](#-hướng-dẫn-cài-đặt--chạy-dự-án)
-- [Các câu lệnh (Scripts)](#-các-câu-lệnh-scripts)
 - [Thành viên đóng góp](#-thành-viên-đóng-góp)
 - [Giấy phép](#-giấy-phép)
 
@@ -131,32 +130,6 @@ npx nx serve web
 ```
 
 Truy cập ứng dụng tại địa chỉ: `http://localhost:4200` (hoặc port được hiển thị trên console).
-
----
-
-## 📜 Các câu lệnh (Scripts)
-
-Dưới đây là một số script tiện ích được cấu hình sẵn trong `package.json`:
-
-| Script                 | Lệnh thực thi                                                 | Mô tả                                                                   |
-| :--------------------- | :------------------------------------------------------------ | :---------------------------------------------------------------------- |
-| `npm run setup`        | `shx cp apps/web/.env.example apps/web/.env && ...`           | Sao chép các file cấu hình `.env` mẫu và `docker-compose.yml` cho dự án |
-| `npm run setup:deploy` | `bash ./scripts/setup_deploy.sh`                              | Chạy script Shell để chuẩn bị và thiết lập môi trường deployment        |
-| `npm run db:docker:up` | `docker compose -f docker-compose.yml up -d mysql-db --build` | Build và khởi chạy riêng container MySQL Database trong Docker          |
-| `npm run docker:up`    | `docker compose -f docker-compose.yml up -d --build`          | Build và khởi chạy toàn bộ các dịch vụ/container bằng Docker Compose    |
-| `npm run docker:down`  | `docker compose -f docker-compose.yml down`                   | Dừng và loại bỏ tất cả các container đang chạy bởi Docker Compose       |
-| `npm run typecheck`    | `nx run-many --target=typecheck --all`                        | Kiểm tra lỗi TypeScript tĩnh trên toàn bộ các project trong Nx Monorepo |
-| `npm run analyst`      | `knip --no-config-hints`                                      | Phân tích code thừa, unused export, dependency không sử dụng bằng Knip  |
-| `npm run prepare`      | `husky`                                                       | Khởi tạo Git hooks (Husky) tự động cho môi trường phát triển            |
-
-**Các lệnh Nx hữu ích khác:**
-
-- `npx nx build web` - Build dự án frontend để chuẩn bị deploy
-- `npx nx test web` - Chạy Unit Test cho ứng dụng Web bằng Vitest
-- `npx nx e2e web-e2e` - Chạy kiểm thử End-to-End bằng Playwright
-- `npx nx storybook ui` - Chạy Storybook để xem trực quan các UI component
-
----
 
 ## 👥 Thành viên đóng góp
 
