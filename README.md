@@ -74,7 +74,7 @@ evovocab-platform/
 - ![Spring Boot](https://img.shields.io/badge/Spring_Boot-6DB33F?style=flat-square&logo=spring-boot&logoColor=white) - Framework Backend Java (quản lý qua plugin `@nxrocks/nx-spring-boot`)
 - ![Docker](https://img.shields.io/badge/docker-%230db7ed.svg?style=flat-square&logo=docker&logoColor=white) - Containerization (Docker Compose)
 
-## DATABASE
+## Database
 
 - ![MySQL](https://img.shields.io/badge/MySQL_8.4-4479A1?style=flat-square&logo=mysql&logoColor=white) - Relational Database (RDBMS) phiên bản 8.4
 - ![Azure](https://img.shields.io/badge/Azure_Database_for_MySQL-0089D6?style=flat-square&logo=microsoftazure&logoColor=white) - Cloud Database Service (Managed Azure MySQL)
