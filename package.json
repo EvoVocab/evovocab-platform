@@ -1,6 +1,6 @@
 {
   "name": "@evovocab/repo",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "license": "Apache-2.0",
   "author": "EvoVocab",
   "description": "Evocab là một nền tảng cá nhân hóa việc từ vựng tiếng Anh, giúp người dùng nâng cao vốn từ vựng một cách hiệu quả và thú vị.",
@@ -112,7 +112,6 @@
     "csv-parse": "^7.0.2",
     "uuid": "^11.1.1",
     "deepmerge": "^4.3.1",
-    "minimatch": "^11.0.1",
     "glob": "^14.0.2"
   },
   "allowScripts": {
