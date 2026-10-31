@@ -44,3 +44,7 @@ security:
     - /v3/api-docs/**
     - /swagger-ui/**
     - /swagger-ui.html
+
+logging:
+  level:
+    org.springframework.web.filter.CommonsRequestLoggingFilter: DEBUG
