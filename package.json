@@ -10,7 +10,7 @@
   },
   "scripts": {
     "setup": "shx cp apps/web/.env.example apps/web/.env && shx cp apps/api/.env.example apps/api/.env && shx cp docker-compose.example.yml docker-compose.yml",
-    "setup:deploy": "bash ./scripts/setup_deploy.sh",
+    "setup:deploy": "node ./scripts/setup_deploy.js",
     "db:docker:up": "docker compose -f docker-compose.yml up -d mysql-db --build",
     "docker:up": "docker compose -f docker-compose.yml up -d --build",
     "docker:down": "docker compose -f docker-compose.yml down",
