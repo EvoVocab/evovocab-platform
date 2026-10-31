@@ -3,6 +3,7 @@
   "compilerOptions": {
     "allowJs": true,
     "module": "NodeNext",
+    "rootDir": ".",
     "moduleResolution": "NodeNext",
     "types": ["@playwright/test", "node"],
     "outDir": "out-tsc/playwright",
