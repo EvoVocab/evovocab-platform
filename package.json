@@ -15,7 +15,7 @@
     "docker:up": "docker compose -f docker-compose.yml up -d --build",
     "docker:down": "docker compose -f docker-compose.yml down",
     "typecheck": "nx run-many --target=typecheck --all",
-    "analyst": "knip --no-config-hints",
+    "analyze": "knip --no-config-hints",
     "prepare": "husky"
   },
   "private": true,
