@@ -126,7 +126,7 @@ npm run db:docker:up (Chỉ chạy database bằng docker)
 npx nx serve api (Chỉ chạy api bằng môi trường trên hệ thống đang chạy)
 ```
 
-_(Để tắt các container, hãy chạy: `npm run api:docker:down`)_
+_(Để tắt các container, hãy chạy: `npm run docker:down`)_
 
 **4. Khởi chạy Frontend (Web)**
 Sử dụng công cụ Nx CLI để khởi chạy ứng dụng web tại môi trường phát triển cục bộ:
