@@ -7,12 +7,10 @@
     "build": {
       "executor": "@nxrocks/nx-spring-boot:build",
       "options": {
-        "root": "apps/api"
+        "root": "apps/api",
+        "args": ["-Dspring.profiles.active=test"]
       },
       "configurations": {
-        "test": {
-          "args": ["-Dspring.profiles.active=test"]
-        },
         "dev": {
           "args": ["-Dspring.profiles.active=dev"]
         },
