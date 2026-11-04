@@ -6,11 +6,13 @@ import jakarta.annotation.PostConstruct;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.security.config.Customizer;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.web.AuthenticationEntryPoint;
 import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.security.web.util.matcher.RequestMatcher;
 import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.CorsConfigurationSource;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
@@ -23,18 +25,17 @@ public class SecurityConfiguration {
     private final AuthenticationEntryPoint authenticationEntryPoint;
     private final CorsProperties corsProperties;
 
-    private String[] publicUrls;
-
-    @PostConstruct
-    public void init() {
-        this.publicUrls = properties.getPublicUrls().toArray(String[]::new);
-    }
-
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http.csrf(AbstractHttpConfigurer::disable)
-            .cors(AbstractHttpConfigurer::disable)
-            .authorizeHttpRequests((auth) -> auth.requestMatchers(publicUrls).permitAll().anyRequest().authenticated())
+            .cors(Customizer.withDefaults())
+            .authorizeHttpRequests((auth) ->
+                auth
+                    .requestMatchers(properties.getPublicUrls().toArray(new String[0]))
+                    .permitAll()
+                    .anyRequest()
+                    .authenticated()
+            )
             .sessionManagement((session) -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
             .exceptionHandling((exception) -> exception.authenticationEntryPoint(authenticationEntryPoint));
 
