@@ -1,4 +1,4 @@
-import { BrandIcon, BrandName } from '../../brand';
+import { BrandIcon, BrandName } from '@/components/brand';
 
 type MainLayoutProps = {
   children?: React.ReactNode;

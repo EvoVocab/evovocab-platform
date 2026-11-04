@@ -1,5 +1,5 @@
 import React from 'react';
-import { isProduction } from '../../../lib/utils';
+import { isProduction } from '@/lib/utils';
 
 export const ReactHookFormDevelopmentTools = isProduction
   ? (): null => null
