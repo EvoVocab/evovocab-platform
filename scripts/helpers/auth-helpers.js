@@ -1,10 +1,10 @@
 const fs = require('fs');
-const path = require('path');
 const { google } = require('googleapis');
 const readline = require('readline');
+const { rootDir, resolvePath } = require('../utils');
 
-const TOKEN_PATH = path.join(__dirname, '../../token.json');
-const CREDENTIALS_PATH = path.join(__dirname, '../../client_secret.json');
+const TOKEN_PATH = resolvePath(rootDir + '/token.json');
+const CREDENTIALS_PATH = resolvePath(rootDir + '/client-secret.json');
 const SCOPES = ['https://www.googleapis.com/auth/drive'];
 
 /**
@@ -24,14 +24,12 @@ async function getAuthClient() {
 
   const oAuth2Client = new google.auth.OAuth2(client_id, client_secret, 'http://localhost');
 
-  // 1. Nếu đã có token.json, dùng luôn không cần hỏi lại
   if (fs.existsSync(TOKEN_PATH)) {
     const tokenData = JSON.parse(fs.readFileSync(TOKEN_PATH, 'utf8'));
     oAuth2Client.setCredentials(tokenData);
     return oAuth2Client;
   }
 
-  // 2. Nếu chưa có token.json, tiến hành hướng dẫn người dùng cấp quyền 1 lần duy nhất
   console.log('\n========================================');
   console.log('🔒 CHƯA CÓ TOKEN: Yêu cầu cấp quyền Google Drive');
   console.log('1. Mở đường link này trên trình duyệt web:\n');
