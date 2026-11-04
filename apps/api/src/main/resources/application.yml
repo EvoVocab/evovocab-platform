@@ -19,13 +19,13 @@ server:
 management:
   server:
     port: ${SERVER_PORT}
-  endpoint:
-    health:
-      show-details: always
   endpoints:
     web:
       exposure:
-        include: health, info
+        include: health, info, metrics, env
+  endpoint:
+    health:
+      show-details: always
 
 spring doc:
   show-actuator: true

@@ -23,6 +23,17 @@ spring:
         connectionCollation: utf8mb4_0900_ai_ci
         sslMode: REQUIRED
 
+management:
+  server:
+    port: ${SERVER_PORT}
+  endpoints:
+    web:
+      exposure:
+        include: health
+  endpoint:
+    health:
+      show-details: never
+
 logging:
   config: classpath:log4j2-prod.yaml
 
