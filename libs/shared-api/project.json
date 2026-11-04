@@ -1,0 +1,18 @@
+{
+  "name": "shared-api",
+  "$schema": "../node_modules/nx/schemas/project-schema.json",
+  "targets": {
+    "generate": {
+      "executor": "nx:run-commands",
+      "dependsOn": [
+        {
+          "projects": ["@evovocab/api"],
+          "target": "generate-openapi"
+        }
+      ],
+      "options": {
+        "command": "openapi-generator-cli generate -i apps/api/docs/swagger.json -g typescript-axios -o libs/shared-api/src/lib --ignore-file-override libs/shared-api/.openapi-generator-ignore"
+      }
+    }
+  }
+}

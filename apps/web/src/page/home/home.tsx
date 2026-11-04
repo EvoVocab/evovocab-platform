@@ -1,9 +1,19 @@
+import React from 'react';
+import { Link } from '@tanstack/react-router';
 import { Button, ModeToggle } from '@evovocab/ui';
 import { BrandLogoBackgroundWhite } from '@evovocab/ui/components/brand';
 import { HomeIcon } from '@evovocab/ui/components/icons';
-import { Link } from '@tanstack/react-router';
+import { useActuatorHealth } from '@/features/actuator/hooks/useActuatorHealth';
 
 function Home() {
+  const { data } = useActuatorHealth();
+
+  React.useEffect(() => {
+    if (data) {
+      console.log('Actuator Health:', data);
+    }
+  }, [data]);
+
   return (
     <div className="flex flex-1 flex-col items-center justify-center gap-8 py-10 sm:py-20">
       <BrandLogoBackgroundWhite className="h-24 w-auto rounded-full shadow-sm sm:h-32 md:h-40" />

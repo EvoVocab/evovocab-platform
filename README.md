@@ -48,6 +48,7 @@ evovocab-platform/
 │   ├── web/            # Frontend Web App (React + Vite)
 │   └── web-e2e/        # End-to-End Tests cho Web (Playwright)
 ├── libs/
+│   ├── shared-api/     # Quản lý các call api dùng chung
 │   ├── store/          # Quản lý state dùng chung (Zustand)
 │   └── ui/             # Thư viện UI Component dùng chung (Shadcn/Tailwind)
 ├── package.json

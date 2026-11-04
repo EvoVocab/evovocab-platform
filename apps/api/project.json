@@ -43,6 +43,13 @@
           "args": ["--args=--spring.profiles.active=prod"]
         }
       }
+    },
+    "generate-openapi": {
+      "executor": "nx:run-commands",
+      "options": {
+        "command": "./gradlew generateOpenApiDocs",
+        "cwd": "{workspaceRoot}/apps/api"
+      }
     }
   }
 }
