@@ -69,6 +69,10 @@ dependencies {
     testImplementation libs.spring.security.test
     testImplementation libs.h2.db
     testRuntimeOnly libs.junit.platform.launcher
+
+    // --- Database for Testing ---
+    developmentOnly libs.h2.db
+    testRuntimeOnly libs.h2.db
 }
 
 tasks.named('test') {
