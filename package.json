@@ -9,8 +9,13 @@
     "url": "https://github.com/EvoVocab/evovocab-platform.git"
   },
   "scripts": {
-    "setup": "shx cp apps/web/.env.example apps/web/.env && shx cp apps/api/.env.example apps/api/.env && shx cp docker-compose.example.yml docker-compose.yml",
-    "setup:deploy": "node ./scripts/setup_deploy.js",
+    "setup": "npm run setup:api:env && npm run setup:web:env && npm run setup:docker:compose && npm run setup:env",
+    "setup:api:env": "shx cp apps/api/.env.example apps/api/.env",
+    "setup:web:env": "shx cp apps/web/.env.example apps/web/.env",
+    "setup:docker:compose": "shx cp docker-compose.example.yml docker-compose.yml",
+    "setup:env": "shx cp .env.example .env",
+    "pre:deploy": "node scripts/pre-deploy/main.js",
+    "download:env": "node scripts/pre-deploy/download-env.js",
     "db:docker:up": "docker compose -f docker-compose.yml up -d mysql-db --build",
     "docker:up": "docker compose -f docker-compose.yml up -d --build",
     "docker:down": "docker compose -f docker-compose.yml down",
@@ -133,6 +138,7 @@
     "class-variance-authority": "^0.7.1",
     "cn": "^0.5.0",
     "dayjs": "^1.11.23",
+    "googleapis": "^189.0.0",
     "lucide-react": "^1.61.0",
     "react": "^19.0.0",
     "react-dom": "^19.0.0",
