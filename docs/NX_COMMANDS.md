@@ -69,22 +69,15 @@ Lưu ý: `sharedGlobals` trong `nx.json` trỏ tới `.github/workflows/ci.yml`.
 
 `api` chạy bằng Gradle qua plugin `@nxrocks/nx-spring-boot`. Ba target `serve`, `build` và `test` được khai báo trong `apps/api/project.json`, mỗi target gắn với một profile Spring; chọn profile bằng cờ `-c` (configuration).
 
-| Lệnh                          | Profile Spring                                           |
-| ----------------------------- | -------------------------------------------------------- |
-| `npx nx serve api`            | `dev` (mặc định)                                         |
-| `npx nx serve api -c staging` | `staging`                                                |
-| `npx nx serve api -c prod`    | `prod`                                                   |
-| `npx nx build api`            | Không ép profile                                         |
-| `npx nx build api -c prod`    | `prod`. Các configuration khác: `dev`, `staging`, `test` |
-| `npx nx test api`             | `test`                                                   |
-
-Plugin còn khai báo thêm các target `install`, `clean`, `run`, `build-image`, `build-info`, `format`, `apply-format` và `check-format` trong `nx.json`. Ví dụ:
-
-- `npx nx run api:clean` xóa thư mục build của Gradle.
-- `npx nx run api:build-image` tạo Docker image bằng Spring Boot.
-- `npx nx run api:check-format` và `npx nx run api:apply-format` kiểm tra và áp dụng định dạng Java.
-
-Dùng dạng `nx run api:format`, không dùng `nx format api`, vì `nx format` là lệnh có sẵn của Nx (Prettier) chứ không phải target của `api`.
+| Lệnh                          | Profile Spring                                   |
+| ----------------------------- | ------------------------------------------------ |
+| `npx nx serve api`            | `dev` (mặc định)                                 |
+| `npx nx serve api -c staging` | `staging`                                        |
+| `npx nx serve api -c prod`    | `prod`                                           |
+| `npx nx build api`            | `test` (mặc định)                                |
+| `npx nx build api -c prod`    | `prod`. Các configuration khác: `dev`, `staging` |
+| `npx nx test api`             | `test`                                           |
+| `npx nx format api`           |                                                  |
 
 ## E2E (Playwright) và Storybook
 
