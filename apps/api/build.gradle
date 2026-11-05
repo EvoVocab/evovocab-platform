@@ -5,11 +5,25 @@ plugins {
     alias (libs.plugins.spring.boot) apply true
     alias (libs.plugins.dependency.management) apply true
     alias (libs.plugins.liquibase) apply true
+    alias (libs.plugins.openapi) apply true
 }
+
+
 
 def rootPkg = new JsonSlurper().parse(file("${rootDir}/package.json"))
 def rootPkgVersion = rootPkg.version
 def workspacePkg =  new JsonSlurper().parse(file("../../package.json"))
+def serverPort = project.findProperty('server.port') ?: 5000
+def serverContextPath = project.findProperty('server.servlet.context-path') ?: '/api'
+
+openApi {
+    apiDocsUrl = "http://localhost:${serverPort}${serverContextPath}/v3/api-docs"
+    outputDir = file("$projectDir/docs")
+    outputFileName = "swagger.json"
+    customBootRun {
+        args = ['--spring.profiles.active=test']
+    }
+}
 
 group = 'com.evovocab'
 version = rootPkgVersion + '-SNAPSHOT'
@@ -67,7 +81,6 @@ dependencies {
     // --- Testing ---
     testImplementation libs.spring.boot.starter.test
     testImplementation libs.spring.security.test
-    testImplementation libs.h2.db
     testRuntimeOnly libs.junit.platform.launcher
 
     // --- Database for Testing ---

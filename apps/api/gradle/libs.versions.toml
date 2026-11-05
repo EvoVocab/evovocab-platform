@@ -3,6 +3,7 @@ java = "21"
 spring-boot = "3.5.16"
 dependency-management = "1.1.6"
 liquibase = "2.2.2"
+openapi = "1.9.0"
 mysql = "8.4.0"
 lombok = "1.18.42"
 lombok-mapstruct-binding = "0.2.0"
@@ -50,3 +51,4 @@ jjwt-jackson = { module = "io.jsonwebtoken:jjwt-jackson", version.ref = "jwt" }
 liquibase = { id = "org.liquibase.gradle", version.ref = "liquibase" }
 spring-boot = { id = "org.springframework.boot", version.ref = "spring-boot" }
 dependency-management = { id = "io.spring.dependency-management", version.ref = "dependency-management" }
+openapi = { id = "org.springdoc.openapi-gradle-plugin", version.ref = "openapi" }

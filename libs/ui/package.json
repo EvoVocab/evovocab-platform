@@ -17,5 +17,8 @@
       "import": "./src/styles/globals.css",
       "default": "./src/styles/globals.css"
     }
+  },
+  "dependencies": {
+    "cn": "*"
   }
 }

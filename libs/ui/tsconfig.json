@@ -1,7 +1,15 @@
 {
   "compilerOptions": {
     "moduleResolution": "NodeNext",
-    "resolvePackageJsonImports": true
+    "resolvePackageJsonImports": true,
+    "baseUrl": ".",
+    "paths": {
+      "@/components/*": ["./src/components/*"],
+      "@/components/ui/*": ["./src/components/ui/*"],
+      "@/lib/*": ["./src/lib/*"],
+      "@/hooks/*": ["./src/hooks/*"],
+      "@/utils/*": ["./src/lib/utils/*"]
+    }
   },
   "files": [],
   "include": [],

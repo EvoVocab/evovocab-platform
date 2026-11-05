@@ -7,7 +7,13 @@
     "tsBuildInfoFile": "dist/tsconfig.app.tsbuildinfo",
     "jsx": "react-jsx",
     "lib": ["dom"],
-    "rootDir": "."
+    "rootDir": ".",
+    "baseUrl": ".",
+    "paths": {
+      "@/*": ["./src/*"],
+      "@evovocab/ui": ["../../libs/ui/src/index.ts"],
+      "@evovocab/ui/*": ["../../libs/ui/src/*"]
+    }
   },
   "exclude": [
     "out-tsc",
@@ -38,6 +44,9 @@
   ],
 
   "references": [
+    {
+      "path": "../../libs/shared-api/tsconfig.lib.json"
+    },
     {
       "path": "../../libs/ui/tsconfig.lib.json"
     }

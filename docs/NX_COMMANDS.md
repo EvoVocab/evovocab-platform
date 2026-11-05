@@ -2,13 +2,14 @@
 
 README và workflow deploy đều dùng tên rút gọn; nếu Nx báo không tìm thấy project thì dùng tên đầy đủ.
 
-| Tên rút gọn | Tên đầy đủ          | Loại     | Công nghệ                         | Cổng                      |
-| ----------- | ------------------- | -------- | --------------------------------- | ------------------------- |
-| `web`       | `@evovocab/web`     | App      | React 19, Vite, TanStack Router   | dev 4200, preview 4300    |
-| `api`       | `@evovocab/api`     | App      | Spring Boot, Gradle               | 5000 (Docker Compose)     |
-| `web-e2e`   | `@evovocab/web-e2e` | E2E      | Playwright                        | dùng lại server của `web` |
-| `ui`        | `@evovocab/ui`      | Thư viện | Shadcn, Tailwind, Storybook       | —                         |
-| `store`     | `@evovocab/store`   | Thư viện | Thư viện quản lý state dùng chung | —                         |
+| Tên rút gọn  | Tên đầy đủ             | Loại     | Công nghệ                                | Cổng                      |
+| ------------ | ---------------------- | -------- | ---------------------------------------- | ------------------------- |
+| `web`        | `@evovocab/web`        | App      | React 19, Vite, TanStack Router          | dev 4200, preview 4300    |
+| `api`        | `@evovocab/api`        | App      | Spring Boot, Gradle                      | 5000 (Docker Compose)     |
+| `web-e2e`    | `@evovocab/web-e2e`    | E2E      | Playwright                               | dùng lại server của `web` |
+| `ui`         | `@evovocab/ui`         | Thư viện | Shadcn, Tailwind, Storybook              | —                         |
+| `store`      | `@evovocab/store`      | Thư viện | Thư viện quản lý state dùng chung        | —                         |
+| `shared-api` | `@evovocab/shared-api` | Thư viện | Thư viện quản lý các call api dùng chung | —                         |
 
 Các target (`build`, `test`, `lint`, `serve`...) hầu hết do plugin trong `nx.json` suy ra từ file cấu hình có sẵn (`vite.config.mts`, `build.gradle`, `playwright.config.mts`, `.storybook`). Riêng `api` khai báo thêm trong `apps/api/project.json`.
 

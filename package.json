@@ -45,6 +45,7 @@
     "@nx/vitest": "22.7.12",
     "@nx/web": "22.7.12",
     "@nxrocks/nx-spring-boot": "^11.0.1",
+    "@openapitools/openapi-generator-cli": "^2.42.0",
     "@playwright/test": "^1.37.0",
     "@storybook/react": "^10.6.5",
     "@storybook/react-vite": "10.6.5",
@@ -61,7 +62,7 @@
     "@testing-library/jest-dom": "^7.0.1",
     "@testing-library/react": "^16.3.3",
     "@testing-library/user-event": "^14.6.8",
-    "@types/node": "^20.0.0",
+    "@types/node": "20.19.9",
     "@types/react": "^19.0.0",
     "@types/react-dom": "^19.0.0",
     "@vitejs/plugin-react": "^6.0.0",
@@ -84,6 +85,7 @@
     "husky": "^9.1.7",
     "jiti": "2.4.2",
     "jsdom": "~22.1.0",
+    "jsonc-eslint-parser": "^2.1.0",
     "knip": "^6.43.0",
     "nx": "22.7.12",
     "postcss": "^8.5.31",
@@ -106,7 +108,7 @@
     "libs/*"
   ],
   "overrides": {
-    "axios": ">=1.19.1",
+    "axios": "^1.7.9",
     "follow-redirects": ">=1.16.1",
     "smol-toml": ">=1.8.1",
     "undici": ">=7.31.0",
@@ -117,7 +119,8 @@
     "csv-parse": "^7.0.2",
     "uuid": "^11.1.1",
     "deepmerge": "^4.3.1",
-    "glob": "^14.0.2"
+    "glob": "^14.0.2",
+    "basic-ftp": "^6.2.1"
   },
   "allowScripts": {
     "nx@22.7.12": true,
@@ -139,6 +142,7 @@
     "cn": "^0.5.0",
     "dayjs": "^1.11.23",
     "googleapis": "^189.0.0",
+    "http-status-codes": "^2.3.0",
     "lucide-react": "^1.61.0",
     "react": "^19.0.0",
     "react-dom": "^19.0.0",
