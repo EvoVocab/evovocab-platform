@@ -15,24 +15,6 @@
       "default": "./dist/index.js"
     }
   },
-  "nx": {
-    "sourceRoot": "libs/shared-api/src",
-    "targets": {
-      "build": {
-        "executor": "@nx/js:swc",
-        "outputs": [
-          "{options.outputPath}"
-        ],
-        "options": {
-          "outputPath": "libs/shared-api/dist",
-          "main": "libs/shared-api/src/index.ts",
-          "tsConfig": "libs/shared-api/tsconfig.lib.json",
-          "skipTypeCheck": true,
-          "stripLeadingPaths": true
-        }
-      }
-    }
-  },
   "dependencies": {
     "@swc/helpers": "~0.5.18",
     "axios": "^1.21.0"

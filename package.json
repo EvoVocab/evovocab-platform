@@ -105,7 +105,8 @@
   "workspaces": [
     "packages/*",
     "apps/*",
-    "libs/*"
+    "libs/*",
+    "libs/shared/*"
   ],
   "overrides": {
     "axios": "^1.7.9",
