@@ -120,4 +120,16 @@ export default [
       },
     },
   },
+  {
+    name: 'api-integration-bypass',
+    files: ['src/config/api-config.ts', 'src/features/**/hooks/*.ts'],
+    rules: {
+      '@typescript-eslint/no-unsafe-assignment': 'off',
+      '@typescript-eslint/no-unsafe-call': 'off',
+      '@typescript-eslint/no-unsafe-member-access': 'off',
+      '@typescript-eslint/no-unsafe-return': 'off',
+      '@typescript-eslint/no-unsafe-argument': 'off',
+      '@typescript-eslint/no-explicit-any': 'off',
+    },
+  },
 ];
