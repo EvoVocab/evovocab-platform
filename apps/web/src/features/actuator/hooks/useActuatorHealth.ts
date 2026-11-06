@@ -5,7 +5,7 @@ import { config } from '@/config/api-config';
 function useActuatorHealth() {
   const health = useQuery({
     queryKey: ['actuator-health'],
-    queryFn: async () => {
+    queryFn: async (): Promise<unknown> => {
       const response = await ActuatorApiFactory(config).health();
       return response.data;
     },
