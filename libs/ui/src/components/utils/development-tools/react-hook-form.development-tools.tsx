@@ -1,7 +1,7 @@
 import React from 'react';
-import { isProduction } from '@/lib/utils';
+import { isProduction } from '@evovocab/shared-utils';
 
-export const ReactHookFormDevelopmentTools = isProduction
+export const ReactHookFormDevelopmentTools = isProduction(import.meta.env)
   ? (): null => null
   : React.lazy(() =>
       import('@hookform/devtools').then((result) => ({
