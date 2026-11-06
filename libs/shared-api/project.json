@@ -1,5 +1,5 @@
 {
-  "name": "shared-api",
+  "name": "@evovocab/shared-api",
   "$schema": "../node_modules/nx/schemas/project-schema.json",
   "targets": {
     "generate": {
