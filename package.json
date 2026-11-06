@@ -122,6 +122,17 @@
     "glob": "^14.0.2",
     "basic-ftp": "^6.2.1"
   },
+  "lint-staged": {
+    "*.{js,ts,jsx,tsx,json,css,scss,md}": [
+      "prettier --write"
+    ],
+    "*.{yml,yaml}": [
+      "prettier --write"
+    ],
+    "*.java": [
+      "prettier --write"
+    ]
+  },
   "allowScripts": {
     "nx@22.7.12": true,
     "nx@24.0.1": true,

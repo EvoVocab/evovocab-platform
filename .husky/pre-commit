@@ -1,2 +1,2 @@
-npx nx format:write --uncommitted
+npx lint-staged
 npx nx affected -t lint
