@@ -48,9 +48,11 @@ evovocab-platform/
 │   ├── web/            # Frontend Web App (React + Vite)
 │   └── web-e2e/        # End-to-End Tests cho Web (Playwright)
 ├── libs/
-│   ├── shared-api/     # Quản lý các call api dùng chung
-│   ├── store/          # Quản lý state dùng chung (Zustand)
-│   └── ui/             # Thư viện UI Component dùng chung (Shadcn/Tailwind)
+│   ├── shared/         # Chứa riêng các thư viện hạ tầng kỹ thuật
+│   │   ├── api/        # OpenAPI Generated Client & Axios Factories (@evovocab/shared-api)
+│   │   └── utils/      # Common helpers, env getters, safe storage (@evovocab/shared-utils)
+│   ├── store/          # Quản lý state dùng chung với Zustand (@evovocab/store)
+│   └── ui/             # Design System, Shadcn UI components & styles (@evovocab/ui)
 ├── package.json
 └── nx.json             # Cấu hình Nx Workspace
 ```
