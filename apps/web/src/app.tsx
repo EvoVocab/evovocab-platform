@@ -7,6 +7,7 @@ import {
   type FunctionComponent,
 } from '@evovocab/ui';
 import type { TanstackRouter } from './main';
+import { Toaster } from '@evovocab/ui/components/ui/sonner';
 
 const queryClient = new QueryClient();
 
@@ -22,6 +23,7 @@ const App = ({ router }: AppProps): FunctionComponent => {
           position="bottom-left"
           router={router}
         />
+        <Toaster richColors position="top-center" />
       </ThemeProvider>
       <ReactQueryDevtools initialIsOpen={false} position="bottom" />
     </QueryClientProvider>
