@@ -18,6 +18,17 @@
     "strict": true,
     "target": "es2022",
     "customConditions": ["@evovocab/repo"],
-    "ignoreDeprecations": "6.0"
+    "ignoreDeprecations": "6.0",
+    "baseUrl": ".",
+    "paths": {
+      "@evovocab/ui": ["libs/ui/src/index.ts"],
+      "@evovocab/ui/*": ["libs/ui/src/*"],
+      "@evovocab/store": ["libs/store/src/index.ts"],
+      "@evovocab/store/*": ["libs/store/src/*"],
+      "@evovocab/shared-api": ["libs/shared/api/src/index.ts"],
+      "@evovocab/shared-api/*": ["libs/shared/api/src/*"],
+      "@evovocab/shared-utils": ["libs/shared/utils/src/index.ts"],
+      "@evovocab/shared-utils/*": ["libs/shared/utils/src/*"]
+    }
   }
 }

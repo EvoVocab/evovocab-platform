@@ -1,7 +1,4 @@
 {
-  "compilerOptions": {
-    "moduleResolution": "NodeNext"
-  },
   "files": [],
   "include": [],
   "references": [
