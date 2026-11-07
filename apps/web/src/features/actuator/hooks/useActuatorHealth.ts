@@ -12,5 +12,4 @@ function useActuatorHealth() {
   });
   return health;
 }
-
 export { useActuatorHealth };

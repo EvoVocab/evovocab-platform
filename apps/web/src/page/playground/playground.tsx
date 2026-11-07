@@ -1,8 +1,23 @@
+import * as React from 'react';
 import { toast } from 'sonner';
-import { Button, Card, CardContent, CardHeader, CardTitle, ModeToggle } from '@evovocab/ui';
+import {
+  Button,
+  Card,
+  CardContent,
+  CardHeader,
+  CardTitle,
+  ModeToggle,
+  GoogleIcon,
+} from '@evovocab/ui';
 import { GoBack } from '@/components/go-back';
+import { useOAuthStore } from '@evovocab/store';
+import { useGoogleLogin } from '@react-oauth/google';
 
 export function Playground() {
+  const oauthState = useOAuthStore((state) => state.oauthState);
+  const generateOAuthState = useOAuthStore((state) => state.generateOAuthState);
+  const resetOAuthState = useOAuthStore((state) => state.resetOAuthState);
+
   const simulateAsyncOperation = (shouldSucceed = true) => {
     return new Promise<{ name: string }>((resolve, reject) => {
       setTimeout(() => {
@@ -23,6 +38,53 @@ export function Playground() {
     });
   };
 
+  const oauth = useGoogleLogin({
+    flow: 'auth-code',
+
+    // eslint-disable-next-line camelcase
+    redirect_uri: `${window.location.origin}/evovocab/playground`,
+    // eslint-disable-next-line camelcase
+    ux_mode: 'redirect',
+    scope: 'openid email profile',
+    state: oauthState ?? undefined,
+  });
+
+  const handleGoogleLoginClick = () => {
+    if (!oauthState) {
+      generateOAuthState();
+      oauth();
+    } else {
+      oauth();
+    }
+  };
+
+  React.useEffect(() => {
+    const cleanUrl = () => {
+      window.history.replaceState({}, document.title, window.location.pathname);
+    };
+
+    const parameters = new URLSearchParams(window.location.search);
+    const code = parameters.get('code');
+    const returnedState = parameters.get('state');
+    const error = parameters.get('error');
+
+    if (error) {
+      toast.error('Đăng nhập không thành công. Vui lòng thử lại.');
+      cleanUrl();
+      return;
+    }
+
+    if (code) {
+      if (returnedState !== oauthState) {
+        toast.error('Đăng nhập không thành công. Vui lòng thử lại.');
+      } else {
+        toast.success('Đăng nhập thành công!');
+      }
+      cleanUrl();
+    }
+    resetOAuthState();
+  }, [oauthState, resetOAuthState]);
+
   return (
     <div className="container mx-auto space-y-8 p-6" data-testid="playground-page">
       <GoBack />
@@ -42,7 +104,7 @@ export function Playground() {
       <div className="grid grid-cols-1 gap-6 lg:grid-cols-2">
         <Card className="lg:col-span-2">
           <CardHeader>
-            <CardTitle className="text-xl">1. Thử nghiệm Toast (Sonner)</CardTitle>
+            <CardTitle className="text-xl">Thử nghiệm Toast (Sonner)</CardTitle>
           </CardHeader>
           <CardContent className="space-y-4">
             <div className="space-y-2">
@@ -138,10 +200,21 @@ export function Playground() {
             </div>
           </CardContent>
         </Card>
+        <Card className="lg:col-span-2">
+          <CardHeader>
+            <CardTitle className="text-xl">Google OAuth</CardTitle>
+          </CardHeader>
+          <CardContent className="space-y-2 text-sm">
+            <Button variant="outline" onClick={handleGoogleLoginClick}>
+              <GoogleIcon data-icon="inline-start" />
+              Đang nhập với Google
+            </Button>
+          </CardContent>
+        </Card>
 
         <Card className="lg:col-span-2">
           <CardHeader>
-            <CardTitle className="text-xl">2. Thông tin môi trường (Debug info)</CardTitle>
+            <CardTitle className="text-xl">Thông tin môi trường (Debug info)</CardTitle>
           </CardHeader>
           <CardContent className="space-y-2 text-sm">
             <div className="flex justify-between border-b pb-1">
