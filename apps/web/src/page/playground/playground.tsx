@@ -42,7 +42,7 @@ export function Playground() {
     flow: 'auth-code',
 
     // eslint-disable-next-line camelcase
-    redirect_uri: `${window.location.origin}/evovocab/playground`,
+    redirect_uri: `${window.location.origin}${window.location.pathname}`,
     // eslint-disable-next-line camelcase
     ux_mode: 'redirect',
     scope: 'openid email profile',
