@@ -374,7 +374,7 @@ public record CreateProductRequest(String name, BigDecimal price) {}
 public record ProductResponse(UUID id, String name, BigDecimal price) {}
 ```
 
-### 3.3 Facade Adapter
+### 3.4 Facade Adapter
 
 ```java
 package com.example.demo.order.infrastructure.adapter.out;
