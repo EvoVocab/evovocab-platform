@@ -11,7 +11,7 @@ interface OAuthState {
   generateOAuthState: () => string;
 }
 
-export const useOAuthStore = create<OAuthState>()(
+const useOAuthStore = create<OAuthState>()(
   devtools(
     loggerMiddleware(
       persist(
@@ -45,3 +45,5 @@ export const useOAuthStore = create<OAuthState>()(
     },
   ),
 );
+
+export { useOAuthStore };

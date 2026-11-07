@@ -69,16 +69,16 @@ export function Playground() {
     const error = parameters.get('error');
 
     if (error) {
-      toast.error('Đăng nhập không thành công. Vui lòng thử lại.');
+      toast.error('Xác thực không thành công. Vui lòng thử lại.');
       cleanUrl();
       return;
     }
 
     if (code) {
       if (returnedState !== oauthState) {
-        toast.error('Đăng nhập không thành công. Vui lòng thử lại.');
+        toast.error('Xác thực không thành công. Vui lòng thử lại.');
       } else {
-        toast.success('Đăng nhập thành công!');
+        toast.success('Xác thực thành công!');
       }
       cleanUrl();
     }
@@ -207,7 +207,7 @@ export function Playground() {
           <CardContent className="space-y-2 text-sm">
             <Button variant="outline" onClick={handleGoogleLoginClick}>
               <GoogleIcon data-icon="inline-start" />
-              Đang nhập với Google
+              Tiếp tục với Google
             </Button>
           </CardContent>
         </Card>

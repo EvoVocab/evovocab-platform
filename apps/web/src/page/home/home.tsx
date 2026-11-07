@@ -1,9 +1,7 @@
 import React from 'react';
 import { Link } from '@tanstack/react-router';
-import { Button, ModeToggle } from '@evovocab/ui';
-import { BrandLogoBackgroundWhite } from '@evovocab/ui/components/brand';
-import { HomeIcon } from '@evovocab/ui/components/icons';
-import { useActuatorHealth } from '@/features/actuator/hooks/useActuatorHealth';
+import { BrandLogoBackgroundWhite, HomeIcon, Button, ModeToggle } from '@evovocab/ui';
+import { useActuatorHealth } from '@/features/actuator/hooks/use-actuator-health';
 
 function Home() {
   const { data } = useActuatorHealth();
