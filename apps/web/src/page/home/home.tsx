@@ -1,5 +1,4 @@
 import React from 'react';
-import { toast } from 'sonner';
 import { Link } from '@tanstack/react-router';
 import { Button, ModeToggle } from '@evovocab/ui';
 import { BrandLogoBackgroundWhite } from '@evovocab/ui/components/brand';
@@ -36,49 +35,6 @@ function Home() {
         </p>
       </div>
 
-      <div className="flex flex-wrap gap-2">
-        <Button variant="outline" onClick={() => toast('Sự kiện đã được tạo thành công')}>
-          Mặc định
-        </Button>
-        <Button variant="outline" onClick={() => toast.success('Sự kiện đã được tạo thành công')}>
-          Thành công
-        </Button>
-        <Button
-          variant="outline"
-          onClick={() => toast.info('Tao sự kiện vào lúc 8 giờ sáng ngày mai')}
-        >
-          Thông tin
-        </Button>
-        <Button
-          variant="outline"
-          onClick={() => toast.warning('Thời gian bắt đầu sự kiện không thể sớm hơn 8 giờ sáng')}
-        >
-          Cảnh báo
-        </Button>
-        <Button variant="outline" onClick={() => toast.error('Sự kiện chưa được tạo')}>
-          Lỗi
-        </Button>
-        <Button
-          variant="outline"
-          onClick={() => {
-            toast.promise<{ name: string }>(
-              () =>
-                new Promise((resolve) => {
-                  setTimeout(() => {
-                    resolve({ name: 'Event' });
-                  }, 2000);
-                }),
-              {
-                loading: 'Loading...',
-                success: (data) => `${data.name} đã được tạo thành công!`,
-                error: 'Error',
-              },
-            );
-          }}
-        >
-          Promise
-        </Button>
-      </div>
       {/* Cụm chức năng (Actions): 
           - Mobile: Xếp dọc (flex-col), w-full
           - Tablet/Desktop: Xếp ngang (sm:flex-row), w-auto 

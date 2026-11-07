@@ -1,4 +1,6 @@
 import { BrandIcon, BrandName } from '@/components/brand';
+import { Button } from '@/components/ui';
+import { Link } from '@tanstack/react-router';
 
 type MainLayoutProps = {
   children?: React.ReactNode;
@@ -13,6 +15,9 @@ const MainLayout = ({ children }: MainLayoutProps) => {
             <BrandIcon className="h-6 w-auto sm:h-7 md:h-8" />
             <BrandName className="h-6 w-auto sm:h-7 md:h-8" />
           </div>
+          <Button variant="link">
+            <Link to="/playground">Playground</Link>
+          </Button>
         </div>
       </header>
 

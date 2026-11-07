@@ -19,6 +19,7 @@ export default [
       'tailwind.config.js',
       'vite.config.ts',
       'routeTree.gen.ts',
+      'vitest.setup.ts',
     ],
   },
   ...typescriptEslint.config(
