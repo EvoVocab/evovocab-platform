@@ -33,7 +33,7 @@ public class ProblemDetailsFilter {
             .type("about:blank")
             .title("Unprocessable Entity")
             .status(HttpStatus.UNPROCESSABLE_ENTITY.value())
-            .detail("Validation failed")
+            .detail("Dữ liệu không hợp lệ.")
             .instance(request.getRequestURI())
             .errors(validationErrors)
             .timestamp(Instant.now().toEpochMilli())
@@ -66,7 +66,7 @@ public class ProblemDetailsFilter {
             .type("about:blank")
             .title("Internal Server Error")
             .status(HttpStatus.INTERNAL_SERVER_ERROR.value())
-            .detail(ex.getMessage())
+            .detail("Đã xảy ra lỗi hệ thống. Vui lòng thử lại sau.")
             .instance(request.getRequestURI())
             .timestamp(Instant.now().toEpochMilli())
             .build();
