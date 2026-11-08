@@ -1,8 +1,6 @@
 spring:
   application:
     name: ${APP_NAME}
-app:
-  name: ${APP_NAME}
 
 server:
   port: ${SERVER_PORT}
@@ -44,6 +42,9 @@ security:
     - /v3/api-docs/**
     - /swagger-ui/**
     - /swagger-ui.html
+  jwt:
+    secret: ${JWT_SECRET}
+    access-token-expiration: ${JWT_ACCESS_TOKEN_EXPIRATION}
 
 logging:
   level:
