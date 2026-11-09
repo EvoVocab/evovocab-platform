@@ -9,6 +9,12 @@
       "options": {
         "root": "apps/api",
         "args": ["-Dspring.profiles.active=test"]
+      }
+    },
+    "test": {
+      "executor": "@nxrocks/nx-spring-boot:test",
+      "options": {
+        "root": "apps/api"
       },
       "configurations": {
         "dev": {
@@ -16,17 +22,7 @@
         },
         "staging": {
           "args": ["-Dspring.profiles.active=staging"]
-        },
-        "prod": {
-          "args": ["-Dspring.profiles.active=prod"]
         }
-      }
-    },
-    "test": {
-      "executor": "@nxrocks/nx-spring-boot:test",
-      "options": {
-        "root": "apps/api",
-        "args": ["-Dspring.profiles.active=test"]
       }
     },
     "serve": {
