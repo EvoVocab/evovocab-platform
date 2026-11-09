@@ -135,10 +135,10 @@
     ]
   },
   "allowScripts": {
-    "nx@22.7.12": true,
-    "nx@24.0.1": true,
-    "@swc/core@1.15.47": true,
-    "esbuild@0.28.2": true
+    "@openapitools/openapi-generator-cli@2.42.0": true,
+    "@swc/core": true,
+    "esbuild": true,
+    "nx": true
   },
   "dependencies": {
     "@base-ui/react": "^1.9.0",
