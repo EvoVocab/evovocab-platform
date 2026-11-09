@@ -109,7 +109,7 @@
     "libs/shared/*"
   ],
   "overrides": {
-    "axios": "^1.7.9",
+    "axios": "^1.21.0",
     "follow-redirects": ">=1.16.1",
     "smol-toml": ">=1.8.1",
     "undici": ">=7.31.0",
@@ -152,7 +152,6 @@
     "@tanstack/react-query": "^5.104.5",
     "@tanstack/react-router": "^1.170.46",
     "class-variance-authority": "^0.7.1",
-    "cn": "^0.5.0",
     "dayjs": "^1.11.23",
     "googleapis": "^189.0.0",
     "http-status-codes": "^2.3.0",
