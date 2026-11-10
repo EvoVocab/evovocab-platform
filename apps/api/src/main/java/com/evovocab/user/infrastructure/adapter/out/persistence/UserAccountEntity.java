@@ -49,7 +49,7 @@ public class UserAccountEntity {
     @Column(name = "deleted_at")
     private Instant deletedAt;
 
-    protected UserAccountEntity() {}
+    public UserAccountEntity() {}
 
     public UUID getId() {
         return id;
