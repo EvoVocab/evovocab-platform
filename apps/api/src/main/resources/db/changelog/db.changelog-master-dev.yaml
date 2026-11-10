@@ -4,4 +4,7 @@
 #   - include:
 #       file: sprint-01/20261025-01-create-table-users.sql
 #       relativeToChangelogFile: true
-databaseChangeLog: []
+databaseChangeLog:
+  - include:
+      file: sprint-01/20261110-01-create-user-accounts.sql
+      relativeToChangelogFile: true
