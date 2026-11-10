@@ -26,7 +26,9 @@ export default defineConfig(({ mode }) => {
       react(),
       nxViteTsPaths(),
       tailwindcss(),
-      tanstackRouter(),
+      tanstackRouter({
+        routeFileIgnorePattern: isProduction ? '.*playground.*' : undefined,
+      }),
       ValidateEnv({
         configFile: './src/config/env',
       }),
