@@ -1,6 +1,8 @@
 import { BrandIcon, BrandName } from '@/components/brand';
 import { Button } from '@/components/ui';
+import { isProduction } from '@evovocab/shared-utils';
 import { Link } from '@tanstack/react-router';
+import { cn } from 'cn';
 
 type MainLayoutProps = {
   children?: React.ReactNode;
@@ -18,7 +20,12 @@ const MainLayout = ({ children }: MainLayoutProps) => {
             </div>
           </Link>
 
-          <Button variant="link">
+          <Button
+            variant="link"
+            className={cn({
+              hidden: isProduction(import.meta.env),
+            })}
+          >
             <Link to="/playground">Playground</Link>
           </Button>
         </div>
