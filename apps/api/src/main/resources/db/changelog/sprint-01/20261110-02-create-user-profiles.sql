@@ -1,6 +1,6 @@
 -- liquibase formatted sql
 
--- changeset phanvanmanh:20261110-02-create-user-profiles
+-- changeset VanManhPhan:20261110-02-create-user-profiles
 -- preconditions onFail:MARK_RAN
 -- precondition-sql-check expectedResult:0 SELECT COUNT(*) FROM information_schema.tables WHERE LOWER(table_name) = 'user_profiles';
 CREATE TABLE IF NOT EXISTS user_profiles (

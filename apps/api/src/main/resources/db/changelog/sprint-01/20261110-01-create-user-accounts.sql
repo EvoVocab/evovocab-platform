@@ -1,6 +1,6 @@
 -- liquibase formatted sql
 
--- changeset phanvanmanh:20261110-01-create-user-accounts
+-- changeset VanManhPhan:20261110-01-create-user-accounts
 -- preconditions onFail:MARK_RAN
 -- precondition-sql-check expectedResult:0 SELECT COUNT(*) FROM information_schema.tables WHERE LOWER(table_name) = 'user_accounts';
 CREATE TABLE IF NOT EXISTS user_accounts (
