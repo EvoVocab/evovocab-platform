@@ -48,6 +48,50 @@ export default defineConfig(({ mode }) => {
       commonjsOptions: {
         transformMixedEsModules: true,
       },
+      rollupOptions: {
+        output: {
+          manualChunks(id) {
+            if (id.includes('node_modules/react/') || id.includes('node_modules/react-dom/')) {
+              return 'vendor-react';
+            }
+
+            if (id.includes('node_modules/@nivo/') || id.includes('node_modules/d3')) {
+              return 'vendor-charts';
+            }
+
+            if (id.includes('node_modules/@tanstack/') || id.includes('node_modules/zustand/')) {
+              return 'vendor-core-state';
+            }
+
+            if (
+              id.includes('node_modules/@base-ui/') ||
+              id.includes('node_modules/lucide-react/') ||
+              id.includes('node_modules/class-variance-authority/') ||
+              id.includes('node_modules/tailwind')
+            ) {
+              return 'vendor-ui';
+            }
+
+            if (id.includes('node_modules/@react-oauth/')) {
+              return 'vendor-auth';
+            }
+
+            if (
+              id.includes('node_modules/dayjs/') ||
+              id.includes('node_modules/zod/') ||
+              id.includes('node_modules/http-status-codes/')
+            ) {
+              return 'vendor-utils';
+            }
+
+            if (id.includes('node_modules/')) {
+              return 'vendor-others';
+            }
+
+            return;
+          },
+        },
+      },
     },
     test: {
       name: '@evovocab/web',
