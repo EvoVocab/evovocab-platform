@@ -64,3 +64,6 @@ storybook-static
 
 client-secret.json
 token.json
+
+# TanStack Router
+routeTree.gen.ts
