@@ -3,7 +3,7 @@ import { type AnyRoute, createRoute } from '@tanstack/react-router';
 import { screen } from '@testing-library/dom';
 
 import { renderWithRouter, rootRoute } from '../../test/router-utilities';
-import Home from './home';
+import Home from './home.lazy';
 import App from '../../app';
 import { render } from '@testing-library/react';
 

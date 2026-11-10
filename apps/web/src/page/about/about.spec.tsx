@@ -4,7 +4,7 @@ import { screen } from '@testing-library/dom';
 import { render } from '@testing-library/react';
 
 import { renderWithRouter, rootRoute } from '../../test/router-utilities';
-import About from './about';
+import About from './about.lazy';
 import App from '../../app';
 
 describe('About Page', () => {

@@ -23,12 +23,13 @@ export default defineConfig(({ mode }) => {
       host: 'localhost',
     },
     plugins: [
+      tanstackRouter({
+        autoCodeSplitting: true,
+        routeFileIgnorePattern: isProduction ? '.*playground.*' : undefined,
+      }),
       react(),
       nxViteTsPaths(),
       tailwindcss(),
-      tanstackRouter({
-        routeFileIgnorePattern: isProduction ? '.*playground.*' : undefined,
-      }),
       ValidateEnv({
         configFile: './src/config/env',
       }),
