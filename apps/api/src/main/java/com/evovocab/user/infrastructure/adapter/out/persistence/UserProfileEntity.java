@@ -11,13 +11,16 @@ import jakarta.persistence.Table;
 import java.time.Instant;
 import java.util.UUID;
 import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.JdbcTypeCode;
 import org.hibernate.annotations.UpdateTimestamp;
+import org.hibernate.type.SqlTypes;
 
 @Entity
 @Table(name = "user_profiles")
 public class UserProfileEntity {
 
     @Id
+    @JdbcTypeCode(SqlTypes.BINARY)
     @Column(name = "account_id", nullable = false, columnDefinition = "BINARY(16)")
     private UUID accountId;
 
@@ -37,7 +40,7 @@ public class UserProfileEntity {
     @Column(name = "updated_at", nullable = false)
     private Instant updatedAt;
 
-    protected UserProfileEntity() {}
+    public UserProfileEntity() {}
 
     public UUID getAccountId() {
         return accountId;
@@ -63,7 +66,15 @@ public class UserProfileEntity {
         return createdAt;
     }
 
+    public void setCreatedAt(Instant createdAt) {
+        this.createdAt = createdAt;
+    }
+
     public Instant getUpdatedAt() {
         return updatedAt;
+    }
+
+    public void setUpdatedAt(Instant updatedAt) {
+        this.updatedAt = updatedAt;
     }
 }

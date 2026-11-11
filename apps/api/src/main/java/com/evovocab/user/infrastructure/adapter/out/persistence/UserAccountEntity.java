@@ -2,22 +2,28 @@ package com.evovocab.user.infrastructure.adapter.out.persistence;
 
 import com.evovocab.user.domain.model.UserAccountProvider;
 import com.evovocab.user.domain.model.UserAccountStatus;
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
+import jakarta.persistence.FetchType;
 import jakarta.persistence.Id;
+import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
 import java.time.Instant;
 import java.util.UUID;
 import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.JdbcTypeCode;
 import org.hibernate.annotations.UpdateTimestamp;
+import org.hibernate.type.SqlTypes;
 
 @Entity
 @Table(name = "user_accounts")
 public class UserAccountEntity {
 
     @Id
+    @JdbcTypeCode(SqlTypes.BINARY)
     @Column(name = "id", nullable = false, columnDefinition = "BINARY(16)")
     private UUID id;
 
@@ -48,6 +54,9 @@ public class UserAccountEntity {
 
     @Column(name = "deleted_at")
     private Instant deletedAt;
+
+    @OneToOne(mappedBy = "account", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
+    private UserProfileEntity profile;
 
     public UserAccountEntity() {}
 
@@ -121,5 +130,16 @@ public class UserAccountEntity {
 
     public void setDeletedAt(Instant deletedAt) {
         this.deletedAt = deletedAt;
+    }
+
+    public UserProfileEntity getProfile() {
+        return profile;
+    }
+
+    public void setProfile(UserProfileEntity profile) {
+        this.profile = profile;
+        if (profile != null) {
+            profile.setAccount(this);
+        }
     }
 }
