@@ -1,5 +1,6 @@
 package com.evovocab.user.domain.model;
 
+import com.evovocab.user.domain.exception.ProfileAccountIdMismatchException;
 import java.time.Instant;
 import java.util.Objects;
 import java.util.UUID;
@@ -45,7 +46,7 @@ public class UserAccount {
 
     public void setProfile(UserProfile profile) {
         if (profile != null && !Objects.equals(id, profile.getAccountId())) {
-            throw new IllegalArgumentException("Profile accountId must match account id");
+            throw new ProfileAccountIdMismatchException();
         }
         this.profile = profile;
     }
