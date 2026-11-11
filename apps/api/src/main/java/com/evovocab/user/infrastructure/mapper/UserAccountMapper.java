@@ -6,7 +6,6 @@ import com.evovocab.user.infrastructure.adapter.out.persistence.UserAccountEntit
 import com.evovocab.user.infrastructure.adapter.out.persistence.UserProfileEntity;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
-import org.mapstruct.MappingTarget;
 
 @Mapper(componentModel = "spring")
 public interface UserAccountMapper {
@@ -18,12 +17,4 @@ public interface UserAccountMapper {
     UserProfileEntity toJpaEntity(UserProfile profile);
 
     UserProfile toDomainEntity(UserProfileEntity entity);
-
-    @Mapping(target = "id", ignore = true)
-    @Mapping(target = "profile", ignore = true)
-    void updateJpaEntity(UserAccount account, @MappingTarget UserAccountEntity entity);
-
-    @Mapping(target = "account", ignore = true)
-    @Mapping(target = "accountId", ignore = true)
-    void updateJpaEntity(UserProfile profile, @MappingTarget UserProfileEntity entity);
 }
