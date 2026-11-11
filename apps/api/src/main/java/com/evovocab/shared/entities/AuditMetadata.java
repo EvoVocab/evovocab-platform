@@ -10,13 +10,11 @@ import org.hibernate.annotations.UpdateTimestamp;
 @Embeddable
 @Getter
 @Setter
-public class Timestamp {
+public class AuditMetadata {
 
     @CreationTimestamp
     private Instant createdAt;
 
     @UpdateTimestamp
     private Instant updatedAt;
-
-    private Instant deletedAt;
 }
