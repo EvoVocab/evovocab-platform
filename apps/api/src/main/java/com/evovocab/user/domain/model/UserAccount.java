@@ -1,6 +1,7 @@
 package com.evovocab.user.domain.model;
 
 import java.time.Instant;
+import java.util.Objects;
 import java.util.UUID;
 
 public class UserAccount {
@@ -14,6 +15,7 @@ public class UserAccount {
     private final Instant createdAt;
     private Instant updatedAt;
     private Instant deletedAt;
+    private UserProfile profile;
 
     public UserAccount(
         UUID id,
@@ -35,6 +37,17 @@ public class UserAccount {
         this.createdAt = createdAt;
         this.updatedAt = updatedAt;
         this.deletedAt = deletedAt;
+    }
+
+    public UserProfile getProfile() {
+        return profile;
+    }
+
+    public void setProfile(UserProfile profile) {
+        if (profile != null && !Objects.equals(id, profile.getAccountId())) {
+            throw new IllegalArgumentException("Profile accountId must match account id");
+        }
+        this.profile = profile;
     }
 
     public UUID getId() {
