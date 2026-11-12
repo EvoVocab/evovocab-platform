@@ -4,9 +4,7 @@ import java.util.regex.Pattern;
 
 public class Password {
 
-    private static final Pattern BCRYPT_PATTERN = Pattern.compile(
-        "\\$2[aby]\\$(?:0[4-9]|[12][0-9]|3[01])\\$[./A-Za-z0-9]{22}[./A-Za-z0-9]{31}"
-    );
+    private static final Pattern BCRYPT_PATTERN = Pattern.compile("\\$2b\\$10\\$[./A-Za-z0-9]{22}[./A-Za-z0-9]{31}");
 
     private final String value;
 
@@ -15,7 +13,7 @@ public class Password {
     }
 
     public boolean isHashed() {
-        return value != null && BCRYPT_PATTERN.matcher(value).matches();
+        return this.value != null && BCRYPT_PATTERN.matcher(this.value).matches();
     }
 
     public static Password hashForPersistence(String value) {
@@ -26,9 +24,6 @@ public class Password {
     }
 
     public String getHashedValue() {
-        if (!isHashed()) {
-            throw new IllegalStateException("Cannot persist a raw password");
-        }
         return value;
     }
 }
