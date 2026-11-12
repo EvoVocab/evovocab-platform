@@ -31,7 +31,7 @@ public interface UserAccountMapper {
     }
 
     default UUID toJpaId(UserAccountId id) {
-        return id == null ? null : id.toUuid();
+        return id == null ? null : id.getValue();
     }
 
     default UserAccountId toDomainId(UUID id) {
@@ -39,12 +39,13 @@ public interface UserAccountMapper {
     }
 
     @Mapping(target = "account", ignore = true)
-    @Mapping(target = "accountId", ignore = true)
+    @Mapping(target = "id", ignore = true)
     @Mapping(target = "auditMetadata.createdAt", source = "createdAt")
     @Mapping(target = "auditMetadata.updatedAt", source = "updatedAt")
     UserProfileEntity toJpaEntity(UserProfile profile);
 
     @Mapping(target = "createdAt", source = "auditMetadata.createdAt")
     @Mapping(target = "updatedAt", source = "auditMetadata.updatedAt")
+    @Mapping(target = "accountId", source = "id")
     UserProfile toDomainEntity(UserProfileEntity entity);
 }

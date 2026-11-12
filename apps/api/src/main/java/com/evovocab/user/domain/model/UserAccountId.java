@@ -19,7 +19,7 @@ public final class UserAccountId {
         return new UserAccountId(UUID.fromString(value));
     }
 
-    public UUID toUuid() {
+    public UUID getValue() {
         return value;
     }
 
@@ -31,5 +31,10 @@ public final class UserAccountId {
     @Override
     public boolean equals(Object other) {
         return this == other || (other instanceof UserAccountId id && value.equals(id.value));
+    }
+
+    @Override
+    public int hashCode() {
+        return value.hashCode();
     }
 }

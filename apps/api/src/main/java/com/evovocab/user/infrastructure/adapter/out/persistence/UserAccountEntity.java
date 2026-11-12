@@ -1,5 +1,6 @@
 package com.evovocab.user.infrastructure.adapter.out.persistence;
 
+import com.evovocab.shared.entities.IdUUID;
 import com.evovocab.shared.entities.LifecycleMetadata;
 import com.evovocab.user.domain.model.UserAccountProvider;
 import com.evovocab.user.domain.model.UserAccountStatus;
@@ -11,21 +12,12 @@ import jakarta.persistence.Embedded;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
-import jakarta.persistence.Id;
 import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
-import java.util.UUID;
-import org.hibernate.annotations.JdbcTypeCode;
-import org.hibernate.type.SqlTypes;
 
 @Entity
 @Table(name = "user_accounts")
-public class UserAccountEntity {
-
-    @Id
-    @JdbcTypeCode(SqlTypes.VARCHAR)
-    @Column(name = "id", nullable = false, updatable = false, length = 36, columnDefinition = "VARCHAR(36)")
-    private UUID id;
+public class UserAccountEntity extends IdUUID {
 
     @Column(name = "email", nullable = false, length = 255, unique = true)
     private String email;
@@ -55,18 +47,10 @@ public class UserAccountEntity {
     })
     private LifecycleMetadata lifecycleMetadata;
 
-    @OneToOne(mappedBy = "account", cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToOne(mappedBy = "account", cascade = { CascadeType.MERGE }, orphanRemoval = true)
     private UserProfileEntity profile;
 
     public UserAccountEntity() {}
-
-    public UUID getId() {
-        return id;
-    }
-
-    public void setId(UUID id) {
-        this.id = id;
-    }
 
     public String getEmail() {
         return email;

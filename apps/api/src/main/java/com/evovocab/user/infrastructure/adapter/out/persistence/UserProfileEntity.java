@@ -1,29 +1,21 @@
 package com.evovocab.user.infrastructure.adapter.out.persistence;
 
 import com.evovocab.shared.entities.AuditMetadata;
+import com.evovocab.shared.entities.IdUUID;
 import jakarta.persistence.AttributeOverride;
 import jakarta.persistence.AttributeOverrides;
 import jakarta.persistence.Column;
 import jakarta.persistence.Embedded;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
-import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.MapsId;
 import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
-import java.util.UUID;
-import org.hibernate.annotations.JdbcTypeCode;
-import org.hibernate.type.SqlTypes;
 
 @Entity
 @Table(name = "user_profiles")
-public class UserProfileEntity {
-
-    @Id
-    @JdbcTypeCode(SqlTypes.VARCHAR)
-    @Column(name = "account_id", nullable = false, length = 36, columnDefinition = "VARCHAR(36)")
-    private UUID accountId;
+public class UserProfileEntity extends IdUUID {
 
     @MapsId
     @OneToOne(fetch = FetchType.LAZY, optional = false)
@@ -44,10 +36,6 @@ public class UserProfileEntity {
     private AuditMetadata auditMetadata;
 
     public UserProfileEntity() {}
-
-    public UUID getAccountId() {
-        return accountId;
-    }
 
     public UserAccountEntity getAccount() {
         return account;

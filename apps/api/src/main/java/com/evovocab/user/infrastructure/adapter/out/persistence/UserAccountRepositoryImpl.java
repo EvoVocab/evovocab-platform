@@ -26,7 +26,7 @@ public class UserAccountRepositoryImpl implements UserAccountRepository {
 
     @Override
     public Optional<UserAccount> findById(UserAccountId id) {
-        return jpaRepository.findById(id.toUuid()).map(mapper::toDomainEntity);
+        return jpaRepository.findById(id.getValue()).map(mapper::toDomainEntity);
     }
 
     @Override
