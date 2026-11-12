@@ -1,6 +1,10 @@
 package com.evovocab.user.infrastructure.adapter.out.persistence;
 
+import com.evovocab.shared.entities.AuditMetadata;
+import jakarta.persistence.AttributeOverride;
+import jakarta.persistence.AttributeOverrides;
 import jakarta.persistence.Column;
+import jakarta.persistence.Embedded;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
 import jakarta.persistence.Id;
@@ -8,11 +12,8 @@ import jakarta.persistence.JoinColumn;
 import jakarta.persistence.MapsId;
 import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
-import java.time.Instant;
 import java.util.UUID;
-import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.JdbcTypeCode;
-import org.hibernate.annotations.UpdateTimestamp;
 import org.hibernate.type.SqlTypes;
 
 @Entity
@@ -20,8 +21,8 @@ import org.hibernate.type.SqlTypes;
 public class UserProfileEntity {
 
     @Id
-    @JdbcTypeCode(SqlTypes.BINARY)
-    @Column(name = "account_id", nullable = false, columnDefinition = "BINARY(16)")
+    @JdbcTypeCode(SqlTypes.VARCHAR)
+    @Column(name = "account_id", nullable = false, length = 36, columnDefinition = "VARCHAR(36)")
     private UUID accountId;
 
     @MapsId
@@ -32,13 +33,15 @@ public class UserProfileEntity {
     @Column(name = "full_name", nullable = false, length = 255)
     private String fullName;
 
-    @CreationTimestamp
-    @Column(name = "created_at", nullable = false, updatable = false)
-    private Instant createdAt;
-
-    @UpdateTimestamp
-    @Column(name = "updated_at", nullable = false)
-    private Instant updatedAt;
+    @Embedded
+    @AttributeOverrides({
+        @AttributeOverride(
+            name = "createdAt",
+            column = @Column(name = "created_at", nullable = false, updatable = false)
+        ),
+        @AttributeOverride(name = "updatedAt", column = @Column(name = "updated_at", nullable = false))
+    })
+    private AuditMetadata auditMetadata;
 
     public UserProfileEntity() {}
 
@@ -62,19 +65,11 @@ public class UserProfileEntity {
         this.fullName = fullName;
     }
 
-    public Instant getCreatedAt() {
-        return createdAt;
+    public AuditMetadata getAuditMetadata() {
+        return auditMetadata;
     }
 
-    public void setCreatedAt(Instant createdAt) {
-        this.createdAt = createdAt;
-    }
-
-    public Instant getUpdatedAt() {
-        return updatedAt;
-    }
-
-    public void setUpdatedAt(Instant updatedAt) {
-        this.updatedAt = updatedAt;
+    public void setAuditMetadata(AuditMetadata auditMetadata) {
+        this.auditMetadata = auditMetadata;
     }
 }

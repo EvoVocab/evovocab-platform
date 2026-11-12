@@ -1,21 +1,21 @@
 package com.evovocab.user.infrastructure.adapter.out.persistence;
 
+import com.evovocab.shared.entities.LifecycleMetadata;
 import com.evovocab.user.domain.model.UserAccountProvider;
 import com.evovocab.user.domain.model.UserAccountStatus;
+import jakarta.persistence.AttributeOverride;
+import jakarta.persistence.AttributeOverrides;
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
+import jakarta.persistence.Embedded;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
-import jakarta.persistence.FetchType;
 import jakarta.persistence.Id;
 import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
-import java.time.Instant;
 import java.util.UUID;
-import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.JdbcTypeCode;
-import org.hibernate.annotations.UpdateTimestamp;
 import org.hibernate.type.SqlTypes;
 
 @Entity
@@ -23,8 +23,8 @@ import org.hibernate.type.SqlTypes;
 public class UserAccountEntity {
 
     @Id
-    @JdbcTypeCode(SqlTypes.BINARY)
-    @Column(name = "id", nullable = false, columnDefinition = "BINARY(16)")
+    @JdbcTypeCode(SqlTypes.VARCHAR)
+    @Column(name = "id", nullable = false, updatable = false, length = 36, columnDefinition = "VARCHAR(36)")
     private UUID id;
 
     @Column(name = "email", nullable = false, length = 255, unique = true)
@@ -44,18 +44,18 @@ public class UserAccountEntity {
     @Column(name = "provider_id", length = 255)
     private String providerId;
 
-    @CreationTimestamp
-    @Column(name = "created_at", nullable = false, updatable = false)
-    private Instant createdAt;
+    @Embedded
+    @AttributeOverrides({
+        @AttributeOverride(
+            name = "createdAt",
+            column = @Column(name = "created_at", nullable = false, updatable = false)
+        ),
+        @AttributeOverride(name = "updatedAt", column = @Column(name = "updated_at", nullable = false)),
+        @AttributeOverride(name = "deletedAt", column = @Column(name = "deleted_at"))
+    })
+    private LifecycleMetadata lifecycleMetadata;
 
-    @UpdateTimestamp
-    @Column(name = "updated_at", nullable = false)
-    private Instant updatedAt;
-
-    @Column(name = "deleted_at")
-    private Instant deletedAt;
-
-    @OneToOne(mappedBy = "account", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
+    @OneToOne(mappedBy = "account", cascade = CascadeType.ALL, orphanRemoval = true)
     private UserProfileEntity profile;
 
     public UserAccountEntity() {}
@@ -108,28 +108,12 @@ public class UserAccountEntity {
         this.providerId = providerId;
     }
 
-    public Instant getCreatedAt() {
-        return createdAt;
+    public LifecycleMetadata getLifecycleMetadata() {
+        return lifecycleMetadata;
     }
 
-    public void setCreatedAt(Instant createdAt) {
-        this.createdAt = createdAt;
-    }
-
-    public Instant getUpdatedAt() {
-        return updatedAt;
-    }
-
-    public void setUpdatedAt(Instant updatedAt) {
-        this.updatedAt = updatedAt;
-    }
-
-    public Instant getDeletedAt() {
-        return deletedAt;
-    }
-
-    public void setDeletedAt(Instant deletedAt) {
-        this.deletedAt = deletedAt;
+    public void setLifecycleMetadata(LifecycleMetadata lifecycleMetadata) {
+        this.lifecycleMetadata = lifecycleMetadata;
     }
 
     public UserProfileEntity getProfile() {
