@@ -6,11 +6,8 @@
 #       relativeToChangelogFile: true
 databaseChangeLog:
   - include:
-      file: sprint-01/20261110-01-create-user-accounts.sql
+      file: sprint-01/20261112-01-create-user-accounts.sql
       relativeToChangelogFile: true
   - include:
-      file: sprint-01/20261110-02-create-user-profiles.sql
-      relativeToChangelogFile: true
-  - include:
-      file: sprint-01/20261112-01-recreate-user-tables-with-varchar-ids.sql
+      file: sprint-01/20261112-02-create-user-profiles.sql
       relativeToChangelogFile: true
