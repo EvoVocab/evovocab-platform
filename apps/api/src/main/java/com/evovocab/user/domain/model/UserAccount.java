@@ -1,15 +1,12 @@
 package com.evovocab.user.domain.model;
 
-import com.evovocab.user.domain.exception.ProfileAccountIdMismatchException;
 import java.time.Instant;
-import java.util.Objects;
-import java.util.UUID;
 
 public class UserAccount {
 
-    private final UUID id;
+    private final UserAccountId id;
     private String email;
-    private String password;
+    private Password password;
     private UserAccountStatus status;
     private UserAccountProvider provider;
     private String providerId;
@@ -19,15 +16,16 @@ public class UserAccount {
     private UserProfile profile;
 
     public UserAccount(
-        UUID id,
+        UserAccountId id,
         String email,
-        String password,
+        Password password,
         UserAccountStatus status,
         UserAccountProvider provider,
         String providerId,
         Instant createdAt,
         Instant updatedAt,
-        Instant deletedAt
+        Instant deletedAt,
+        UserProfile profile
     ) {
         this.id = id;
         this.email = email;
@@ -38,20 +36,14 @@ public class UserAccount {
         this.createdAt = createdAt;
         this.updatedAt = updatedAt;
         this.deletedAt = deletedAt;
+        this.profile = profile;
     }
 
     public UserProfile getProfile() {
         return profile;
     }
 
-    public void setProfile(UserProfile profile) {
-        if (profile != null && !Objects.equals(id, profile.getAccountId())) {
-            throw new ProfileAccountIdMismatchException();
-        }
-        this.profile = profile;
-    }
-
-    public UUID getId() {
+    public UserAccountId getId() {
         return id;
     }
 
@@ -59,7 +51,7 @@ public class UserAccount {
         return email;
     }
 
-    public String getPassword() {
+    public Password getPassword() {
         return password;
     }
 
@@ -87,24 +79,8 @@ public class UserAccount {
         return deletedAt;
     }
 
-    public void setEmail(String email) {
-        this.email = email;
-    }
-
-    public void setPassword(String password) {
-        this.password = password;
-    }
-
     public void setStatus(UserAccountStatus status) {
         this.status = status;
-    }
-
-    public void setProvider(UserAccountProvider provider) {
-        this.provider = provider;
-    }
-
-    public void setProviderId(String providerId) {
-        this.providerId = providerId;
     }
 
     public void setUpdatedAt(Instant updatedAt) {
