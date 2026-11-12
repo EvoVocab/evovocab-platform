@@ -3,6 +3,7 @@ package com.evovocab.user.infrastructure.adapter.out.persistence;
 import static org.junit.jupiter.api.Assertions.assertAll;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import com.evovocab.user.domain.model.Password;
 import com.evovocab.user.domain.model.UserAccount;
@@ -17,6 +18,7 @@ import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.boot.test.autoconfigure.orm.jpa.TestEntityManager;
 import org.springframework.context.annotation.Import;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder.BCryptVersion;
 import org.springframework.test.context.ActiveProfiles;
 
 @DataJpaTest
@@ -24,7 +26,9 @@ import org.springframework.test.context.ActiveProfiles;
 @Import({ UserAccountRepositoryImpl.class, UserAccountMapperImpl.class })
 class UserAccountRepositoryImplTest {
 
-    private static final String HASHED_PASSWORD = new BCryptPasswordEncoder(4).encode("TestPassword1!");
+    private static final String HASHED_PASSWORD = new BCryptPasswordEncoder(BCryptVersion.$2B, 10).encode(
+        "TestPassword1!"
+    );
 
     @Autowired
     private UserAccountRepositoryImpl repository;
@@ -33,7 +37,7 @@ class UserAccountRepositoryImplTest {
     private TestEntityManager entityManager;
 
     @Test
-    void saveThenFindByIdLoadsAccountAndProfileAsDomainModels() {
+    void loadsAccountAndProfileByIdWhenSaved() {
         UserAccountId accountId = UserAccountId.generate();
         repository.save(newAccount(accountId));
         entityManager.flush();
@@ -45,7 +49,7 @@ class UserAccountRepositoryImplTest {
     }
 
     @Test
-    void saveThenFindByEmailLoadsAccountAndProfileAsDomainModels() {
+    void loadsAccountAndProfileByEmailWhenSaved() {
         UserAccountId accountId = UserAccountId.generate();
         repository.save(newAccount(accountId));
         entityManager.flush();
@@ -54,6 +58,16 @@ class UserAccountRepositoryImplTest {
         UserAccount loaded = repository.findByEmail("account@example.com").orElseThrow();
 
         assertLoadedAccount(loaded, accountId);
+    }
+
+    @Test
+    void returnsEmptyByIdWhenAccountMissing() {
+        assertTrue(repository.findById(UserAccountId.generate()).isEmpty());
+    }
+
+    @Test
+    void returnsEmptyByEmailWhenAccountMissing() {
+        assertTrue(repository.findByEmail("missing@example.com").isEmpty());
     }
 
     private UserAccount newAccount(UserAccountId accountId) {
