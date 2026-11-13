@@ -6,7 +6,7 @@
 CREATE TABLE IF NOT EXISTS user_accounts (
     id BINARY(16) NOT NULL,
     email VARCHAR(255) NOT NULL,
-    password VARCHAR(255) NULL,
+    password VARCHAR(60) NULL,
     status VARCHAR(20) NOT NULL,
     provider VARCHAR(50) NOT NULL,
     provider_id VARCHAR(255) NULL,
