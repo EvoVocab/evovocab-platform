@@ -55,4 +55,11 @@ public class UserAccountEntity extends IdUUID {
 
     @OneToOne(mappedBy = "account", cascade = { CascadeType.MERGE }, orphanRemoval = true)
     private UserProfileEntity profile;
+
+    public void setProfile(UserProfileEntity profile) {
+        this.profile = profile;
+        if (profile != null) {
+            profile.setAccount(this);
+        }
+    }
 }

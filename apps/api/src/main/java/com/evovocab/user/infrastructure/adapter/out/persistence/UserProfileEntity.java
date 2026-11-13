@@ -24,8 +24,7 @@ import lombok.Setter;
 public class UserProfileEntity extends IdUUID {
 
     @MapsId
-    @OneToOne(fetch = FetchType.LAZY, optional = false)
-    @JoinColumn(name = "account_id", nullable = false)
+    @OneToOne
     private UserAccountEntity account;
 
     @Column(name = "full_name", nullable = false, length = 255)
