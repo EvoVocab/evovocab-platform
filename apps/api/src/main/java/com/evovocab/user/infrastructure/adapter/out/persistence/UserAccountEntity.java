@@ -14,15 +14,21 @@ import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
 import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 @Entity
 @Table(name = "user_accounts")
+@Getter
+@Setter
+@NoArgsConstructor
 public class UserAccountEntity extends IdUUID {
 
     @Column(name = "email", nullable = false, length = 255, unique = true)
     private String email;
 
-    @Column(name = "password", length = 255)
+    @Column(name = "password", length = 60)
     private String password;
 
     @Enumerated(EnumType.STRING)
@@ -49,65 +55,4 @@ public class UserAccountEntity extends IdUUID {
 
     @OneToOne(mappedBy = "account", cascade = { CascadeType.MERGE }, orphanRemoval = true)
     private UserProfileEntity profile;
-
-    public UserAccountEntity() {}
-
-    public String getEmail() {
-        return email;
-    }
-
-    public void setEmail(String email) {
-        this.email = email;
-    }
-
-    public String getPassword() {
-        return password;
-    }
-
-    public void setPassword(String password) {
-        this.password = password;
-    }
-
-    public UserAccountStatus getStatus() {
-        return status;
-    }
-
-    public void setStatus(UserAccountStatus status) {
-        this.status = status;
-    }
-
-    public UserAccountProvider getProvider() {
-        return provider;
-    }
-
-    public void setProvider(UserAccountProvider provider) {
-        this.provider = provider;
-    }
-
-    public String getProviderId() {
-        return providerId;
-    }
-
-    public void setProviderId(String providerId) {
-        this.providerId = providerId;
-    }
-
-    public LifecycleMetadata getLifecycleMetadata() {
-        return lifecycleMetadata;
-    }
-
-    public void setLifecycleMetadata(LifecycleMetadata lifecycleMetadata) {
-        this.lifecycleMetadata = lifecycleMetadata;
-    }
-
-    public UserProfileEntity getProfile() {
-        return profile;
-    }
-
-    public void setProfile(UserProfileEntity profile) {
-        this.profile = profile;
-        if (profile != null) {
-            profile.setAccount(this);
-        }
-    }
 }

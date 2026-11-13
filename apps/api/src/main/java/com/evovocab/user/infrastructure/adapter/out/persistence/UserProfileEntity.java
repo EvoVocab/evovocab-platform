@@ -12,9 +12,15 @@ import jakarta.persistence.JoinColumn;
 import jakarta.persistence.MapsId;
 import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 @Entity
 @Table(name = "user_profiles")
+@Getter
+@Setter
+@NoArgsConstructor
 public class UserProfileEntity extends IdUUID {
 
     @MapsId
@@ -34,30 +40,4 @@ public class UserProfileEntity extends IdUUID {
         @AttributeOverride(name = "updatedAt", column = @Column(name = "updated_at", nullable = false))
     })
     private AuditMetadata auditMetadata;
-
-    public UserProfileEntity() {}
-
-    public UserAccountEntity getAccount() {
-        return account;
-    }
-
-    public void setAccount(UserAccountEntity account) {
-        this.account = account;
-    }
-
-    public String getFullName() {
-        return fullName;
-    }
-
-    public void setFullName(String fullName) {
-        this.fullName = fullName;
-    }
-
-    public AuditMetadata getAuditMetadata() {
-        return auditMetadata;
-    }
-
-    public void setAuditMetadata(AuditMetadata auditMetadata) {
-        this.auditMetadata = auditMetadata;
-    }
 }
