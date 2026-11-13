@@ -78,16 +78,4 @@ public class UserAccount {
     public Instant getDeletedAt() {
         return deletedAt;
     }
-
-    public void setStatus(UserAccountStatus status) {
-        this.status = status;
-    }
-
-    public void setUpdatedAt(Instant updatedAt) {
-        this.updatedAt = updatedAt;
-    }
-
-    public void setDeletedAt(Instant deletedAt) {
-        this.deletedAt = deletedAt;
-    }
 }

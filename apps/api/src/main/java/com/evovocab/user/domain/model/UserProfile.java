@@ -31,12 +31,4 @@ public class UserProfile {
     public Instant getUpdatedAt() {
         return updatedAt;
     }
-
-    public void setFullName(String fullName) {
-        this.fullName = fullName;
-    }
-
-    public void setUpdatedAt(Instant updatedAt) {
-        this.updatedAt = updatedAt;
-    }
 }
