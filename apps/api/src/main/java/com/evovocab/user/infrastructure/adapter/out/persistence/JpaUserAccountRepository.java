@@ -9,4 +9,6 @@ public interface JpaUserAccountRepository extends JpaRepository<UserAccountEntit
     Optional<UserAccountEntity> findById(UUID id);
 
     Optional<UserAccountEntity> findByEmail(String email);
+
+    boolean existsByEmail(String email);
 }
