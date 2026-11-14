@@ -15,9 +15,13 @@ public class Password {
     }
 
     public static Password hashForPersistence(String value) {
-        if (BcryptUtils.checkIfPasswordIsHashed(value)) {
-            throw new IllegalArgumentException("Password must have a valid format of bcrypt");
+        if (value == null || value.isEmpty()) {
+            throw new IllegalArgumentException("Password cannot be null or empty");
         }
+        if (BcryptUtils.checkIfPasswordIsHashed(value)) {
+            throw new IllegalArgumentException("Password must not be already hashed");
+        }
+
         return new Password(value);
     }
 
