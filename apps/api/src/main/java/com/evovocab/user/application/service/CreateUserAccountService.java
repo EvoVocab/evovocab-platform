@@ -1,9 +1,9 @@
 package com.evovocab.user.application.service;
 
-import com.evovocab.auth.domain.exception.EmailAlreadyExistsException;
 import com.evovocab.user.application.port.in.CreateUserAccountUseCase;
 import com.evovocab.user.application.port.in.CreateUserByEmailCommand;
 import com.evovocab.user.application.port.out.UserResult;
+import com.evovocab.user.domain.exception.EmailAlreadyExistsException;
 import com.evovocab.user.domain.model.Password;
 import com.evovocab.user.domain.model.UserAccount;
 import com.evovocab.user.domain.model.UserAccountId;
@@ -54,6 +54,7 @@ public class CreateUserAccountService implements CreateUserAccountUseCase {
 
         return new UserResult(
             savedUserAccount.getId().getValue(),
+            savedUserAccount.getProfile().getFullName(),
             savedUserAccount.getEmail(),
             savedUserAccount.getStatus().name(),
             savedUserAccount.getProvider().name()
