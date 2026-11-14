@@ -28,14 +28,18 @@ import com.evovocab.user.domain.repository.UserAccountRepository;
 import java.time.Instant;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.NullAndEmptySource;
+import org.junit.jupiter.params.provider.ValueSource;
 import org.mockito.ArgumentCaptor;
 import org.mockito.InOrder;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder.BCryptVersion;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
 class CreateUserAccountServiceTest {
 
-    // The current factory accepts non-empty values outside the $2b$10$ pattern.
-    private static final String MOCK_HASHED_PASSWORD = "$2a$10$" + "a".repeat(53);
+    private static final String VALID_HASH = new BCryptPasswordEncoder(BCryptVersion.$2B, 10).encode("TestPassword1!");
 
     private UserAccountRepository accountRepository;
     private PasswordEncoder passwordEncoder;
@@ -51,24 +55,28 @@ class CreateUserAccountServiceTest {
     @Test
     void encodesPasswordAndReturnsCreatedUserAccount() {
         CreateUserByEmailCommand command = validCommand();
+
         when(accountRepository.existsByEmail(command.email())).thenReturn(false);
-        when(passwordEncoder.encode(command.password())).thenReturn(MOCK_HASHED_PASSWORD);
+        when(passwordEncoder.encode(command.password())).thenReturn(VALID_HASH);
+        // Tra ve chinh xac thang UserAccount duoc goi voi save
         when(accountRepository.save(any(UserAccount.class))).thenAnswer((invocation) -> invocation.getArgument(0));
+
         Instant before = Instant.now();
-
         UserResult result = service.executeForEmail(command);
-
         Instant after = Instant.now();
         ArgumentCaptor<UserAccount> accountCaptor = ArgumentCaptor.forClass(UserAccount.class);
         InOrder order = inOrder(accountRepository, passwordEncoder);
+        // Dung order de chi dinh chay accountRepository truoc
         order.verify(accountRepository).existsByEmail(command.email());
         order.verify(passwordEncoder).encode(command.password());
         order.verify(accountRepository).save(accountCaptor.capture());
-        UserAccount account = accountCaptor.getValue();
+
+        UserAccount account = accountCaptor.getValue(); // Bat lai thang account da duoc luu
+
         assertAll(
             () -> assertNotNull(account.getId()),
             () -> assertEquals(command.email(), account.getEmail()),
-            () -> assertEquals(MOCK_HASHED_PASSWORD, account.getPassword().getHashedValue()),
+            () -> assertEquals(VALID_HASH, account.getPassword().getHashedValue()),
             () -> assertEquals(UserAccountStatus.INACTIVE, account.getStatus()),
             () -> assertEquals(UserAccountProvider.EMAIL, account.getProvider()),
             () -> assertNull(account.getProviderId()),
@@ -90,32 +98,7 @@ class CreateUserAccountServiceTest {
     }
 
     @Test
-    void rejectsExistingEmailBeforeEncodingOrSaving() {
-        CreateUserByEmailCommand command = validCommand();
-        when(accountRepository.existsByEmail(command.email())).thenReturn(true);
-
-        assertThrows(EmailAlreadyExistsException.class, () -> service.executeForEmail(command));
-
-        verify(accountRepository).existsByEmail(command.email());
-        verifyNoMoreInteractions(accountRepository);
-        verifyNoInteractions(passwordEncoder);
-    }
-
-    @Test
-    void doesNotSaveAccountWhenPasswordEncoderFails() {
-        CreateUserByEmailCommand command = validCommand();
-        IllegalArgumentException failure = new IllegalArgumentException("Password cannot be encoded");
-        when(passwordEncoder.encode(command.password())).thenThrow(failure);
-
-        assertSame(failure, assertThrows(IllegalArgumentException.class, () -> service.executeForEmail(command)));
-
-        verify(accountRepository).existsByEmail(command.email());
-        verify(passwordEncoder).encode(command.password());
-        verify(accountRepository, never()).save(any());
-    }
-
-    @Test
-    void returnsResultFromAccountReturnedByRepository() {
+    void returnsResultMappedFromSavedAccountReturnedByRepository() {
         CreateUserByEmailCommand command = validCommand();
         UserAccountId savedId = UserAccountId.generate();
         UserAccount savedAccount = new UserAccount(
@@ -130,7 +113,9 @@ class CreateUserAccountServiceTest {
             null,
             new UserProfile(savedId, "Saved User", null, null)
         );
-        when(passwordEncoder.encode(command.password())).thenReturn(MOCK_HASHED_PASSWORD);
+
+        when(accountRepository.existsByEmail(command.email())).thenReturn(false);
+        when(passwordEncoder.encode(command.password())).thenReturn(VALID_HASH);
         when(accountRepository.save(any(UserAccount.class))).thenReturn(savedAccount);
 
         UserResult result = service.executeForEmail(command);
@@ -148,23 +133,48 @@ class CreateUserAccountServiceTest {
     }
 
     @Test
-    void rejectsUserAccountWhenEncoderReturnsBcrypt2bCost10Hash() {
+    void rejectsExistingEmailBeforeEncodingOrSaving() {
         CreateUserByEmailCommand command = validCommand();
-        when(passwordEncoder.encode(command.password())).thenReturn("$2b$10$" + "a".repeat(53));
+        when(accountRepository.existsByEmail(command.email())).thenReturn(true);
 
-        assertThrows(IllegalArgumentException.class, () -> service.executeForEmail(command));
+        assertThrows(EmailAlreadyExistsException.class, () -> service.executeForEmail(command));
 
+        verify(accountRepository).existsByEmail(command.email());
+        verifyNoMoreInteractions(accountRepository);
+        verifyNoInteractions(passwordEncoder);
+    }
+
+    @Test
+    void doesNotSaveAccountWhenPasswordEncoderThrowsException() {
+        CreateUserByEmailCommand command = validCommand();
+        IllegalArgumentException failure = new IllegalArgumentException("Password cannot be encoded");
+
+        when(accountRepository.existsByEmail(command.email())).thenReturn(false);
+        when(passwordEncoder.encode(command.password())).thenThrow(failure);
+
+        IllegalArgumentException thrown = assertThrows(IllegalArgumentException.class, () ->
+            service.executeForEmail(command)
+        );
+
+        assertSame(failure, thrown);
+        verify(accountRepository).existsByEmail(command.email());
         verify(passwordEncoder).encode(command.password());
         verify(accountRepository, never()).save(any());
     }
 
-    @Test
-    void rejectsUserAccountWhenEncoderReturnsEmptyValue() {
+    @ParameterizedTest
+    @NullAndEmptySource
+    @ValueSource(
+        strings = { "   ", "plain-text-password", "$2a$10$abcdefghijklmnopqrstuuABCDEFGHIJKLMNOPQRSTUVWXYZabcdea" }
+    )
+    void doesNotSaveAccountWhenEncoderReturnsInvalidHash(String invalidEncodedPassword) {
         CreateUserByEmailCommand command = validCommand();
-        when(passwordEncoder.encode(command.password())).thenReturn("");
+        when(accountRepository.existsByEmail(command.email())).thenReturn(false);
+        when(passwordEncoder.encode(command.password())).thenReturn(invalidEncodedPassword);
 
         assertThrows(IllegalArgumentException.class, () -> service.executeForEmail(command));
 
+        verify(accountRepository).existsByEmail(command.email());
         verify(passwordEncoder).encode(command.password());
         verify(accountRepository, never()).save(any());
     }

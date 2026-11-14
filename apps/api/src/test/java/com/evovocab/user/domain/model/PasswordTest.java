@@ -3,64 +3,58 @@ package com.evovocab.user.domain.model;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
+import java.util.stream.Stream;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.Arguments;
+import org.junit.jupiter.params.provider.MethodSource;
+import org.junit.jupiter.params.provider.NullAndEmptySource;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder.BCryptVersion;
 
 class PasswordTest {
 
     private static final String VALID_HASH = new BCryptPasswordEncoder(BCryptVersion.$2B, 10).encode("TestPassword1!");
+    private static final String EMPTY_ERROR_MSG = "Password cannot be null or empty";
+    private static final String INVALID_HASH_ERROR_MSG = "Password must be already hashed with suitable Bcrypt";
 
     @Test
-    void rejectsPasswordHashWhenBcrypt2bCost10() {
+    void acceptsPasswordHashWhenValidBcrypt2bCost10() {
+        Password password = Password.fromHash(VALID_HASH);
+        assertEquals(VALID_HASH, password.getHashedValue());
+    }
+
+    @Test
+    void returnsEmptyStringWhenGetEmptyPassword() {
+        Password password = Password.getEmptyPassword();
+        assertEquals("", password.getHashedValue());
+    }
+
+    @ParameterizedTest
+    @NullAndEmptySource
+    void rejectsPasswordHashWhenNullOrEmpty(String input) {
         IllegalArgumentException exception = assertThrows(IllegalArgumentException.class, () ->
-            Password.hashForPersistence(VALID_HASH)
+            Password.fromHash(input)
         );
-        assertEquals("Password must not be already hashed", exception.getMessage());
+        assertEquals(EMPTY_ERROR_MSG, exception.getMessage());
     }
 
-    @Test
-    void rejectsPasswordHashWhenNull() {
+    @ParameterizedTest(name = "Rejects invalid hash: {0}")
+    @MethodSource("provideInvalidHashes")
+    void rejectsPasswordHashWhenFormatIsNotSuitableBcrypt(String caseDescription, String invalidInput) {
         IllegalArgumentException exception = assertThrows(IllegalArgumentException.class, () ->
-            Password.hashForPersistence(null)
+            Password.fromHash(invalidInput)
         );
-        assertEquals("Password cannot be null or empty", exception.getMessage());
+        assertEquals(INVALID_HASH_ERROR_MSG, exception.getMessage());
     }
 
-    @Test
-    void acceptsPasswordWhenPlaintext() {
-        assertEquals("TestPassword1!", Password.hashForPersistence("TestPassword1!").getHashedValue());
-    }
-
-    @Test
-    void acceptsPasswordHashWhenTruncated() {
-        String value = VALID_HASH.substring(0, 59);
-        assertEquals(value, Password.hashForPersistence(value).getHashedValue());
-    }
-
-    @Test
-    void acceptsPasswordHashWhenBcryptVersionDoesNotMatchPattern() {
-        String value = VALID_HASH.replace("$2b$", "$2a$");
-        assertEquals(value, Password.hashForPersistence(value).getHashedValue());
-    }
-
-    @Test
-    void acceptsPasswordHashWhenBcryptCostDoesNotMatchPattern() {
-        String value = VALID_HASH.replace("$10$", "$12$");
-        assertEquals(value, Password.hashForPersistence(value).getHashedValue());
-    }
-
-    @Test
-    void rejectsPasswordWhenEmpty() {
-        IllegalArgumentException exception = assertThrows(IllegalArgumentException.class, () ->
-            Password.hashForPersistence("")
+    private static Stream<Arguments> provideInvalidHashes() {
+        return Stream.of(
+            Arguments.of("Blank whitespace", "   "),
+            Arguments.of("Plaintext password", "TestPassword1!"),
+            Arguments.of("Truncated hash (59 chars)", VALID_HASH.substring(0, 59)),
+            Arguments.of("Unsupported BCrypt version ($2a$)", VALID_HASH.replace("$2b$", "$2a$")),
+            Arguments.of("Unsupported BCrypt cost ($12$)", VALID_HASH.replace("$10$", "$12$"))
         );
-        assertEquals("Password cannot be null or empty", exception.getMessage());
-    }
-
-    @Test
-    void preservesWhitespaceWhenValueIsNotEmpty() {
-        String value = "   ";
-        assertEquals(value, Password.hashForPersistence(value).getHashedValue());
     }
 }

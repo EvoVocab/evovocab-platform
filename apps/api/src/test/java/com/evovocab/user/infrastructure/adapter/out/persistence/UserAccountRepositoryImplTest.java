@@ -27,7 +27,7 @@ import org.springframework.test.context.ActiveProfiles;
 @Import({ UserAccountRepositoryImpl.class, UserAccountMapperImpl.class })
 class UserAccountRepositoryImplTest {
 
-    private static final String HASHED_PASSWORD = new BCryptPasswordEncoder(BCryptVersion.$2A, 10).encode(
+    private static final String HASHED_PASSWORD = new BCryptPasswordEncoder(BCryptVersion.$2B, 10).encode(
         "TestPassword1!"
     );
 
@@ -89,7 +89,7 @@ class UserAccountRepositoryImplTest {
         return new UserAccount(
             accountId,
             "account@example.com",
-            Password.hashForPersistence(HASHED_PASSWORD),
+            Password.fromHash(HASHED_PASSWORD),
             UserAccountStatus.INACTIVE,
             UserAccountProvider.EMAIL,
             null,
