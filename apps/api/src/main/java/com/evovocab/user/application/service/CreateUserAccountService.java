@@ -35,7 +35,7 @@ public class CreateUserAccountService implements CreateUserAccountUseCase {
 
         UserAccountId id = UserAccountId.generate();
         Instant now = Instant.now();
-        Password password = Password.hashForPersistence(passwordEncoder.encode(command.password()));
+        Password password = Password.fromHash(passwordEncoder.encode(command.password()));
         UserProfile profile = new UserProfile(id, command.fullName(), now, now);
         UserAccount account = new UserAccount(
             id,

@@ -27,7 +27,7 @@ public interface UserAccountMapper {
     }
 
     default Password toDomainPassword(String password) {
-        return password == null ? null : Password.hashForPersistence(password);
+        return password == null ? null : Password.fromHash(password);
     }
 
     default UUID toJpaId(UserAccountId id) {

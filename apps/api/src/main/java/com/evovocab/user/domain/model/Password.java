@@ -14,12 +14,12 @@ public class Password {
         this.value = value;
     }
 
-    public static Password hashForPersistence(String value) {
+    public static Password fromHash(String value) {
         if (value == null || value.isEmpty()) {
             throw new IllegalArgumentException("Password cannot be null or empty");
         }
-        if (BcryptUtils.checkIfPasswordIsHashed(value)) {
-            throw new IllegalArgumentException("Password must not be already hashed");
+        if (!BcryptUtils.checkIfPasswordIsHashed(value)) {
+            throw new IllegalArgumentException("Password must be already hashed with suitable Bcrypt");
         }
 
         return new Password(value);
