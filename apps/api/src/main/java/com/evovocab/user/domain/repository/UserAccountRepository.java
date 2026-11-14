@@ -10,4 +10,6 @@ public interface UserAccountRepository {
     Optional<UserAccount> findById(UserAccountId id);
 
     Optional<UserAccount> findByEmail(String email);
+
+    boolean existsByEmail(String email);
 }

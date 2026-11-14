@@ -2,6 +2,7 @@ package com.evovocab.user.infrastructure.adapter.out.persistence;
 
 import static org.junit.jupiter.api.Assertions.assertAll;
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
@@ -70,11 +71,25 @@ class UserAccountRepositoryImplTest {
         assertTrue(repository.findByEmail("missing@example.com").isEmpty());
     }
 
+    @Test
+    void returnsTrueWhenEmailExists() {
+        repository.save(newAccount(UserAccountId.generate()));
+        entityManager.flush();
+        entityManager.clear();
+
+        assertTrue(repository.existsByEmail("account@example.com"));
+    }
+
+    @Test
+    void returnsFalseWhenEmailDoesNotExist() {
+        assertFalse(repository.existsByEmail("missing@example.com"));
+    }
+
     private UserAccount newAccount(UserAccountId accountId) {
         return new UserAccount(
             accountId,
             "account@example.com",
-            Password.hashForPersistence(HASHED_PASSWORD),
+            Password.fromHash(HASHED_PASSWORD),
             UserAccountStatus.INACTIVE,
             UserAccountProvider.EMAIL,
             null,
