@@ -7,9 +7,6 @@ public class BcryptUtils {
     private static final Pattern BCRYPT_PATTERN = Pattern.compile("\\$2b\\$10\\$[./A-Za-z0-9]{22}[./A-Za-z0-9]{31}");
 
     public static boolean checkIfPasswordIsHashed(String password) {
-        if (password == null) {
-            return true;
-        }
         return BCRYPT_PATTERN.matcher(password).matches();
     }
 }
