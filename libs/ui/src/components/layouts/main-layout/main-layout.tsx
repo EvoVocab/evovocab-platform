@@ -1,4 +1,5 @@
 import { BrandIcon, BrandName } from '@/components/brand';
+import { ModeToggle } from '@/components/customs';
 import { Button } from '@/components/ui';
 import { isProduction } from '@evovocab/shared-utils';
 import { Link } from '@tanstack/react-router';
@@ -29,6 +30,7 @@ const MainLayout = ({ children }: MainLayoutProps) => {
             <Link to="/playground">Playground</Link>
           </Button>
         </div>
+        <ModeToggle />
       </header>
 
       <main className="mx-auto flex w-full max-w-7xl flex-1 flex-col px-4 py-6 sm:px-6 sm:py-8 lg:px-8">

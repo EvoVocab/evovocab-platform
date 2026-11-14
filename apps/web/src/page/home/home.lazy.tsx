@@ -1,6 +1,6 @@
 import React from 'react';
 import { Link } from '@tanstack/react-router';
-import { BrandLogoBackgroundWhite, HomeIcon, Button, ModeToggle } from '@evovocab/ui';
+import { BrandLogoBackgroundWhite, HomeIcon, Button } from '@evovocab/ui';
 import { useActuatorHealth } from '@/features/actuator/hooks/use-actuator-health';
 
 function Home() {
@@ -49,14 +49,12 @@ function Home() {
         </Button>
 
         <div className="flex w-full flex-row items-center justify-center gap-4 sm:w-auto">
-          <Link
-            className="text-primary hover:text-primary/80 text-sm font-medium underline-offset-4 hover:underline sm:text-base"
-            data-testid="about-link"
-            to="/about"
-          >
-            Đi tới trang About
-          </Link>
-          <div className="bg-border hidden h-6 w-px sm:block"></div> <ModeToggle />
+          <Button size="lg" variant="link">
+            <Link to="/about">Trang About</Link>
+          </Button>
+          <Button size="lg" variant="link">
+            <Link to="/test">Trang Thử nghiệm</Link>
+          </Button>
         </div>
       </div>
     </div>

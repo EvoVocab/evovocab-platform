@@ -1,4 +1,4 @@
-import { Button, ModeToggle } from '@evovocab/ui';
+import { Button } from '@evovocab/ui';
 import { Link } from '@tanstack/react-router';
 
 function About() {
@@ -35,14 +35,9 @@ function About() {
         </Button>
 
         <div className="flex w-full flex-row items-center justify-center gap-4 sm:w-auto">
-          <Link
-            className="text-primary hover:text-primary/80 text-sm font-medium underline-offset-4 hover:underline sm:text-base"
-            data-testid="home-link"
-            to="/"
-          >
-            Đi tới trang Home
-          </Link>
-          <div className="bg-border hidden h-6 w-px sm:block"></div> <ModeToggle />
+          <Button size="lg" variant="link">
+            <Link to="/">Trang Home</Link>
+          </Button>
         </div>
       </div>
     </div>
