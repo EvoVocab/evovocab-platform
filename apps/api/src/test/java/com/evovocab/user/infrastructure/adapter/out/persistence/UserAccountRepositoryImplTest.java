@@ -2,6 +2,7 @@ package com.evovocab.user.infrastructure.adapter.out.persistence;
 
 import static org.junit.jupiter.api.Assertions.assertAll;
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
@@ -26,7 +27,7 @@ import org.springframework.test.context.ActiveProfiles;
 @Import({ UserAccountRepositoryImpl.class, UserAccountMapperImpl.class })
 class UserAccountRepositoryImplTest {
 
-    private static final String HASHED_PASSWORD = new BCryptPasswordEncoder(BCryptVersion.$2B, 10).encode(
+    private static final String HASHED_PASSWORD = new BCryptPasswordEncoder(BCryptVersion.$2A, 10).encode(
         "TestPassword1!"
     );
 
@@ -68,6 +69,20 @@ class UserAccountRepositoryImplTest {
     @Test
     void returnsEmptyByEmailWhenAccountMissing() {
         assertTrue(repository.findByEmail("missing@example.com").isEmpty());
+    }
+
+    @Test
+    void returnsTrueWhenEmailExists() {
+        repository.save(newAccount(UserAccountId.generate()));
+        entityManager.flush();
+        entityManager.clear();
+
+        assertTrue(repository.existsByEmail("account@example.com"));
+    }
+
+    @Test
+    void returnsFalseWhenEmailDoesNotExist() {
+        assertFalse(repository.existsByEmail("missing@example.com"));
     }
 
     private UserAccount newAccount(UserAccountId accountId) {

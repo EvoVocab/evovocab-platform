@@ -22,7 +22,7 @@ import org.mapstruct.factory.Mappers;
 
 class UserAccountMapperTest {
 
-    private static final String HASH = "$2b$10$abcdefghijklmnopqrstuuABCDEFGHIJKLMNOPQRSTUVWXYZabcde";
+    private static final String HASH = "$2a$10$abcdefghijklmnopqrstuuABCDEFGHIJKLMNOPQRSTUVWXYZabcde";
     private static final Instant CREATED_AT = Instant.parse("2026-11-01T10:00:00Z");
     private static final Instant UPDATED_AT = Instant.parse("2026-11-02T10:00:00Z");
     private static final Instant DELETED_AT = Instant.parse("2026-11-03T10:00:00Z");
@@ -159,7 +159,7 @@ class UserAccountMapperTest {
     }
 
     @Test
-    void mapsNullInputsAndRejectsInvalidStoredHash() {
+    void mapsNullInputsAndRejectsEmptyOrBcrypt2bCost10Password() {
         assertAll(
             () -> assertNull(mapper.toJpaEntity((UserAccount) null)),
             () -> assertNull(mapper.toDomainEntity((UserAccountEntity) null)),
@@ -169,7 +169,11 @@ class UserAccountMapperTest {
             () -> assertNull(mapper.toDomainId(null)),
             () -> assertNull(mapper.toJpaPassword(null)),
             () -> assertNull(mapper.toDomainPassword(null)),
-            () -> assertThrows(IllegalArgumentException.class, () -> mapper.toDomainPassword("plain-text"))
+            () -> assertThrows(IllegalArgumentException.class, () -> mapper.toDomainPassword("")),
+            () ->
+                assertThrows(IllegalArgumentException.class, () ->
+                    mapper.toDomainPassword(HASH.replace("$2a$", "$2b$"))
+                )
         );
     }
 }
