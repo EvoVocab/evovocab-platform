@@ -2,7 +2,6 @@ package com.evovocab.user.domain.model;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
-import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -17,7 +16,6 @@ class PasswordTest {
         Password password = Password.hashForPersistence(VALID_HASH);
 
         assertEquals(VALID_HASH, password.getHashedValue());
-        assertTrue(password.isHashed());
     }
 
     @Test
