@@ -56,18 +56,18 @@ class UserAccountMapperTest {
         assertAll(
             () -> assertNotNull(entity),
             () -> assertEquals(id.getValue(), entity.getId()),
-            () -> assertEquals("user@example.com", entity.getEmail()),
-            () -> assertEquals(VALID_HASH, entity.getPassword()),
-            () -> assertEquals(UserAccountStatus.INACTIVE, entity.getStatus()),
-            () -> assertEquals(UserAccountProvider.EMAIL, entity.getProvider()),
-            () -> assertEquals("", entity.getProviderId()),
-            () -> assertEquals(CREATED_AT, entity.getLifecycleMetadata().getCreatedAt()),
-            () -> assertEquals(UPDATED_AT, entity.getLifecycleMetadata().getUpdatedAt()),
-            () -> assertEquals(DELETED_AT, entity.getLifecycleMetadata().getDeletedAt()),
+            () -> assertEquals(account.getEmail(), entity.getEmail()),
+            () -> assertEquals(account.getPassword().getHashedValue(), entity.getPassword()),
+            () -> assertEquals(account.getStatus(), entity.getStatus()),
+            () -> assertEquals(account.getProvider(), entity.getProvider()),
+            () -> assertEquals(account.getProviderId(), entity.getProviderId()),
+            () -> assertEquals(account.getCreatedAt(), entity.getLifecycleMetadata().getCreatedAt()),
+            () -> assertEquals(account.getUpdatedAt(), entity.getLifecycleMetadata().getUpdatedAt()),
+            () -> assertEquals(account.getDeletedAt(), entity.getLifecycleMetadata().getDeletedAt()),
             () -> assertNotNull(entity.getProfile()),
-            () -> assertEquals("Nguyen Van A", entity.getProfile().getFullName()),
-            () -> assertEquals(CREATED_AT, entity.getProfile().getAuditMetadata().getCreatedAt()),
-            () -> assertEquals(UPDATED_AT, entity.getProfile().getAuditMetadata().getUpdatedAt()),
+            () -> assertEquals(account.getProfile().getFullName(), entity.getProfile().getFullName()),
+            () -> assertEquals(account.getCreatedAt(), entity.getProfile().getAuditMetadata().getCreatedAt()),
+            () -> assertEquals(account.getUpdatedAt(), entity.getProfile().getAuditMetadata().getUpdatedAt()),
             () -> assertSame(entity, entity.getProfile().getAccount())
         );
     }
@@ -105,19 +105,19 @@ class UserAccountMapperTest {
         assertAll(
             () -> assertNotNull(account),
             () -> assertEquals(id, account.getId()),
-            () -> assertEquals("user@example.com", account.getEmail()),
-            () -> assertEquals(VALID_HASH, account.getPassword().getHashedValue()),
-            () -> assertEquals(UserAccountStatus.INACTIVE, account.getStatus()),
-            () -> assertEquals(UserAccountProvider.EMAIL, account.getProvider()),
-            () -> assertEquals("", account.getProviderId()),
-            () -> assertEquals(CREATED_AT, account.getCreatedAt()),
-            () -> assertEquals(UPDATED_AT, account.getUpdatedAt()),
-            () -> assertEquals(DELETED_AT, account.getDeletedAt()),
+            () -> assertEquals(entity.getEmail(), account.getEmail()),
+            () -> assertEquals(entity.getPassword(), account.getPassword().getHashedValue()),
+            () -> assertEquals(entity.getStatus(), account.getStatus()),
+            () -> assertEquals(entity.getProvider(), account.getProvider()),
+            () -> assertEquals(entity.getProviderId(), account.getProviderId()),
+            () -> assertEquals(entity.getLifecycleMetadata().getCreatedAt(), account.getCreatedAt()),
+            () -> assertEquals(entity.getLifecycleMetadata().getUpdatedAt(), account.getUpdatedAt()),
+            () -> assertEquals(entity.getLifecycleMetadata().getDeletedAt(), account.getDeletedAt()),
             () -> assertNotNull(account.getProfile()),
             () -> assertEquals(id, account.getProfile().getAccountId()),
-            () -> assertEquals("Nguyen Van A", account.getProfile().getFullName()),
-            () -> assertEquals(CREATED_AT, account.getProfile().getCreatedAt()),
-            () -> assertEquals(UPDATED_AT, account.getProfile().getUpdatedAt())
+            () -> assertEquals(entity.getProfile().getFullName(), account.getProfile().getFullName()),
+            () -> assertEquals(entity.getLifecycleMetadata().getCreatedAt(), account.getProfile().getCreatedAt()),
+            () -> assertEquals(entity.getLifecycleMetadata().getUpdatedAt(), account.getProfile().getUpdatedAt())
         );
     }
 
@@ -142,7 +142,7 @@ class UserAccountMapperTest {
         assertAll(
             () -> assertNotNull(entity),
             () -> assertEquals(id.getValue(), entity.getId()),
-            () -> assertEquals("user@example.com", entity.getEmail()),
+            () -> assertEquals(account.getEmail(), entity.getEmail()),
             () -> assertNull(entity.getPassword()),
             () -> assertNull(entity.getProviderId()),
             () -> assertNull(entity.getProfile())
@@ -163,7 +163,7 @@ class UserAccountMapperTest {
         assertAll(
             () -> assertNotNull(account),
             () -> assertEquals(id, account.getId()),
-            () -> assertEquals("user@example.com", account.getEmail()),
+            () -> assertEquals(entity.getEmail(), account.getEmail()),
             () -> assertNull(account.getPassword()),
             () -> assertNull(account.getProviderId()),
             () -> assertNull(account.getProfile()),
@@ -182,9 +182,9 @@ class UserAccountMapperTest {
 
         assertAll(
             () -> assertNotNull(entity),
-            () -> assertEquals("Nguyen Van A", entity.getFullName()),
-            () -> assertEquals(CREATED_AT, entity.getAuditMetadata().getCreatedAt()),
-            () -> assertEquals(UPDATED_AT, entity.getAuditMetadata().getUpdatedAt()),
+            () -> assertEquals(profile.getFullName(), entity.getFullName()),
+            () -> assertEquals(profile.getCreatedAt(), entity.getAuditMetadata().getCreatedAt()),
+            () -> assertEquals(profile.getUpdatedAt(), entity.getAuditMetadata().getUpdatedAt()),
             () -> assertNull(entity.getId()),
             () -> assertNull(entity.getAccount())
         );
@@ -207,9 +207,9 @@ class UserAccountMapperTest {
         assertAll(
             () -> assertNotNull(profile),
             () -> assertEquals(id, profile.getAccountId()),
-            () -> assertEquals("Nguyen Van A", profile.getFullName()),
-            () -> assertEquals(CREATED_AT, profile.getCreatedAt()),
-            () -> assertEquals(UPDATED_AT, profile.getUpdatedAt())
+            () -> assertEquals(entity.getFullName(), profile.getFullName()),
+            () -> assertEquals(entity.getAuditMetadata().getCreatedAt(), profile.getCreatedAt()),
+            () -> assertEquals(entity.getAuditMetadata().getUpdatedAt(), profile.getUpdatedAt())
         );
     }
 
