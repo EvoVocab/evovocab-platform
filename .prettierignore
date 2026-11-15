@@ -7,3 +7,6 @@
 /test-output
 /playwright-report
 /playwright/.cache
+/apps/api/docs/**
+/libs/shared/api/src/**
+/libs/ui/src/components/ui/**
