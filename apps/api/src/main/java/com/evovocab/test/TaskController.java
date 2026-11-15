@@ -30,7 +30,7 @@ public class TaskController {
         return ApiResponseDto.created(task, "Tạo task thành công");
     }
 
-    @PutMapping("/v1/tasks")
+    @PutMapping("/v1/tasks/{id}")
     public ApiResponseDto<Task> update(@PathVariable Long id, @Valid @RequestBody UpdateTaskRequest request) {
         Task task = service.update(id, request);
         return ApiResponseDto.success(task, "Cập nhật task thành công");

@@ -7,7 +7,7 @@ All URIs are relative to *http://localhost:5000/api*
 |[**_delete**](#_delete) | **DELETE** /v1/tasks/{id} | |
 |[**create**](#create) | **POST** /v1/tasks | |
 |[**getAll**](#getall) | **GET** /v1/tasks | |
-|[**update**](#update) | **PUT** /v1/tasks | |
+|[**update**](#update) | **PUT** /v1/tasks/{id} | |
 
 # **_delete**
 > ApiResponseDtoVoid _delete()
@@ -169,9 +169,11 @@ import {
 const configuration = new Configuration();
 const apiInstance = new TaskControllerApi(configuration);
 
+let id: number; // (default to undefined)
 let updateTaskRequest: UpdateTaskRequest; //
 
 const { status, data } = await apiInstance.update(
+    id,
     updateTaskRequest
 );
 ```
@@ -181,6 +183,7 @@ const { status, data } = await apiInstance.update(
 |Name | Type | Description  | Notes|
 |------------- | ------------- | ------------- | -------------|
 | **updateTaskRequest** | **UpdateTaskRequest**|  | |
+| **id** | [**number**] |  | defaults to undefined|
 
 
 ### Return type

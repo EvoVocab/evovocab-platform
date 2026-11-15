@@ -654,14 +654,18 @@ export const TaskControllerApiAxiosParamCreator = function (configuration?: Conf
         },
         /**
          * 
+         * @param {number} id 
          * @param {UpdateTaskRequest} updateTaskRequest 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        update: async (updateTaskRequest: UpdateTaskRequest, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        update: async (id: number, updateTaskRequest: UpdateTaskRequest, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'id' is not null or undefined
+            assertParamExists('update', 'id', id)
             // verify required parameter 'updateTaskRequest' is not null or undefined
             assertParamExists('update', 'updateTaskRequest', updateTaskRequest)
-            const localVarPath = `/v1/tasks`;
+            const localVarPath = `/v1/tasks/{id}`
+                .replace('{id}', encodeURIComponent(String(id)));
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
             let baseOptions;
@@ -732,12 +736,13 @@ export const TaskControllerApiFp = function(configuration?: Configuration) {
         },
         /**
          * 
+         * @param {number} id 
          * @param {UpdateTaskRequest} updateTaskRequest 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async update(updateTaskRequest: UpdateTaskRequest, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<ApiResponseDtoTask>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.update(updateTaskRequest, options);
+        async update(id: number, updateTaskRequest: UpdateTaskRequest, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<ApiResponseDtoTask>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.update(id, updateTaskRequest, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['TaskControllerApi.update']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
@@ -779,12 +784,13 @@ export const TaskControllerApiFactory = function (configuration?: Configuration,
         },
         /**
          * 
+         * @param {number} id 
          * @param {UpdateTaskRequest} updateTaskRequest 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        update(updateTaskRequest: UpdateTaskRequest, options?: RawAxiosRequestConfig): AxiosPromise<ApiResponseDtoTask> {
-            return localVarFp.update(updateTaskRequest, options).then((request) => request(axios, basePath));
+        update(id: number, updateTaskRequest: UpdateTaskRequest, options?: RawAxiosRequestConfig): AxiosPromise<ApiResponseDtoTask> {
+            return localVarFp.update(id, updateTaskRequest, options).then((request) => request(axios, basePath));
         },
     };
 };
@@ -824,12 +830,13 @@ export class TaskControllerApi extends BaseAPI {
 
     /**
      * 
+     * @param {number} id 
      * @param {UpdateTaskRequest} updateTaskRequest 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      */
-    public update(updateTaskRequest: UpdateTaskRequest, options?: RawAxiosRequestConfig) {
-        return TaskControllerApiFp(this.configuration).update(updateTaskRequest, options).then((request) => request(this.axios, this.basePath));
+    public update(id: number, updateTaskRequest: UpdateTaskRequest, options?: RawAxiosRequestConfig) {
+        return TaskControllerApiFp(this.configuration).update(id, updateTaskRequest, options).then((request) => request(this.axios, this.basePath));
     }
 }
 
