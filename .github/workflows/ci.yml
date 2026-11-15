@@ -60,10 +60,13 @@ jobs:
           NX_NO_CLOUD: "true"
         run: npx nx affected -t lint --verbose
 
-      # 4. Chạy Unit Test cho các project bị ảnh hưởng
+      # 4. Kiểm tra Type Check cho các project bị ảnh hưởng
+      - name: Type check affected projects
+        env:
+          NX_DAEMON: "false"
+          NX_NO_CLOUD: "true"
+        run: npx nx affected -t typecheck --verbose
+
+      # 5. Chạy Unit Test cho các project bị ảnh hưởng
       - name: Test affected projects
         run: npx nx affected -t test
-
-      # 5. Build các project bị ảnh hưởng
-      - name: Build affected projects
-        run: npx nx affected -t build
