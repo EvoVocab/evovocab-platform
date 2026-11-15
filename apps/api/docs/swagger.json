@@ -83,9 +83,9 @@
                   "detail": "Dữ liệu không hợp lệ.",
                   "instance": "/api/v1/...",
                   "errors": {
-                    "isCompleted": "Trạng thái hoàn thành không được để trống",
                     "title": "Tiêu đề không được để trống",
-                    "description": "Mô tả tối đa 200 ký tự"
+                    "description": "Mô tả tối đa 200 ký tự",
+                    "isCompleted": "Trạng thái hoàn thành không được để trống"
                   },
                   "timestamp": 1763188800000
                 }
@@ -183,8 +183,8 @@
                   "detail": "Dữ liệu không hợp lệ.",
                   "instance": "/api/v1/...",
                   "errors": {
-                    "description": "Mô tả tối đa 200 ký tự",
-                    "title": "Tiêu đề không được để trống"
+                    "title": "Tiêu đề không được để trống",
+                    "description": "Mô tả tối đa 200 ký tự"
                   },
                   "timestamp": 1763188800000
                 }
