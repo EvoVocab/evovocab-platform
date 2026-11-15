@@ -12,7 +12,8 @@
         "tsConfig": "libs/shared/api/tsconfig.lib.json",
         "skipTypeCheck": true,
         "stripLeadingPaths": true
-      }
+      },
+      "dependsOn": ["generate"]
     },
     "generate": {
       "executor": "nx:run-commands",
