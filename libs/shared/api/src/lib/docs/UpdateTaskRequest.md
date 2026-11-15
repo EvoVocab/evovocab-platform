@@ -1,12 +1,13 @@
 # UpdateTaskRequest
 
+
 ## Properties
 
-| Name            | Type        | Description | Notes                             |
-| --------------- | ----------- | ----------- | --------------------------------- |
-| **title**       | **string**  |             | [default to undefined]            |
-| **description** | **string**  |             | [optional] [default to undefined] |
-| **isCompleted** | **boolean** |             | [default to undefined]            |
+Name | Type | Description | Notes
+------------ | ------------- | ------------- | -------------
+**title** | **string** |  | [default to undefined]
+**description** | **string** |  | [optional] [default to undefined]
+**isCompleted** | **boolean** |  | [default to undefined]
 
 ## Example
 
@@ -14,9 +15,9 @@
 import { UpdateTaskRequest } from './api';
 
 const instance: UpdateTaskRequest = {
-  title,
-  description,
-  isCompleted,
+    title,
+    description,
+    isCompleted,
 };
 ```
 

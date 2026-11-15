@@ -1,13 +1,14 @@
 # ApiResponseDtoListTask
 
+
 ## Properties
 
-| Name          | Type                             | Description | Notes                             |
-| ------------- | -------------------------------- | ----------- | --------------------------------- |
-| **status**    | **number**                       |             | [optional] [default to undefined] |
-| **message**   | **string**                       |             | [optional] [default to undefined] |
-| **data**      | [**Array&lt;Task&gt;**](Task.md) |             | [optional] [default to undefined] |
-| **timestamp** | **number**                       |             | [optional] [default to undefined] |
+Name | Type | Description | Notes
+------------ | ------------- | ------------- | -------------
+**status** | **number** |  | [optional] [default to undefined]
+**message** | **string** |  | [optional] [default to undefined]
+**data** | [**Array&lt;Task&gt;**](Task.md) |  | [optional] [default to undefined]
+**timestamp** | **number** |  | [optional] [default to undefined]
 
 ## Example
 
@@ -15,10 +16,10 @@
 import { ApiResponseDtoListTask } from './api';
 
 const instance: ApiResponseDtoListTask = {
-  status,
-  message,
-  data,
-  timestamp,
+    status,
+    message,
+    data,
+    timestamp,
 };
 ```
 

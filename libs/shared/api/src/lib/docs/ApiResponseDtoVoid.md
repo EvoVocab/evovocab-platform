@@ -1,13 +1,14 @@
 # ApiResponseDtoVoid
 
+
 ## Properties
 
-| Name          | Type       | Description | Notes                             |
-| ------------- | ---------- | ----------- | --------------------------------- |
-| **status**    | **number** |             | [optional] [default to undefined] |
-| **message**   | **string** |             | [optional] [default to undefined] |
-| **data**      | **any**    |             | [optional] [default to undefined] |
-| **timestamp** | **number** |             | [optional] [default to undefined] |
+Name | Type | Description | Notes
+------------ | ------------- | ------------- | -------------
+**status** | **number** |  | [optional] [default to undefined]
+**message** | **string** |  | [optional] [default to undefined]
+**data** | **any** |  | [optional] [default to undefined]
+**timestamp** | **number** |  | [optional] [default to undefined]
 
 ## Example
 
@@ -15,10 +16,10 @@
 import { ApiResponseDtoVoid } from './api';
 
 const instance: ApiResponseDtoVoid = {
-  status,
-  message,
-  data,
-  timestamp,
+    status,
+    message,
+    data,
+    timestamp,
 };
 ```
 

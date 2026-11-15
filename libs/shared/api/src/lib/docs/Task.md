@@ -1,13 +1,14 @@
 # Task
 
+
 ## Properties
 
-| Name            | Type        | Description | Notes                             |
-| --------------- | ----------- | ----------- | --------------------------------- |
-| **id**          | **number**  |             | [optional] [default to undefined] |
-| **title**       | **string**  |             | [optional] [default to undefined] |
-| **description** | **string**  |             | [optional] [default to undefined] |
-| **isCompleted** | **boolean** |             | [optional] [default to undefined] |
+Name | Type | Description | Notes
+------------ | ------------- | ------------- | -------------
+**id** | **number** |  | [optional] [default to undefined]
+**title** | **string** |  | [optional] [default to undefined]
+**description** | **string** |  | [optional] [default to undefined]
+**isCompleted** | **boolean** |  | [optional] [default to undefined]
 
 ## Example
 
@@ -15,10 +16,10 @@
 import { Task } from './api';
 
 const instance: Task = {
-  id,
-  title,
-  description,
-  isCompleted,
+    id,
+    title,
+    description,
+    isCompleted,
 };
 ```
 

@@ -1,11 +1,12 @@
 # Link
 
+
 ## Properties
 
-| Name          | Type        | Description | Notes                             |
-| ------------- | ----------- | ----------- | --------------------------------- |
-| **href**      | **string**  |             | [optional] [default to undefined] |
-| **templated** | **boolean** |             | [optional] [default to undefined] |
+Name | Type | Description | Notes
+------------ | ------------- | ------------- | -------------
+**href** | **string** |  | [optional] [default to undefined]
+**templated** | **boolean** |  | [optional] [default to undefined]
 
 ## Example
 
@@ -13,8 +14,8 @@
 import { Link } from './api';
 
 const instance: Link = {
-  href,
-  templated,
+    href,
+    templated,
 };
 ```
 

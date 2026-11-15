@@ -1,11 +1,12 @@
 # CreateTaskRequest
 
+
 ## Properties
 
-| Name            | Type       | Description | Notes                             |
-| --------------- | ---------- | ----------- | --------------------------------- |
-| **title**       | **string** |             | [default to undefined]            |
-| **description** | **string** |             | [optional] [default to undefined] |
+Name | Type | Description | Notes
+------------ | ------------- | ------------- | -------------
+**title** | **string** |  | [default to undefined]
+**description** | **string** |  | [optional] [default to undefined]
 
 ## Example
 
@@ -13,8 +14,8 @@
 import { CreateTaskRequest } from './api';
 
 const instance: CreateTaskRequest = {
-  title,
-  description,
+    title,
+    description,
 };
 ```
 
