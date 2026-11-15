@@ -35,6 +35,8 @@ security:
     allowed-headers: "*"
     allow-credentials: true
   public-urls:
+    - /v1/tasks
+    - /v1/tasks/**
     - /public/**
     - /actuator
     - /actuator/**

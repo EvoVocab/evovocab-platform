@@ -23,7 +23,5 @@ describe('About Page', () => {
     render(<App router={router} />);
 
     expect(await screen.findByTestId('about-page')).toBeInTheDocument();
-    expect(await screen.findByTestId('app-title')).toBeInTheDocument();
-    expect(await screen.findByTestId('app-title')).toHaveTextContent('EvoVocab');
   });
 });

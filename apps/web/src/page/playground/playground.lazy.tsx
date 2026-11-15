@@ -86,7 +86,7 @@ export function Playground() {
   }, [oauthState, resetOAuthState]);
 
   return (
-    <div className="container mx-auto space-y-8 p-6" data-testid="playground-page">
+    <div className="container mx-auto space-y-8 p-6">
       <GoBack />
       <div className="flex flex-col gap-2 border-b pb-4 md:flex-row md:items-center md:justify-between">
         <div>
