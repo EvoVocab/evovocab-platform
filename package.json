@@ -125,14 +125,8 @@
     "basic-ftp": "^6.2.1"
   },
   "lint-staged": {
-    "*.{js,ts,jsx,tsx,json,css,scss,md}": [
-      "prettier --write"
-    ],
-    "*.{yml,yaml}": [
-      "prettier --write"
-    ],
-    "*.java": [
-      "prettier --write"
+    "*.{js,ts,jsx,tsx,json,css,scss,md,yml,yaml,java}": [
+      "prettier --write --ignore-path .prettierignore"
     ]
   },
   "allowScripts": {
