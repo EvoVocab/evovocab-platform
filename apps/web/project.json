@@ -1,0 +1,16 @@
+{
+  "name": "@evovocab/web",
+  "$schema": "../../node_modules/nx/schemas/project-schema.json",
+  "sourceRoot": "apps/web/src",
+  "tags": [],
+  "targets": {
+    "build": {
+      "options": {
+        "args": ["--mode=development"]
+      },
+      "configurations": {
+        "prod": { "args": ["--mode=production"] }
+      }
+    }
+  }
+}
