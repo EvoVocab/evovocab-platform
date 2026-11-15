@@ -33,4 +33,8 @@ public class ApiResponseDto<T> {
             .data(data)
             .build();
     }
+
+    public static <T> ApiResponseDto<T> created(T data, String message) {
+        return ApiResponseDto.<T>builder().status(HttpStatus.CREATED.value()).message(message).data(data).build();
+    }
 }

@@ -17,6 +17,12 @@
     },
     {
       "path": "./libs/store"
+    },
+    {
+      "path": "./libs/shared/utils"
+    },
+    {
+      "path": "./libs/shared/api"
     }
   ]
 }

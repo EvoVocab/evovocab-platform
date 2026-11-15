@@ -16,12 +16,29 @@ spring:
     password: ${DB_MYSQL_PASSWORD}
     driver-class-name: com.mysql.cj.jdbc.Driver
     hikari:
+      # Thời gian tối đa (ms) chờ để  phản hồi cho 1 lần tạo kết nối
+      connection-timeout: 10000
+
+      # Thời gian tối đa (ms) chờ để 1 kết nối được lấy ra từ pool
+      initialization-fail-timeout: 60000
+
       data-source-properties:
         createDatabaseIfNotExist: true
         serverTimezone: UTC
         characterEncoding: UTF-8
         connectionCollation: utf8mb4_0900_ai_ci
         sslMode: REQUIRED
+
+management:
+  server:
+    port: ${SERVER_PORT}
+  endpoints:
+    web:
+      exposure:
+        include: health
+  endpoint:
+    health:
+      show-details: never
 
 logging:
   config: classpath:log4j2-prod.yaml

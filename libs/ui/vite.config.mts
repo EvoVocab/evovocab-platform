@@ -19,6 +19,9 @@ export default defineConfig(() => ({
   // },
   // Configuration for building your library.
   // See: https://vite.dev/guide/build.html#library-mode
+  resolve: {
+    tsconfigPaths: true,
+  },
   build: {
     outDir: './dist',
     emptyOutDir: true,

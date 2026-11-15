@@ -1,6 +1,6 @@
 {
   "compilerOptions": {
-    "moduleResolution": "NodeNext"
+    "module": "ESNext"
   },
   "files": [],
   "include": [],

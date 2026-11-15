@@ -27,6 +27,15 @@
   "references": [
     {
       "path": "./tsconfig.app.json"
+    },
+    {
+      "path": "../../libs/store/tsconfig.lib.json"
+    },
+    {
+      "path": "../../libs/shared/api/tsconfig.lib.json"
+    },
+    {
+      "path": "../../libs/ui/tsconfig.lib.json"
     }
   ]
 }

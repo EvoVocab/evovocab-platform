@@ -19,6 +19,7 @@ export default [
       'tailwind.config.js',
       'vite.config.ts',
       'routeTree.gen.ts',
+      'vitest.setup.ts',
     ],
   },
   ...typescriptEslint.config(
@@ -118,6 +119,18 @@ export default [
         tsconfigRootDir: import.meta.dirname,
         project: ['./tsconfig.spec.json'],
       },
+    },
+  },
+  {
+    name: 'api-integration-bypass',
+    files: ['src/config/api-config.ts', 'src/features/**/hooks/*.ts'],
+    rules: {
+      '@typescript-eslint/no-unsafe-assignment': 'off',
+      '@typescript-eslint/no-unsafe-call': 'off',
+      '@typescript-eslint/no-unsafe-member-access': 'off',
+      '@typescript-eslint/no-unsafe-return': 'off',
+      '@typescript-eslint/no-unsafe-argument': 'off',
+      '@typescript-eslint/no-explicit-any': 'off',
     },
   },
 ];

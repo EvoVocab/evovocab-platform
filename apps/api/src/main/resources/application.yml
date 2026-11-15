@@ -1,6 +1,7 @@
 spring:
   application:
     name: ${APP_NAME}
+
 app:
   name: ${APP_NAME}
 
@@ -19,13 +20,13 @@ server:
 management:
   server:
     port: ${SERVER_PORT}
-  endpoint:
-    health:
-      show-details: always
   endpoints:
     web:
       exposure:
-        include: health, info
+        include: health, info, metrics, env
+  endpoint:
+    health:
+      show-details: always
 
 spring doc:
   show-actuator: true
@@ -37,6 +38,8 @@ security:
     allowed-headers: "*"
     allow-credentials: true
   public-urls:
+    - /v1/tasks
+    - /v1/tasks/**
     - /public/**
     - /actuator
     - /actuator/**
@@ -44,6 +47,9 @@ security:
     - /v3/api-docs/**
     - /swagger-ui/**
     - /swagger-ui.html
+  jwt:
+    secret: ${JWT_SECRET}
+    access-token-expiration: ${JWT_ACCESS_TOKEN_EXPIRATION}
 
 logging:
   level:

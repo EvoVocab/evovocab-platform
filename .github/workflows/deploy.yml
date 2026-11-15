@@ -85,7 +85,7 @@ jobs:
 
       - name: Build Web App
         if: steps.check_affected.outputs.deploy_web == 'true'
-        run: npx nx build web
+        run: npx nx build web -c prod
 
       - name: Setup Pages
         if: ${{ !env.ACT && steps.check_affected.outputs.deploy_web == 'true' }}

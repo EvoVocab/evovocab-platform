@@ -7,28 +7,22 @@
     "build": {
       "executor": "@nxrocks/nx-spring-boot:build",
       "options": {
-        "root": "apps/api"
-      },
-      "configurations": {
-        "test": {
-          "args": ["-Dspring.profiles.active=test"]
-        },
-        "dev": {
-          "args": ["-Dspring.profiles.active=dev"]
-        },
-        "staging": {
-          "args": ["-Dspring.profiles.active=staging"]
-        },
-        "prod": {
-          "args": ["-Dspring.profiles.active=prod"]
-        }
+        "root": "apps/api",
+        "args": ["-Dspring.profiles.active=test"]
       }
     },
     "test": {
       "executor": "@nxrocks/nx-spring-boot:test",
       "options": {
-        "root": "apps/api",
-        "args": ["-Dspring.profiles.active=test"]
+        "root": "apps/api"
+      },
+      "configurations": {
+        "dev": {
+          "args": ["-Dspring.profiles.active=dev"]
+        },
+        "staging": {
+          "args": ["-Dspring.profiles.active=staging"]
+        }
       }
     },
     "serve": {
@@ -45,6 +39,19 @@
           "args": ["--args=--spring.profiles.active=prod"]
         }
       }
+    },
+    "generate-openapi": {
+      "executor": "nx:run-commands",
+      "cache": true,
+      "options": {
+        "command": "npx nx run api:generateOpenApiDocs --skip-nx-cache"
+      },
+      "inputs": [
+        "{projectRoot}/src/**/*",
+        "{projectRoot}/build.gradle*",
+        "{projectRoot}/settings.gradle*"
+      ],
+      "outputs": ["{projectRoot}/docs/swagger.json"]
     }
   }
 }

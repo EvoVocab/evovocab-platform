@@ -1,0 +1,64 @@
+import React from 'react';
+import { Link } from '@tanstack/react-router';
+import { BrandLogoBackgroundWhite, HomeIcon, Button } from '@evovocab/ui';
+import { useActuatorHealth } from '@/features/actuator/hooks/use-actuator-health';
+
+function Home() {
+  const { data } = useActuatorHealth();
+
+  React.useEffect(() => {
+    if (data) {
+      console.log('Actuator Health:', data);
+    }
+  }, [data]);
+
+  return (
+    <div className="flex flex-1 flex-col items-center justify-center gap-8 py-10 sm:py-20">
+      <BrandLogoBackgroundWhite className="h-24 w-auto rounded-full shadow-sm sm:h-32 md:h-40" />
+
+      <div className="flex flex-col items-center gap-3 text-center">
+        <HomeIcon />
+        <h1
+          className="text-3xl font-bold tracking-tight sm:text-4xl md:text-5xl"
+          data-testid="home-page"
+        >
+          Home Page
+        </h1>
+        <title className="text-muted-foreground text-lg font-medium sm:text-xl md:text-2xl">
+          {import.meta.env.VITE_APP_TITLE}
+        </title>
+        <p className="text-muted-foreground max-w-lg text-sm sm:text-base">
+          Chào mừng bạn đến với ứng dụng. Giao diện này đã được tự động điều chỉnh để hiển thị hoàn
+          hảo trên mọi thiết bị.
+        </p>
+      </div>
+
+      {/* Cụm chức năng (Actions): 
+          - Mobile: Xếp dọc (flex-col), w-full
+          - Tablet/Desktop: Xếp ngang (sm:flex-row), w-auto 
+      */}
+      <div className="flex w-full flex-col items-center justify-center gap-4 px-4 sm:w-auto sm:flex-row sm:gap-6 sm:px-0">
+        <Button
+          className="w-full sm:w-auto"
+          size="lg"
+          onClick={() => {
+            alert('Đây là Home Page!');
+          }}
+        >
+          Chạm vào đây
+        </Button>
+
+        <div className="flex w-full flex-row items-center justify-center gap-4 sm:w-auto">
+          <Button size="lg" variant="link">
+            <Link to="/about">Trang About</Link>
+          </Button>
+          <Button size="lg" variant="link">
+            <Link to="/test">Trang Thử nghiệm</Link>
+          </Button>
+        </div>
+      </div>
+    </div>
+  );
+}
+
+export default Home;

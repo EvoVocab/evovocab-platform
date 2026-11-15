@@ -5,7 +5,7 @@ import ReactDOM from 'react-dom/client';
 import App from './app';
 import { routeTree } from './routeTree.gen';
 
-export const router = createRouter({ routeTree, basepath: import.meta.env.VITE_APP_BASE_URL });
+const router = createRouter({ routeTree, basepath: import.meta.env.VITE_APP_BASE_URL });
 
 export type TanstackRouter = typeof router;
 

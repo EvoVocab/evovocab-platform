@@ -10,7 +10,9 @@
     <a href="https://github.com/EvoVocab/evovocab-platform/blob/main/LICENSE">
       <img src="https://img.shields.io/badge/License-Apache_2.0-blue.svg?style=flat-square" alt="License: Apache 2.0" />
     </a>
-    <img src="https://img.shields.io/badge/version-0.1.0-brightgreen.svg?style=flat-square" alt="Version 0.1.0" />
+    <a href="https://github.com/EvoVocab/evovocab-platform/blob/main/package.json">
+      <img src="https://img.shields.io/github/package-json/v/EvoVocab/evovocab-platform?style=flat-square&label=version&color=brightgreen" alt="Version" />
+    </a>
     <a href="https://nx.dev">
       <img src="https://img.shields.io/badge/Powered_by-Nx-143055?style=flat-square&logo=nx&logoColor=white" alt="Powered by Nx" />
     </a>
@@ -21,13 +23,18 @@
 
 ## 📖 Mục lục
 
-- [Giới thiệu](#-giới-thiệu)
-- [Kiến trúc dự án (Monorepo)](#-kiến-trúc-dự-án-monorepo)
-- [Công nghệ sử dụng](#-công-nghệ-sử-dụng)
-- [Yêu cầu hệ thống](#-yêu-cầu-hệ-thống)
-- [Hướng dẫn cài đặt & Chạy dự án](#-hướng-dẫn-cài-đặt--chạy-dự-án)
-- [Thành viên đóng góp](#-thành-viên-đóng-góp)
-- [Giấy phép](#-giấy-phép)
+- [📖 Mục lục](#-mục-lục)
+- [🚀 Giới thiệu](#-giới-thiệu)
+- [🏗 Kiến trúc dự án (Monorepo)](#-kiến-trúc-dự-án-monorepo)
+- [🛠 Công nghệ sử dụng](#-công-nghệ-sử-dụng)
+  - [Frontend (Web)](#frontend-web)
+  - [Backend (API)](#backend-api)
+  - [Database](#database)
+  - [Testing \& Tools](#testing--tools)
+- [💻 Yêu cầu hệ thống](#-yêu-cầu-hệ-thống)
+- [⚙️ Hướng dẫn cài đặt \& Chạy dự án](#️-hướng-dẫn-cài-đặt--chạy-dự-án)
+- [👥 Thành viên đóng góp](#-thành-viên-đóng-góp)
+- [📄 Giấy phép](#-giấy-phép)
 
 ---
 
@@ -48,8 +55,11 @@ evovocab-platform/
 │   ├── web/            # Frontend Web App (React + Vite)
 │   └── web-e2e/        # End-to-End Tests cho Web (Playwright)
 ├── libs/
-│   ├── store/          # Quản lý state dùng chung (Zustand)
-│   └── ui/             # Thư viện UI Component dùng chung (Shadcn/Tailwind)
+│   ├── shared/         # Chứa riêng các thư viện hạ tầng kỹ thuật
+│   │   ├── api/        # OpenAPI Generated Client & Axios Factories (@evovocab/shared-api)
+│   │   └── utils/      # Common helpers, env getters, safe storage (@evovocab/shared-utils)
+│   ├── store/          # Quản lý state dùng chung với Zustand (@evovocab/store)
+│   └── ui/             # Design System, Shadcn UI components & styles (@evovocab/ui)
 ├── package.json
 └── nx.json             # Cấu hình Nx Workspace
 ```

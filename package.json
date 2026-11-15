@@ -1,6 +1,6 @@
 {
   "name": "@evovocab/repo",
-  "version": "0.2.0",
+  "version": "0.3.0",
   "license": "Apache-2.0",
   "author": "EvoVocab",
   "description": "Evocab là một nền tảng cá nhân hóa việc từ vựng tiếng Anh, giúp người dùng nâng cao vốn từ vựng một cách hiệu quả và thú vị.",
@@ -9,8 +9,13 @@
     "url": "https://github.com/EvoVocab/evovocab-platform.git"
   },
   "scripts": {
-    "setup": "shx cp apps/web/.env.example apps/web/.env && shx cp apps/api/.env.example apps/api/.env && shx cp docker-compose.example.yml docker-compose.yml",
-    "setup:deploy": "node ./scripts/setup_deploy.js",
+    "setup": "npm run setup:api:env && npm run setup:web:env && npm run setup:docker:compose && npm run setup:env",
+    "setup:api:env": "shx cp apps/api/.env.example apps/api/.env",
+    "setup:web:env": "shx cp apps/web/.env.example apps/web/.env",
+    "setup:docker:compose": "shx cp docker-compose.example.yml docker-compose.yml",
+    "setup:env": "shx cp .env.example .env",
+    "pre:deploy": "node scripts/pre-deploy/main.js",
+    "download:env": "node scripts/pre-deploy/download-env.js",
     "db:docker:up": "docker compose -f docker-compose.yml up -d mysql-db --build",
     "docker:up": "docker compose -f docker-compose.yml up -d --build",
     "docker:down": "docker compose -f docker-compose.yml down",
@@ -32,6 +37,7 @@
     "@nx/devkit": "22.7.12",
     "@nx/eslint": "22.7.12",
     "@nx/eslint-plugin": "22.7.12",
+    "@nx/gradle": "^22.7.12",
     "@nx/js": "^22.7.12",
     "@nx/playwright": "22.7.12",
     "@nx/react": "^22.7.12",
@@ -40,6 +46,7 @@
     "@nx/vitest": "22.7.12",
     "@nx/web": "22.7.12",
     "@nxrocks/nx-spring-boot": "^11.0.1",
+    "@openapitools/openapi-generator-cli": "^2.42.0",
     "@playwright/test": "^1.37.0",
     "@storybook/react": "^10.6.5",
     "@storybook/react-vite": "10.6.5",
@@ -56,7 +63,7 @@
     "@testing-library/jest-dom": "^7.0.1",
     "@testing-library/react": "^16.3.3",
     "@testing-library/user-event": "^14.6.8",
-    "@types/node": "^20.0.0",
+    "@types/node": "20.19.9",
     "@types/react": "^19.0.0",
     "@types/react-dom": "^19.0.0",
     "@vitejs/plugin-react": "^6.0.0",
@@ -76,9 +83,11 @@
     "eslint-plugin-storybook": "^10.4.6",
     "eslint-plugin-unicorn": "63.0.0",
     "globals": "^17.13.0",
+    "googleapis": "^189.0.0",
     "husky": "^9.1.7",
     "jiti": "2.4.2",
     "jsdom": "~22.1.0",
+    "jsonc-eslint-parser": "^2.1.0",
     "knip": "^6.43.0",
     "nx": "22.7.12",
     "postcss": "^8.5.31",
@@ -98,10 +107,11 @@
   "workspaces": [
     "packages/*",
     "apps/*",
-    "libs/*"
+    "libs/*",
+    "libs/shared/*"
   ],
   "overrides": {
-    "axios": ">=1.19.1",
+    "axios": "^1.21.0",
     "follow-redirects": ">=1.16.1",
     "smol-toml": ">=1.8.1",
     "undici": ">=7.31.0",
@@ -112,30 +122,39 @@
     "csv-parse": "^7.0.2",
     "uuid": "^11.1.1",
     "deepmerge": "^4.3.1",
-    "glob": "^14.0.2"
+    "glob": "^14.0.2",
+    "basic-ftp": "^6.2.1"
+  },
+  "lint-staged": {
+    "*.{js,ts,jsx,tsx,json,css,scss,md,yml,yaml,java}": [
+      "prettier --write --ignore-path .prettierignore"
+    ]
   },
   "allowScripts": {
-    "nx@22.7.12": true,
-    "nx@24.0.1": true,
-    "@swc/core@1.15.47": true,
-    "esbuild@0.28.2": true
+    "@openapitools/openapi-generator-cli@2.42.0": true,
+    "@swc/core": true,
+    "esbuild": true,
+    "nx": true
   },
   "dependencies": {
     "@base-ui/react": "^1.9.0",
     "@fontsource-variable/geist": "^5.3.0",
+    "@hookform/resolvers": "^7.0.6",
     "@nivo/bar": "^0.99.0",
     "@nivo/core": "^0.99.0",
     "@nivo/line": "^0.99.0",
     "@nivo/pie": "^0.99.0",
+    "@react-oauth/google": "^0.13.5",
     "@tailwindcss/vite": "^4.3.3",
     "@tanstack/react-query": "^5.104.5",
     "@tanstack/react-router": "^1.170.46",
     "class-variance-authority": "^0.7.1",
-    "cn": "^0.5.0",
     "dayjs": "^1.11.23",
+    "http-status-codes": "^2.3.0",
     "lucide-react": "^1.61.0",
     "react": "^19.0.0",
     "react-dom": "^19.0.0",
+    "react-hook-form": "^7.92.0",
     "shadcn": "^4.22.1",
     "tailwindcss": "^4.3.3",
     "tailwindcss-animate": "^1.0.7",

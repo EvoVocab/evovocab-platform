@@ -7,7 +7,11 @@
     "jsx": "react-jsx",
     "module": "esnext",
     "tsBuildInfoFile": "dist/tsconfig.lib.tsbuildinfo",
-    "lib": ["DOM", "DOM.Iterable", "ESNext"]
+    "lib": ["DOM", "DOM.Iterable", "ESNext"],
+    "baseUrl": ".",
+    "paths": {
+      "@/*": ["./src/*"]
+    }
   },
   "exclude": [
     "out-tsc",
@@ -33,5 +37,10 @@
     "**/*.stories.js",
     "**/*.stories.jsx",
     "**/*.stories.tsx"
+  ],
+  "references": [
+    {
+      "path": "../shared/utils/tsconfig.lib.json"
+    }
   ]
 }

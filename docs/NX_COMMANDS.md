@@ -2,13 +2,14 @@
 
 README và workflow deploy đều dùng tên rút gọn; nếu Nx báo không tìm thấy project thì dùng tên đầy đủ.
 
-| Tên rút gọn | Tên đầy đủ          | Loại     | Công nghệ                         | Cổng                      |
-| ----------- | ------------------- | -------- | --------------------------------- | ------------------------- |
-| `web`       | `@evovocab/web`     | App      | React 19, Vite, TanStack Router   | dev 4200, preview 4300    |
-| `api`       | `@evovocab/api`     | App      | Spring Boot, Gradle               | 5000 (Docker Compose)     |
-| `web-e2e`   | `@evovocab/web-e2e` | E2E      | Playwright                        | dùng lại server của `web` |
-| `ui`        | `@evovocab/ui`      | Thư viện | Shadcn, Tailwind, Storybook       | —                         |
-| `store`     | `@evovocab/store`   | Thư viện | Thư viện quản lý state dùng chung | —                         |
+| Tên rút gọn  | Tên đầy đủ             | Loại     | Công nghệ                                | Cổng                      |
+| ------------ | ---------------------- | -------- | ---------------------------------------- | ------------------------- |
+| `web`        | `@evovocab/web`        | App      | React 19, Vite, TanStack Router          | dev 4200, preview 4300    |
+| `api`        | `@evovocab/api`        | App      | Spring Boot, Gradle                      | 5000 (Docker Compose)     |
+| `web-e2e`    | `@evovocab/web-e2e`    | E2E      | Playwright                               | dùng lại server của `web` |
+| `ui`         | `@evovocab/ui`         | Thư viện | Shadcn, Tailwind, Storybook              | —                         |
+| `store`      | `@evovocab/store`      | Thư viện | Thư viện quản lý state dùng chung        | —                         |
+| `shared-api` | `@evovocab/shared-api` | Thư viện | Thư viện quản lý các call api dùng chung | —                         |
 
 Các target (`build`, `test`, `lint`, `serve`...) hầu hết do plugin trong `nx.json` suy ra từ file cấu hình có sẵn (`vite.config.mts`, `build.gradle`, `playwright.config.mts`, `.storybook`). Riêng `api` khai báo thêm trong `apps/api/project.json`.
 
@@ -69,22 +70,15 @@ Lưu ý: `sharedGlobals` trong `nx.json` trỏ tới `.github/workflows/ci.yml`.
 
 `api` chạy bằng Gradle qua plugin `@nxrocks/nx-spring-boot`. Ba target `serve`, `build` và `test` được khai báo trong `apps/api/project.json`, mỗi target gắn với một profile Spring; chọn profile bằng cờ `-c` (configuration).
 
-| Lệnh                          | Profile Spring                                           |
-| ----------------------------- | -------------------------------------------------------- |
-| `npx nx serve api`            | `dev` (mặc định)                                         |
-| `npx nx serve api -c staging` | `staging`                                                |
-| `npx nx serve api -c prod`    | `prod`                                                   |
-| `npx nx build api`            | Không ép profile                                         |
-| `npx nx build api -c prod`    | `prod`. Các configuration khác: `dev`, `staging`, `test` |
-| `npx nx test api`             | `test`                                                   |
-
-Plugin còn khai báo thêm các target `install`, `clean`, `run`, `build-image`, `build-info`, `format`, `apply-format` và `check-format` trong `nx.json`. Ví dụ:
-
-- `npx nx run api:clean` xóa thư mục build của Gradle.
-- `npx nx run api:build-image` tạo Docker image bằng Spring Boot.
-- `npx nx run api:check-format` và `npx nx run api:apply-format` kiểm tra và áp dụng định dạng Java.
-
-Dùng dạng `nx run api:format`, không dùng `nx format api`, vì `nx format` là lệnh có sẵn của Nx (Prettier) chứ không phải target của `api`.
+| Lệnh                          | Profile Spring                                   |
+| ----------------------------- | ------------------------------------------------ |
+| `npx nx serve api`            | `dev` (mặc định)                                 |
+| `npx nx serve api -c staging` | `staging`                                        |
+| `npx nx serve api -c prod`    | `prod`                                           |
+| `npx nx build api`            | `test` (mặc định)                                |
+| `npx nx build api -c prod`    | `prod`. Các configuration khác: `dev`, `staging` |
+| `npx nx test api`             | `test`                                           |
+| `npx nx format api`           |                                                  |
 
 ## E2E (Playwright) và Storybook
 

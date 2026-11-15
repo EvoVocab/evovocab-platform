@@ -13,12 +13,14 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.validation.FieldError;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
+import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 
 @Slf4j
 @RestControllerAdvice
 public class ProblemDetailsFilter {
 
+    @ResponseStatus(HttpStatus.UNPROCESSABLE_ENTITY)
     @ExceptionHandler(MethodArgumentNotValidException.class)
     public ResponseEntity<ErrorResponseDto> handleValidationExceptions(
         MethodArgumentNotValidException ex,
@@ -33,7 +35,7 @@ public class ProblemDetailsFilter {
             .type("about:blank")
             .title("Unprocessable Entity")
             .status(HttpStatus.UNPROCESSABLE_ENTITY.value())
-            .detail("Validation failed")
+            .detail("Dữ liệu không hợp lệ.")
             .instance(request.getRequestURI())
             .errors(validationErrors)
             .timestamp(Instant.now().toEpochMilli())
@@ -66,7 +68,7 @@ public class ProblemDetailsFilter {
             .type("about:blank")
             .title("Internal Server Error")
             .status(HttpStatus.INTERNAL_SERVER_ERROR.value())
-            .detail(ex.getMessage())
+            .detail("Đã xảy ra lỗi hệ thống. Vui lòng thử lại sau.")
             .instance(request.getRequestURI())
             .timestamp(Instant.now().toEpochMilli())
             .build();

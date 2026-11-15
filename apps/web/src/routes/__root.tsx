@@ -1,5 +1,5 @@
 import { createRootRoute, Outlet } from '@tanstack/react-router';
-import { MainLayout } from '@evovocab/ui/components/layouts';
+import { MainLayout } from '@evovocab/ui';
 
 export const Route = createRootRoute({
   component: () => (
