@@ -44,8 +44,7 @@
       "executor": "nx:run-commands",
       "cache": true,
       "options": {
-        "command": "npx nx run @evovocab/api:generateOpenApiDocs --skip-nx-cache",
-        "cwd": "apps/api"
+        "command": "npx nx run api:generateOpenApiDocs --skip-nx-cache"
       },
       "inputs": [
         "{projectRoot}/src/**/*",

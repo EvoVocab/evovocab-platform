@@ -113,6 +113,11 @@
   ],
   "analytics": false,
   "targetDefaults": {
+    "resolveMainClassName": { "cache": false },
+    "bootRunMainClassName": { "cache": false },
+    "forkedSpringBootRun": { "cache": false },
+    "forkedSpringBootStop": { "cache": false },
+    "generateOpenApiDocs": { "cache": false },
     "lint": {
       "dependsOn": ["^build"]
     },
