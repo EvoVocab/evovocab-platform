@@ -2,6 +2,7 @@ package com.evovocab.shared.config;
 
 import com.evovocab.shared.dto.responses.ErrorResponseDto;
 import com.evovocab.shared.properties.AppProperties;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import io.swagger.v3.oas.models.OpenAPI;
 import io.swagger.v3.oas.models.info.Contact;
 import io.swagger.v3.oas.models.info.Info;
@@ -14,9 +15,11 @@ import jakarta.validation.MessageInterpolator;
 import jakarta.validation.Validation;
 import jakarta.validation.Validator;
 import jakarta.validation.ValidatorFactory;
+import jakarta.validation.metadata.BeanDescriptor;
 import jakarta.validation.metadata.ConstraintDescriptor;
 import jakarta.validation.metadata.PropertyDescriptor;
-import java.util.Arrays;
+import java.lang.reflect.Field;
+import java.lang.reflect.Modifier;
 import java.util.LinkedHashMap;
 import java.util.Locale;
 import java.util.Map;
@@ -35,6 +38,7 @@ public class SwaggerConfiguration {
     private final BuildProperties buildProperties;
     private final AppProperties appProperties;
     private static final Locale LOCALE = Locale.forLanguageTag("vi");
+    private static final ObjectMapper MAPPER = new ObjectMapper();
 
     @Bean
     public OpenAPI customOpenAPI() {
@@ -89,9 +93,9 @@ public class SwaggerConfiguration {
                     .timestamp(1763188800000L)
                     .build();
 
-                MediaType mediaType = new io.swagger.v3.oas.models.media.MediaType()
+                MediaType mediaType = new MediaType()
                     .schema(new Schema<>().$ref("#/components/schemas/ErrorResponseDto"))
-                    .example(example);
+                    .example(MAPPER.valueToTree(example));
 
                 operation
                     .getResponses()
@@ -109,12 +113,22 @@ public class SwaggerConfiguration {
 
     private Map<String, String> collectErrors(Validator validator, MessageInterpolator interpolator, Class<?> type) {
         Map<String, String> errors = new LinkedHashMap<>();
+        BeanDescriptor beanDescriptor = validator.getConstraintsForClass(type);
 
-        for (PropertyDescriptor prop : validator.getConstraintsForClass(type).getConstrainedProperties()) {
+        for (Field field : type.getDeclaredFields()) {
+            if (Modifier.isStatic(field.getModifiers())) {
+                continue;
+            }
+
+            PropertyDescriptor prop = beanDescriptor.getConstraintsForProperty(field.getName());
+            if (prop == null) {
+                continue;
+            }
+
             prop.getConstraintDescriptors()
                 .stream()
                 .findFirst()
-                .ifPresent((d) -> errors.put(prop.getPropertyName(), interpolate(interpolator, d)));
+                .ifPresent((d) -> errors.put(field.getName(), interpolate(interpolator, d)));
         }
         return errors;
     }
