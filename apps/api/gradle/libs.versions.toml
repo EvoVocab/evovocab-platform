@@ -11,6 +11,7 @@ mapstruct = "1.6.3"
 disruptor = "4.0.0"
 swagger = "2.8.13"
 jwt = "0.13.0"
+nx-gradle = "0.1.20"
 
 [libraries]
 # --- Spring Boot Starters ---
@@ -52,3 +53,4 @@ liquibase = { id = "org.liquibase.gradle", version.ref = "liquibase" }
 spring-boot = { id = "org.springframework.boot", version.ref = "spring-boot" }
 dependency-management = { id = "io.spring.dependency-management", version.ref = "dependency-management" }
 openapi = { id = "org.springdoc.openapi-gradle-plugin", version.ref = "openapi" }
+nx-gradle = { id = "dev.nx.gradle.project-graph", version.ref = "nx-gradle" }
