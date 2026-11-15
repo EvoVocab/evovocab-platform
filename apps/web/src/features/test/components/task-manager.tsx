@@ -4,8 +4,7 @@ import * as React from 'react';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { Controller, useForm } from 'react-hook-form';
 import { toast } from 'sonner';
-import * as z from 'zod';
-import { Pencil, Plus, Trash2 } from 'lucide-react';
+import { Pencil, Plus, RefreshCw, Trash2 } from 'lucide-react';
 
 import {
   Badge,
@@ -34,39 +33,18 @@ import {
   TableHeader,
   TableRow,
 } from '@evovocab/ui';
+import type { Task } from '@evovocab/shared-api';
 
-export interface Task {
-  id: string;
-  title: string;
-  description: string;
-  isCompleted: boolean;
-}
-
-const taskFormSchema = z.object({
-  title: z.string().min(1, 'Tiêu đề không được để trống.').max(50, 'Tiêu đề tối đa 50 ký tự.'),
-  description: z.string().max(200, 'Mô tả tối đa 200 ký tự.'),
-  isCompleted: z.boolean(),
-});
-
-type TaskFormValues = z.infer<typeof taskFormSchema>;
-
-const INITIAL_TASKS: Array<Task> = [
-  {
-    id: '1',
-    title: 'Thiết kế cơ sở dữ liệu',
-    description: 'Hoàn thiện sơ đồ ERD cho thực thể TASK',
-    isCompleted: true,
-  },
-  {
-    id: '2',
-    title: 'Xây dựng giao diện CRUD',
-    description: 'Tích hợp Table, Dialog và Field với React Hook Form',
-    isCompleted: false,
-  },
-];
+import { useGetAllTasks } from '../hooks/use-get-all-tasks';
+import { useCreateTask } from '../hooks/use-create-task';
+import { useDeleteTask } from '../hooks/use-delete-task';
+import { useUpdateTask } from '../hooks/use-update-task';
+import { taskFormSchema, type TaskFormValues } from '../form';
 
 export default function TaskManager() {
-  const [tasks, setTasks] = React.useState<Array<Task>>(INITIAL_TASKS);
+  const { data: tasks = [], refetch, isRefetching, isFetching } = useGetAllTasks();
+  const { mutateAsync: deleteTaskAsync } = useDeleteTask();
+
   const [isModalOpen, setIsModalOpen] = React.useState(false);
   const [editingTask, setEditingTask] = React.useState<Task | null>(null);
 
@@ -78,6 +56,9 @@ export default function TaskManager() {
       isCompleted: false,
     },
   });
+
+  const { mutateAsync: createTaskAsync } = useCreateTask(form);
+  const { mutateAsync: updateTaskAsync } = useUpdateTask(form);
 
   const handleOpenCreate = () => {
     setEditingTask(null);
@@ -99,45 +80,78 @@ export default function TaskManager() {
     setIsModalOpen(true);
   };
 
-  function onSubmit(data: TaskFormValues) {
+  async function onSubmit(data: TaskFormValues) {
     if (editingTask) {
-      setTasks((previous) =>
-        previous.map((item) => (item.id === editingTask.id ? { ...item, ...data } : item)),
+      await updateTaskAsync(
+        { id: editingTask.id ?? 0, data },
+        {
+          onSuccess: (response) => {
+            toast.success(response.message);
+          },
+        },
       );
-      toast.success(`Đã cập nhật ${editingTask.id}`);
     } else {
-      const newTask: Task = {
-        id: `${String(tasks.length + 1)}`,
-        ...data,
-      };
-      setTasks((previous) => [newTask, ...previous]);
-      toast.success(`Đã thêm ${newTask.id}`);
+      await createTaskAsync(data, {
+        onSuccess: (response) => {
+          toast.success(response.message);
+        },
+      });
     }
+    await refetch();
     setIsModalOpen(false);
   }
 
-  const handleDelete = (id: string) => {
-    setTasks((previous) => previous.filter((item) => item.id !== id));
-    toast.success(`Đã xóa ${id}`);
+  const handleDelete = async (id: string) => {
+    await deleteTaskAsync(Number(id), {
+      onSuccess: (response) => {
+        toast.success(response.message);
+      },
+      onError: (error) => {
+        console.error('Error deleting task:', error);
+        toast.error(`Xóa Task thất bại`);
+      },
+    });
+
+    await refetch();
   };
 
-  const handleToggleComplete = (id: string, checked: boolean) => {
-    setTasks((previous) =>
-      previous.map((item) => (item.id === id ? { ...item, isCompleted: checked } : item)),
+  const handleToggleComplete = async (id: string, data: TaskFormValues) => {
+    await updateTaskAsync(
+      { id: Number(id), data },
+      {
+        onSuccess: (response) => {
+          toast.success(response.message);
+        },
+        onError: (error) => {
+          console.error('Error updating task:', error);
+          toast.error(`Cập nhật Task thất bại`);
+        },
+      },
     );
+    await refetch();
   };
 
   return (
     <>
-      <div className="flex flex-wrap items-center justify-between">
+      <div className="flex flex-wrap items-center justify-between gap-2">
         <div>
           <h1 className="text-2xl font-bold tracking-tight">Quản lý Task</h1>
           <p className="text-muted-foreground text-sm">Danh sách công việc theo hiện tại.</p>
         </div>
-        <Button onClick={handleOpenCreate}>
-          <Plus className="mr-2 h-4 w-4" />
-          Thêm Task
-        </Button>
+        <div className="flex flex-wrap items-center gap-2">
+          <Button
+            disabled={isRefetching || isFetching}
+            variant="outline"
+            onClick={async () => refetch()}
+          >
+            <RefreshCw className="mr-2 h-4 w-4" />
+            Tải lại
+          </Button>
+          <Button onClick={handleOpenCreate}>
+            <Plus className="mr-2 h-4 w-4" />
+            Thêm Task
+          </Button>
+        </div>
       </div>
 
       <div className="rounded-md border">
@@ -166,8 +180,12 @@ export default function TaskManager() {
                     <Checkbox
                       aria-label={`Đánh dấu hoàn thành ${task.title}`}
                       checked={task.isCompleted}
-                      onCheckedChange={(checked) => {
-                        handleToggleComplete(task.id, checked === true);
+                      onCheckedChange={async (checked) => {
+                        await handleToggleComplete(task.id ? task.id.toString() : '', {
+                          title: task.title ?? '',
+                          description: task.description ?? '',
+                          isCompleted: checked === true,
+                        });
                       }}
                     />
                   </TableCell>
@@ -207,8 +225,8 @@ export default function TaskManager() {
                         size="icon"
                         title="Xóa"
                         variant="destructive"
-                        onClick={() => {
-                          handleDelete(task.id);
+                        onClick={async () => {
+                          await handleDelete(task.id ? task.id.toString() : '');
                         }}
                       >
                         <Trash2 className="h-4 w-4" />
@@ -278,32 +296,34 @@ export default function TaskManager() {
                 )}
               />
 
-              <Controller
-                control={form.control}
-                name="isCompleted"
-                render={({ field, fieldState }) => (
-                  <Field
-                    className="rounded-md border p-3"
-                    data-invalid={fieldState.invalid}
-                    orientation="horizontal"
-                  >
-                    <Checkbox
-                      aria-invalid={fieldState.invalid}
-                      checked={field.value}
-                      id="task-form-completed"
-                      onCheckedChange={(checked) => {
-                        field.onChange(checked === true);
-                      }}
-                    />
-                    <FieldLabel
-                      className="cursor-pointer font-normal"
-                      htmlFor="task-form-completed"
+              {editingTask && (
+                <Controller
+                  control={form.control}
+                  name="isCompleted"
+                  render={({ field, fieldState }) => (
+                    <Field
+                      className="rounded-md border p-3"
+                      data-invalid={fieldState.invalid}
+                      orientation="horizontal"
                     >
-                      Đã hoàn thành
-                    </FieldLabel>
-                  </Field>
-                )}
-              />
+                      <Checkbox
+                        aria-invalid={fieldState.invalid}
+                        checked={field.value}
+                        id="task-form-completed"
+                        onCheckedChange={(checked) => {
+                          field.onChange(checked === true);
+                        }}
+                      />
+                      <FieldLabel
+                        className="cursor-pointer font-normal"
+                        htmlFor="task-form-completed"
+                      >
+                        Đã hoàn thành
+                      </FieldLabel>
+                    </Field>
+                  )}
+                />
+              )}
             </FieldGroup>
           </form>
 
