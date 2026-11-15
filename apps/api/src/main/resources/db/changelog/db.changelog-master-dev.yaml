@@ -11,3 +11,14 @@ databaseChangeLog:
   - include:
       file: sprint-01/20261112-02-create-user-profiles.sql
       relativeToChangelogFile: true
+
+  - changeSet:
+      id: tag-sprint-01
+      author: osamuharu
+      changes:
+        - tagDatabase:
+            tag: sprint-01
+
+  - include:
+      file: test/20261114-01-create-tasks.sql
+      relativeToChangelogFile: true
