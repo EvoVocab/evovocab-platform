@@ -47,6 +47,13 @@ export default [
     },
   },
   {
-    ignores: ['**/out-tsc', '**/dist', '**/build', '.eslintrc.json', 'storybook-static/**'],
+    ignores: [
+      '**/out-tsc',
+      '**/dist',
+      '**/build',
+      '.eslintrc.json',
+      'storybook-static/**',
+      'src/components/ui/**',
+    ],
   },
 ];
