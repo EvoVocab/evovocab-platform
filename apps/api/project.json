@@ -42,10 +42,17 @@
     },
     "generate-openapi": {
       "executor": "nx:run-commands",
+      "cache": true,
       "options": {
-        "commands": ["npx nx run @evovocab/api:generateOpenApiDocs"],
+        "command": "npx nx run @evovocab/api:generateOpenApiDocs --skip-nx-cache",
         "cwd": "apps/api"
-      }
+      },
+      "inputs": [
+        "{projectRoot}/src/**/*",
+        "{projectRoot}/build.gradle*",
+        "{projectRoot}/settings.gradle*"
+      ],
+      "outputs": ["{projectRoot}/docs/swagger.json"]
     }
   }
 }
