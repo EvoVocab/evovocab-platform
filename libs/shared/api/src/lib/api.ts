@@ -34,9 +34,42 @@ import type { RequestArgs } from './base';
 // @ts-ignore
 import { BASE_PATH, COLLECTION_FORMATS, BaseAPI, RequiredError, operationServerMap } from './base';
 
+export interface ApiResponseDtoListTask {
+  status?: number;
+  message?: string;
+  data?: Array<Task>;
+  timestamp?: number;
+}
+export interface ApiResponseDtoTask {
+  status?: number;
+  message?: string;
+  data?: Task;
+  timestamp?: number;
+}
+export interface ApiResponseDtoVoid {
+  status?: number;
+  message?: string;
+  data?: any;
+  timestamp?: number;
+}
+export interface CreateTaskRequest {
+  title: string;
+  description?: string;
+}
 export interface Link {
   href?: string;
   templated?: boolean;
+}
+export interface Task {
+  id?: number;
+  title?: string;
+  description?: string;
+  isCompleted?: boolean;
+}
+export interface UpdateTaskRequest {
+  title: string;
+  description?: string;
+  isCompleted: boolean;
 }
 
 /**
@@ -676,6 +709,378 @@ export class ActuatorApi extends BaseAPI {
   public metric(requiredMetricName: string, tag?: string, options?: RawAxiosRequestConfig) {
     return ActuatorApiFp(this.configuration)
       .metric(requiredMetricName, tag, options)
+      .then((request) => request(this.axios, this.basePath));
+  }
+}
+
+/**
+ * TaskControllerApi - axios parameter creator
+ */
+export const TaskControllerApiAxiosParamCreator = function (configuration?: Configuration) {
+  return {
+    /**
+     *
+     * @param {number} id
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     */
+    _delete: async (id: number, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+      // verify required parameter 'id' is not null or undefined
+      assertParamExists('_delete', 'id', id);
+      const localVarPath = `/v1/tasks/{id}`.replace('{id}', encodeURIComponent(String(id)));
+      // use dummy base URL string because the URL constructor only accepts absolute URLs.
+      const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+      let baseOptions;
+      if (configuration) {
+        baseOptions = configuration.baseOptions;
+      }
+
+      const localVarRequestOptions = { method: 'DELETE', ...baseOptions, ...options };
+      const localVarHeaderParameter = {} as any;
+      const localVarQueryParameter = {} as any;
+
+      localVarHeaderParameter['Accept'] = '*/*';
+
+      setSearchParams(localVarUrlObj, localVarQueryParameter);
+      let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+      localVarRequestOptions.headers = {
+        ...localVarHeaderParameter,
+        ...headersFromBaseOptions,
+        ...options.headers,
+      };
+
+      return {
+        url: toPathString(localVarUrlObj),
+        options: localVarRequestOptions,
+      };
+    },
+    /**
+     *
+     * @param {CreateTaskRequest} createTaskRequest
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     */
+    create: async (
+      createTaskRequest: CreateTaskRequest,
+      options: RawAxiosRequestConfig = {},
+    ): Promise<RequestArgs> => {
+      // verify required parameter 'createTaskRequest' is not null or undefined
+      assertParamExists('create', 'createTaskRequest', createTaskRequest);
+      const localVarPath = `/v1/tasks`;
+      // use dummy base URL string because the URL constructor only accepts absolute URLs.
+      const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+      let baseOptions;
+      if (configuration) {
+        baseOptions = configuration.baseOptions;
+      }
+
+      const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options };
+      const localVarHeaderParameter = {} as any;
+      const localVarQueryParameter = {} as any;
+
+      localVarHeaderParameter['Content-Type'] = 'application/json';
+      localVarHeaderParameter['Accept'] = '*/*';
+
+      setSearchParams(localVarUrlObj, localVarQueryParameter);
+      let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+      localVarRequestOptions.headers = {
+        ...localVarHeaderParameter,
+        ...headersFromBaseOptions,
+        ...options.headers,
+      };
+      localVarRequestOptions.data = serializeDataIfNeeded(
+        createTaskRequest,
+        localVarRequestOptions,
+        configuration,
+      );
+
+      return {
+        url: toPathString(localVarUrlObj),
+        options: localVarRequestOptions,
+      };
+    },
+    /**
+     *
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     */
+    getAll: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+      const localVarPath = `/v1/tasks`;
+      // use dummy base URL string because the URL constructor only accepts absolute URLs.
+      const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+      let baseOptions;
+      if (configuration) {
+        baseOptions = configuration.baseOptions;
+      }
+
+      const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options };
+      const localVarHeaderParameter = {} as any;
+      const localVarQueryParameter = {} as any;
+
+      localVarHeaderParameter['Accept'] = '*/*';
+
+      setSearchParams(localVarUrlObj, localVarQueryParameter);
+      let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+      localVarRequestOptions.headers = {
+        ...localVarHeaderParameter,
+        ...headersFromBaseOptions,
+        ...options.headers,
+      };
+
+      return {
+        url: toPathString(localVarUrlObj),
+        options: localVarRequestOptions,
+      };
+    },
+    /**
+     *
+     * @param {UpdateTaskRequest} updateTaskRequest
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     */
+    update: async (
+      updateTaskRequest: UpdateTaskRequest,
+      options: RawAxiosRequestConfig = {},
+    ): Promise<RequestArgs> => {
+      // verify required parameter 'updateTaskRequest' is not null or undefined
+      assertParamExists('update', 'updateTaskRequest', updateTaskRequest);
+      const localVarPath = `/v1/tasks`;
+      // use dummy base URL string because the URL constructor only accepts absolute URLs.
+      const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+      let baseOptions;
+      if (configuration) {
+        baseOptions = configuration.baseOptions;
+      }
+
+      const localVarRequestOptions = { method: 'PUT', ...baseOptions, ...options };
+      const localVarHeaderParameter = {} as any;
+      const localVarQueryParameter = {} as any;
+
+      localVarHeaderParameter['Content-Type'] = 'application/json';
+      localVarHeaderParameter['Accept'] = '*/*';
+
+      setSearchParams(localVarUrlObj, localVarQueryParameter);
+      let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+      localVarRequestOptions.headers = {
+        ...localVarHeaderParameter,
+        ...headersFromBaseOptions,
+        ...options.headers,
+      };
+      localVarRequestOptions.data = serializeDataIfNeeded(
+        updateTaskRequest,
+        localVarRequestOptions,
+        configuration,
+      );
+
+      return {
+        url: toPathString(localVarUrlObj),
+        options: localVarRequestOptions,
+      };
+    },
+  };
+};
+
+/**
+ * TaskControllerApi - functional programming interface
+ */
+export const TaskControllerApiFp = function (configuration?: Configuration) {
+  const localVarAxiosParamCreator = TaskControllerApiAxiosParamCreator(configuration);
+  return {
+    /**
+     *
+     * @param {number} id
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     */
+    async _delete(
+      id: number,
+      options?: RawAxiosRequestConfig,
+    ): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<ApiResponseDtoVoid>> {
+      const localVarAxiosArgs = await localVarAxiosParamCreator._delete(id, options);
+      const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+      const localVarOperationServerBasePath =
+        operationServerMap['TaskControllerApi._delete']?.[localVarOperationServerIndex]?.url;
+      return (axios, basePath) =>
+        createRequestFunction(
+          localVarAxiosArgs,
+          globalAxios,
+          BASE_PATH,
+          configuration,
+        )(axios, localVarOperationServerBasePath || basePath);
+    },
+    /**
+     *
+     * @param {CreateTaskRequest} createTaskRequest
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     */
+    async create(
+      createTaskRequest: CreateTaskRequest,
+      options?: RawAxiosRequestConfig,
+    ): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<ApiResponseDtoTask>> {
+      const localVarAxiosArgs = await localVarAxiosParamCreator.create(createTaskRequest, options);
+      const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+      const localVarOperationServerBasePath =
+        operationServerMap['TaskControllerApi.create']?.[localVarOperationServerIndex]?.url;
+      return (axios, basePath) =>
+        createRequestFunction(
+          localVarAxiosArgs,
+          globalAxios,
+          BASE_PATH,
+          configuration,
+        )(axios, localVarOperationServerBasePath || basePath);
+    },
+    /**
+     *
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     */
+    async getAll(
+      options?: RawAxiosRequestConfig,
+    ): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<ApiResponseDtoListTask>> {
+      const localVarAxiosArgs = await localVarAxiosParamCreator.getAll(options);
+      const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+      const localVarOperationServerBasePath =
+        operationServerMap['TaskControllerApi.getAll']?.[localVarOperationServerIndex]?.url;
+      return (axios, basePath) =>
+        createRequestFunction(
+          localVarAxiosArgs,
+          globalAxios,
+          BASE_PATH,
+          configuration,
+        )(axios, localVarOperationServerBasePath || basePath);
+    },
+    /**
+     *
+     * @param {UpdateTaskRequest} updateTaskRequest
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     */
+    async update(
+      updateTaskRequest: UpdateTaskRequest,
+      options?: RawAxiosRequestConfig,
+    ): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<ApiResponseDtoTask>> {
+      const localVarAxiosArgs = await localVarAxiosParamCreator.update(updateTaskRequest, options);
+      const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+      const localVarOperationServerBasePath =
+        operationServerMap['TaskControllerApi.update']?.[localVarOperationServerIndex]?.url;
+      return (axios, basePath) =>
+        createRequestFunction(
+          localVarAxiosArgs,
+          globalAxios,
+          BASE_PATH,
+          configuration,
+        )(axios, localVarOperationServerBasePath || basePath);
+    },
+  };
+};
+
+/**
+ * TaskControllerApi - factory interface
+ */
+export const TaskControllerApiFactory = function (
+  configuration?: Configuration,
+  basePath?: string,
+  axios?: AxiosInstance,
+) {
+  const localVarFp = TaskControllerApiFp(configuration);
+  return {
+    /**
+     *
+     * @param {number} id
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     */
+    _delete(id: number, options?: RawAxiosRequestConfig): AxiosPromise<ApiResponseDtoVoid> {
+      return localVarFp._delete(id, options).then((request) => request(axios, basePath));
+    },
+    /**
+     *
+     * @param {CreateTaskRequest} createTaskRequest
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     */
+    create(
+      createTaskRequest: CreateTaskRequest,
+      options?: RawAxiosRequestConfig,
+    ): AxiosPromise<ApiResponseDtoTask> {
+      return localVarFp
+        .create(createTaskRequest, options)
+        .then((request) => request(axios, basePath));
+    },
+    /**
+     *
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     */
+    getAll(options?: RawAxiosRequestConfig): AxiosPromise<ApiResponseDtoListTask> {
+      return localVarFp.getAll(options).then((request) => request(axios, basePath));
+    },
+    /**
+     *
+     * @param {UpdateTaskRequest} updateTaskRequest
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     */
+    update(
+      updateTaskRequest: UpdateTaskRequest,
+      options?: RawAxiosRequestConfig,
+    ): AxiosPromise<ApiResponseDtoTask> {
+      return localVarFp
+        .update(updateTaskRequest, options)
+        .then((request) => request(axios, basePath));
+    },
+  };
+};
+
+/**
+ * TaskControllerApi - object-oriented interface
+ */
+export class TaskControllerApi extends BaseAPI {
+  /**
+   *
+   * @param {number} id
+   * @param {*} [options] Override http request option.
+   * @throws {RequiredError}
+   */
+  public _delete(id: number, options?: RawAxiosRequestConfig) {
+    return TaskControllerApiFp(this.configuration)
+      ._delete(id, options)
+      .then((request) => request(this.axios, this.basePath));
+  }
+
+  /**
+   *
+   * @param {CreateTaskRequest} createTaskRequest
+   * @param {*} [options] Override http request option.
+   * @throws {RequiredError}
+   */
+  public create(createTaskRequest: CreateTaskRequest, options?: RawAxiosRequestConfig) {
+    return TaskControllerApiFp(this.configuration)
+      .create(createTaskRequest, options)
+      .then((request) => request(this.axios, this.basePath));
+  }
+
+  /**
+   *
+   * @param {*} [options] Override http request option.
+   * @throws {RequiredError}
+   */
+  public getAll(options?: RawAxiosRequestConfig) {
+    return TaskControllerApiFp(this.configuration)
+      .getAll(options)
+      .then((request) => request(this.axios, this.basePath));
+  }
+
+  /**
+   *
+   * @param {UpdateTaskRequest} updateTaskRequest
+   * @param {*} [options] Override http request option.
+   * @throws {RequiredError}
+   */
+  public update(updateTaskRequest: UpdateTaskRequest, options?: RawAxiosRequestConfig) {
+    return TaskControllerApiFp(this.configuration)
+      .update(updateTaskRequest, options)
       .then((request) => request(this.axios, this.basePath));
   }
 }
