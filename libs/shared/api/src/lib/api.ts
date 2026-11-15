@@ -45,6 +45,15 @@ export interface CreateTaskRequest {
     'title': string;
     'description'?: string;
 }
+export interface ErrorResponseDto {
+    'type'?: string;
+    'title'?: string;
+    'status'?: number;
+    'detail'?: string;
+    'instance'?: string;
+    'errors'?: { [key: string]: string; };
+    'timestamp'?: number;
+}
 export interface Link {
     'href'?: string;
     'templated'?: boolean;
@@ -611,7 +620,7 @@ export const TaskControllerApiAxiosParamCreator = function (configuration?: Conf
             const localVarQueryParameter = {} as any;
 
             localVarHeaderParameter['Content-Type'] = 'application/json';
-            localVarHeaderParameter['Accept'] = '*/*';
+            localVarHeaderParameter['Accept'] = '*/*,application/problem+json';
 
             setSearchParams(localVarUrlObj, localVarQueryParameter);
             let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
@@ -678,7 +687,7 @@ export const TaskControllerApiAxiosParamCreator = function (configuration?: Conf
             const localVarQueryParameter = {} as any;
 
             localVarHeaderParameter['Content-Type'] = 'application/json';
-            localVarHeaderParameter['Accept'] = '*/*';
+            localVarHeaderParameter['Accept'] = '*/*,application/problem+json';
 
             setSearchParams(localVarUrlObj, localVarQueryParameter);
             let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};

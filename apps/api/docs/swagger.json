@@ -68,6 +68,29 @@
                 }
               }
             }
+          },
+          "422": {
+            "description": "Dữ liệu không hợp lệ",
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponseDto"
+                },
+                "example": {
+                  "type": "about:blank",
+                  "title": "Unprocessable Entity",
+                  "status": 422,
+                  "detail": "Dữ liệu không hợp lệ.",
+                  "instance": "/api/v1/...",
+                  "errors": {
+                    "isCompleted": "Trạng thái hoàn thành không được để trống",
+                    "title": "Tiêu đề không được để trống",
+                    "description": "Mô tả tối đa 200 ký tự"
+                  },
+                  "timestamp": 1763188800000
+                }
+              }
+            }
           }
         }
       },
@@ -142,6 +165,28 @@
               "*/*": {
                 "schema": {
                   "$ref": "#/components/schemas/ApiResponseDtoTask"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Dữ liệu không hợp lệ",
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponseDto"
+                },
+                "example": {
+                  "type": "about:blank",
+                  "title": "Unprocessable Entity",
+                  "status": 422,
+                  "detail": "Dữ liệu không hợp lệ.",
+                  "instance": "/api/v1/...",
+                  "errors": {
+                    "description": "Mô tả tối đa 200 ký tự",
+                    "title": "Tiêu đề không được để trống"
+                  },
+                  "timestamp": 1763188800000
                 }
               }
             }
@@ -429,6 +474,37 @@
   },
   "components": {
     "schemas": {
+      "ErrorResponseDto": {
+        "type": "object",
+        "properties": {
+          "type": {
+            "type": "string"
+          },
+          "title": {
+            "type": "string"
+          },
+          "status": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "detail": {
+            "type": "string"
+          },
+          "instance": {
+            "type": "string"
+          },
+          "errors": {
+            "type": "object",
+            "additionalProperties": {
+              "type": "string"
+            }
+          },
+          "timestamp": {
+            "type": "integer",
+            "format": "int64"
+          }
+        }
+      },
       "UpdateTaskRequest": {
         "type": "object",
         "properties": {
