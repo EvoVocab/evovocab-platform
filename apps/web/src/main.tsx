@@ -9,7 +9,6 @@ const hashHistory = createHashHistory();
 
 const router = createRouter({
   routeTree,
-  basepath: import.meta.env.VITE_APP_BASE_URL,
   history: hashHistory,
 });
 
