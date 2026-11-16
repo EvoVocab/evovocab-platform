@@ -1,3 +1,13 @@
+## 0.3.1 (2026-11-16)
+
+### 🩹 Fixes
+
+- **web:** dùng hash history để không bị lỗi route ([1c0fc20](https://github.com/EvoVocab/evovocab-platform/commit/1c0fc20))
+
+### ❤️ Thank You
+
+- Huỳnh Nam Kha
+
 ## 0.3.0 (2026-11-15)
 
 ### 🚀 Features
