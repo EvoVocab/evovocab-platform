@@ -1,6 +1,6 @@
 import React from 'react';
 import { Link } from '@tanstack/react-router';
-import { BrandLogoBackgroundWhite, HomeIcon, Button } from '@evovocab/ui';
+import { BrandLogoBackgroundWhite, Button } from '@evovocab/ui';
 import { useActuatorHealth } from '@/features/actuator/hooks/use-actuator-health';
 
 function Home() {
@@ -13,11 +13,10 @@ function Home() {
   }, [data]);
 
   return (
-    <div className="flex flex-1 flex-col items-center justify-center gap-8 py-10 sm:py-20">
+    <div className="col-span-4 flex flex-col items-center gap-8 py-8 sm:col-start-2 sm:py-8 lg:col-span-6 lg:col-start-4 lg:pt-24 lg:pb-12">
       <BrandLogoBackgroundWhite className="h-24 w-auto rounded-full shadow-sm sm:h-32 md:h-40" />
 
       <div className="flex flex-col items-center gap-3 text-center">
-        <HomeIcon />
         <h1
           className="text-3xl font-bold tracking-tight sm:text-4xl md:text-5xl"
           data-testid="home-page"
@@ -33,11 +32,10 @@ function Home() {
         </p>
       </div>
 
-      {/* Cụm chức năng (Actions): 
-          - Mobile: Xếp dọc (flex-col), w-full
-          - Tablet/Desktop: Xếp ngang (sm:flex-row), w-auto 
-      */}
-      <div className="flex w-full flex-col items-center justify-center gap-4 px-4 sm:w-auto sm:flex-row sm:gap-6 sm:px-0">
+      <div className="flex w-full flex-col items-center gap-4 sm:flex-row sm:justify-center">
+        <Button className="w-full sm:w-auto" size="lg" variant="secondary">
+          <Link to="/test">Trang Thử nghiệm</Link>
+        </Button>
         <Button
           className="w-full sm:w-auto"
           size="lg"
@@ -47,15 +45,9 @@ function Home() {
         >
           Chạm vào đây
         </Button>
-
-        <div className="flex w-full flex-row items-center justify-center gap-4 sm:w-auto">
-          <Button size="lg" variant="link">
-            <Link to="/about">Trang About</Link>
-          </Button>
-          <Button size="lg" variant="link">
-            <Link to="/test">Trang Thử nghiệm</Link>
-          </Button>
-        </div>
+        <Button className="w-full sm:w-auto" size="lg" variant="link">
+          <Link to="/about">About Page</Link>
+        </Button>
       </div>
     </div>
   );

@@ -132,13 +132,13 @@ export default function TaskManager() {
   };
 
   return (
-    <>
-      <div className="flex flex-wrap items-center justify-between gap-2">
+    <div className="flex flex-col gap-4">
+      <div className="flex justify-between gap-2">
         <div>
           <h1 className="text-2xl font-bold tracking-tight">Quản lý Task</h1>
           <p className="text-muted-foreground text-sm">Danh sách công việc theo hiện tại.</p>
         </div>
-        <div className="flex flex-wrap items-center gap-2">
+        <div className="flex flex-wrap items-center justify-end gap-2">
           <Button
             disabled={isRefetching || isFetching}
             variant="outline"
@@ -343,6 +343,6 @@ export default function TaskManager() {
           </DialogFooter>
         </DialogContent>
       </Dialog>
-    </>
+    </div>
   );
 }
