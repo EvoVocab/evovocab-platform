@@ -11,29 +11,30 @@ type MainLayoutProps = {
 
 const MainLayout = ({ children }: MainLayoutProps) => {
   return (
-    <div className="bg-background flex min-h-screen flex-col">
-      <header className="border-border bg-background/95 sticky top-0 z-10 flex w-full items-center border-b p-4 backdrop-blur sm:px-6 lg:px-8">
-        <div className="mx-auto flex w-full max-w-7xl items-center justify-center md:justify-start">
-          <Link to="/">
-            <div className="flex flex-row items-center gap-2">
-              <BrandIcon className="h-6 w-auto sm:h-7 md:h-8" />
-              <BrandName className="h-6 w-auto sm:h-7 md:h-8" />
-            </div>
+    <div className="bg-background container mx-auto grid w-full max-w-360 min-w-[320px] grid-rows-[56px_1fr] sm:grid-rows-[96px_1fr]">
+      <header className="border-border sticky top-0 z-10 flex h-full w-full items-center justify-between border-b px-4 sm:px-8 lg:px-28">
+        <div className="flex items-center gap-2 sm:gap-4">
+          <Link className="flex items-center gap-2" to="/">
+            <BrandIcon className="h-6 w-auto sm:h-7 lg:h-8" />
+            <BrandName className="hidden w-auto sm:block sm:h-7 lg:h-8" />
           </Link>
 
           <Button
             variant="link"
-            className={cn({
+            size="sm"
+            className={cn('sm:h-10 sm:px-3 sm:text-sm lg:h-11 lg:px-8 lg:text-base', {
               hidden: isProduction(import.meta.env),
             })}
           >
             <Link to="/playground">Playground</Link>
           </Button>
         </div>
-        <ModeToggle />
-      </header>
 
-      <main className="mx-auto flex w-full max-w-7xl flex-1 flex-col px-4 py-6 sm:px-6 sm:py-8 lg:px-8">
+        <div className="flex items-center">
+          <ModeToggle />
+        </div>
+      </header>
+      <main className="grid grid-cols-4 gap-4 px-4 sm:grid-cols-6 sm:gap-8 sm:px-8 lg:grid-cols-12 lg:gap-8 lg:px-28">
         {children}
       </main>
     </div>

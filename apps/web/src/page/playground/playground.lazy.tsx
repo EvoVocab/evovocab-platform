@@ -1,14 +1,6 @@
 import * as React from 'react';
 import { toast } from 'sonner';
-import {
-  Button,
-  Card,
-  CardContent,
-  CardHeader,
-  CardTitle,
-  ModeToggle,
-  GoogleIcon,
-} from '@evovocab/ui';
+import { Button, Card, CardContent, CardHeader, CardTitle, GoogleIcon } from '@evovocab/ui';
 import { GoBack } from '@/components/go-back';
 import { useOAuthStore } from '@evovocab/store';
 import { useGoogleLogin } from '@react-oauth/google';
@@ -86,18 +78,17 @@ export function Playground() {
   }, [oauthState, resetOAuthState]);
 
   return (
-    <div className="container mx-auto space-y-8 p-6">
-      <GoBack />
-      <div className="flex flex-col gap-2 border-b pb-4 md:flex-row md:items-center md:justify-between">
+    <div className="col-span-full flex flex-col gap-4 py-8 sm:py-8 md:pt-24 md:pb-12">
+      <div>
+        <GoBack />
+      </div>
+
+      <div className="flex flex-col gap-2 border-b md:flex-row md:items-center md:justify-between">
         <div>
           <h1 className="text-3xl font-bold tracking-tight">EvoVocab Playground</h1>
           <p className="text-muted-foreground text-sm">
             Khu vực thử nghiệm UI components, state management và thông báo hệ thống.
           </p>
-        </div>
-        <div className="flex items-center gap-2">
-          <span className="text-muted-foreground text-xs">Chuyển theme:</span>
-          <ModeToggle />
         </div>
       </div>
 

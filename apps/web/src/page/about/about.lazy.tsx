@@ -3,7 +3,7 @@ import { Link } from '@tanstack/react-router';
 
 function About() {
   return (
-    <div className="flex flex-1 flex-col items-center justify-center gap-8 py-10 sm:py-20">
+    <div className="col-span-4 flex flex-col items-center gap-8 py-8 sm:col-start-2 sm:py-8 md:pt-24 md:pb-12 lg:col-span-6 lg:col-start-4">
       <div className="flex flex-col items-center gap-3 text-center">
         <h1
           className="text-3xl font-bold tracking-tight sm:text-4xl md:text-5xl"
@@ -19,11 +19,7 @@ function About() {
         </p>
       </div>
 
-      {/* Cụm chức năng (Actions): 
-          - Mobile: Xếp dọc (flex-col), w-full
-          - Tablet/Desktop: Xếp ngang (sm:flex-row), w-auto 
-      */}
-      <div className="flex w-full flex-col items-center justify-center gap-4 px-4 sm:w-auto sm:flex-row sm:gap-6 sm:px-0">
+      <div className="flex w-full flex-col items-center gap-4 sm:flex-row sm:justify-center">
         <Button
           className="w-full sm:w-auto"
           size="lg"
@@ -33,12 +29,9 @@ function About() {
         >
           Chạm vào đây
         </Button>
-
-        <div className="flex w-full flex-row items-center justify-center gap-4 sm:w-auto">
-          <Button size="lg" variant="link">
-            <Link to="/">Trang Home</Link>
-          </Button>
-        </div>
+        <Button className="w-full sm:w-auto" size="lg" variant="link">
+          <Link to="/">Home Page</Link>
+        </Button>
       </div>
     </div>
   );
