@@ -14,7 +14,6 @@ public record RegisterRequest(
     @NotBlank(message = "Email không được để trống")
     @Email(message = "Email không hợp lệ")
     @Size(max = 255, message = "Email không hợp lệ")
-    @Pattern(regexp = "\\S+", message = "Email không hợp lệ")
     String email,
 
     @NotBlank(message = "Mật khẩu không được để trống")
