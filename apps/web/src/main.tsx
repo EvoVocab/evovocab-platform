@@ -1,11 +1,17 @@
 import '@evovocab/ui/globals.css';
-import { createRouter } from '@tanstack/react-router';
+import { createHashHistory, createRouter } from '@tanstack/react-router';
 import React from 'react';
 import ReactDOM from 'react-dom/client';
 import App from './app';
 import { routeTree } from './routeTree.gen';
 
-const router = createRouter({ routeTree, basepath: import.meta.env.VITE_APP_BASE_URL });
+const hashHistory = createHashHistory();
+
+const router = createRouter({
+  routeTree,
+  basepath: import.meta.env.VITE_APP_BASE_URL,
+  history: hashHistory,
+});
 
 export type TanstackRouter = typeof router;
 
