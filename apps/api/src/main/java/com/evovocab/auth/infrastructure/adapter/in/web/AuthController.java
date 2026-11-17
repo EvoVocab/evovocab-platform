@@ -3,7 +3,8 @@ package com.evovocab.auth.infrastructure.adapter.in.web;
 import com.evovocab.auth.application.port.in.RegisterByEmailCommand;
 import com.evovocab.auth.application.port.in.RegisterUseCase;
 import com.evovocab.auth.infrastructure.adapter.in.web.dto.RegisterRequest;
-import com.evovocab.auth.infrastructure.adapter.in.web.dto.RegisterResponse;
+import com.evovocab.auth.infrastructure.adapter.in.web.dto.RegisterResult;
+import com.evovocab.shared.dto.responses.ApiResponseDto;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -19,7 +20,7 @@ public class AuthController {
     private final RegisterUseCase registerUseCase;
 
     @PostMapping("/v1/auth/register")
-    public ResponseEntity<RegisterResponse> register(@Valid @RequestBody RegisterRequest request) {
+    public ResponseEntity<ApiResponseDto<RegisterResult>> register(@Valid @RequestBody RegisterRequest request) {
         RegisterByEmailCommand command = new RegisterByEmailCommand(
             request.fullName(),
             request.email(),
@@ -27,9 +28,8 @@ public class AuthController {
         );
 
         String registeredEmail = registerUseCase.executeForEmail(command);
+        RegisterResult result = new RegisterResult(registeredEmail);
 
-        RegisterResponse response = new RegisterResponse(registeredEmail);
-
-        return new ResponseEntity<>(response, HttpStatus.CREATED);
+        return ResponseEntity.status(HttpStatus.CREATED).body(ApiResponseDto.created(result, "Đăng ký thành công"));
     }
 }
