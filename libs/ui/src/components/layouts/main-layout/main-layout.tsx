@@ -12,7 +12,7 @@ type MainLayoutProps = {
 const MainLayout = ({ children }: MainLayoutProps) => {
   return (
     <div className="bg-background container mx-auto grid w-full max-w-360 min-w-[320px] grid-rows-[56px_1fr] sm:grid-rows-[96px_1fr]">
-      <header className="border-border sticky top-0 z-10 flex h-full w-full items-center justify-between border-b px-4 sm:px-8 lg:px-28">
+      <header className="border-border bg-background/95 sticky top-0 z-10 flex h-full w-full items-center justify-between border-b px-4 sm:px-8 lg:px-28">
         <div className="flex items-center gap-2 sm:gap-4">
           <Link className="flex items-center gap-2" to="/">
             <BrandIcon className="h-6 w-auto sm:h-7 lg:h-8" />
