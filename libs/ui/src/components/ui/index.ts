@@ -11,3 +11,5 @@ export * from './dialog';
 export * from './table';
 export * from './field';
 export * from './input-group';
+export * from './separator';
+export * from './tooltip';
