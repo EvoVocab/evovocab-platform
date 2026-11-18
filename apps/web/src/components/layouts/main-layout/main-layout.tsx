@@ -1,6 +1,6 @@
 import { Button, ModeToggle, BrandIcon, BrandName } from '@evovocab/ui';
 import { isProduction } from '@evovocab/shared-utils';
-import { Link } from '@tanstack/react-router';
+import { Link, useMatchRoute } from '@tanstack/react-router';
 import { cn } from 'cn';
 
 type MainLayoutProps = {
@@ -8,6 +8,10 @@ type MainLayoutProps = {
 };
 
 const MainLayout = ({ children }: MainLayoutProps) => {
+  const matchRoute = useMatchRoute();
+
+  const showRegister = !matchRoute({ to: '/register' });
+
   return (
     <div className="bg-background container mx-auto grid w-full max-w-360 min-w-[320px] grid-rows-[56px_1fr] sm:grid-rows-[96px_1fr]">
       <header className="border-border bg-background/95 sticky top-0 z-10 flex h-full w-full items-center justify-between border-b px-4 sm:px-8 lg:px-28">
@@ -29,9 +33,14 @@ const MainLayout = ({ children }: MainLayoutProps) => {
         </div>
 
         <div className="flex items-center gap-2">
-          <Button className="sm:h-10 sm:px-3 sm:text-sm lg:h-11 lg:px-8 lg:text-base">
-            <Link to="/register">Đăng ký</Link>
-          </Button>
+          {showRegister && (
+            <Button
+              className="sm:block sm:h-10 sm:px-3 sm:text-sm lg:h-11 lg:px-8 lg:text-base"
+              size="sm"
+            >
+              <Link to="/register">Đăng ký</Link>
+            </Button>
+          )}
           <ModeToggle />
         </div>
       </header>
