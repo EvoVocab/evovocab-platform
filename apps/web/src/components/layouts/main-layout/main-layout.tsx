@@ -28,7 +28,10 @@ const MainLayout = ({ children }: MainLayoutProps) => {
           </Button>
         </div>
 
-        <div className="flex items-center">
+        <div className="flex items-center gap-2">
+          <Button className="sm:h-10 sm:px-3 sm:text-sm lg:h-11 lg:px-8 lg:text-base">
+            <Link to="/register">Đăng ký</Link>
+          </Button>
           <ModeToggle />
         </div>
       </header>
