@@ -2,7 +2,7 @@ import type { Decorator, Preview } from '@storybook/react';
 
 // @ts-expect-error Storybook's CSS loader handles this side-effect import.
 import '../src/styles/globals.css';
-import { ThemeProvider } from '../src';
+import { ModeToggle, ThemeProvider } from '../src';
 
 const preview: Preview = {
   parameters: {
@@ -19,6 +19,10 @@ const preview: Preview = {
 export const decorators: Array<Decorator> = [
   (Story) => (
     <ThemeProvider>
+      <div className="absolute top-10 right-10">
+        <ModeToggle />
+      </div>
+
       <Story />
     </ThemeProvider>
   ),
