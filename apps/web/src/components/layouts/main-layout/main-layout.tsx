@@ -1,6 +1,4 @@
-import { BrandIcon, BrandName } from '@/components/brand';
-import { ModeToggle } from '@/components/customs';
-import { Button } from '@/components/ui';
+import { Button, ModeToggle, BrandIcon, BrandName } from '@evovocab/ui';
 import { isProduction } from '@evovocab/shared-utils';
 import { Link } from '@tanstack/react-router';
 import { cn } from 'cn';
@@ -20,8 +18,8 @@ const MainLayout = ({ children }: MainLayoutProps) => {
           </Link>
 
           <Button
-            variant="link"
             size="sm"
+            variant="link"
             className={cn('sm:h-10 sm:px-3 sm:text-sm lg:h-11 lg:px-8 lg:text-base', {
               hidden: isProduction(import.meta.env),
             })}
