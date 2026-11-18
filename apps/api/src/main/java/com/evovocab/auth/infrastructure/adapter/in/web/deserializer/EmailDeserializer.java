@@ -4,7 +4,7 @@ import com.fasterxml.jackson.core.JsonParser;
 import com.fasterxml.jackson.databind.DeserializationContext;
 import com.fasterxml.jackson.databind.deser.std.StdDeserializer;
 import java.io.IOException;
-import java.util.Locale;
+import java.text.Normalizer;
 
 public class EmailDeserializer extends StdDeserializer<String> {
 
@@ -18,6 +18,10 @@ public class EmailDeserializer extends StdDeserializer<String> {
         if (value == null) {
             return null;
         }
-        return value.trim().toLowerCase(Locale.ROOT);
+        String trimmed = value.trim();
+        if (trimmed.isEmpty()) {
+            return trimmed;
+        }
+        return Normalizer.normalize(trimmed, Normalizer.Form.NFC);
     }
 }

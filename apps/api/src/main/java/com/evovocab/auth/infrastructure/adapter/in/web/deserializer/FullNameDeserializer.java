@@ -5,6 +5,7 @@ import com.fasterxml.jackson.core.JsonParser;
 import com.fasterxml.jackson.databind.DeserializationContext;
 import com.fasterxml.jackson.databind.deser.std.StdDeserializer;
 import java.io.IOException;
+import java.text.Normalizer;
 import java.util.Arrays;
 import java.util.Locale;
 import java.util.stream.Collectors;
@@ -20,13 +21,12 @@ public class FullNameDeserializer extends StdDeserializer<String> {
         String value = p.getValueAsString();
         if (value == null) {
             return null;
-        } // @notblank se xu ly sau do voi request.fullName==null;
+        }
 
         String trimmed = value.trim();
         if (trimmed.isEmpty()) {
-            return null; // tra ve null de NotBlank bat duoc con Pattern se tu dong bo qua null
-        } // Neu ten chi toan dau khoang cach thi gan bang rong cho @notblank xu ly luon
-
+            return trimmed;
+        }
         String normalizedSpaces = trimmed.replaceAll("\\s+", " "); // thay the cac dau cach lien tiep bang mot space duy nhat
 
         String[] dividedFullName = normalizedSpaces.split(" ");
@@ -36,6 +36,6 @@ public class FullNameDeserializer extends StdDeserializer<String> {
             .map((word) -> word.substring(0, 1).toUpperCase(Locale.ROOT) + word.substring(1).toLowerCase(Locale.ROOT))
             .collect(Collectors.joining(" "));
 
-        return titleCaseFullName;
+        return Normalizer.normalize(titleCaseFullName, Normalizer.Form.NFC);
     }
 }
