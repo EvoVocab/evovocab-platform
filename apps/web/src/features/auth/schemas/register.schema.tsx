@@ -5,7 +5,7 @@ export const registerSchema = z
     fullName: z.string(),
     email: z.string(),
     password: z.string(),
-    confirmPassword: z.string().min(1, 'Vui lòng xác nhận mật khẩu'),
+    confirmPassword: z.string(),
   })
   .refine((data) => data.password === data.confirmPassword, {
     message: 'Mật khẩu xác nhận không khớp',
