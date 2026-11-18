@@ -2,7 +2,7 @@ import { render, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { beforeEach, describe, expect, it, vi } from 'vitest';
 
-import { useTheme } from '../../../contexts/theme-provider';
+import { useTheme } from '../../../../contexts/theme-provider';
 import { ModeToggle } from './mode-toggle';
 
 describe('ModeToggle Component', () => {
