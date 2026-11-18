@@ -27,11 +27,14 @@ public class FullNameDeserializer extends StdDeserializer<String> {
         if (trimmed.isEmpty()) {
             return trimmed;
         }
-        String normalizedSpaces = trimmed.replaceAll("\\s+", " "); // thay the cac dau cach lien tiep bang mot space duy nhat
+        // Thay các spaces liên tiếp bằng 1 space duy nhất
+        String normalizedSpaces = trimmed.replaceAll("\\s+", " ");
 
         String[] dividedFullName = normalizedSpaces.split(" ");
 
-        // Voi Locale mac dinh (truyen ron) thi phụ thuộc vào cấu hình của hệ điều hành hoặc JVM nơi ứng dụng chạy, Locale.ROOT luôn cho kết quả đồng nhất trên mọi máy chủ.
+        // Locale.ROOT áp dụng quy tắc chuẩn của Unicode quốc tế, không bị chi phối bởi Locale riêng của bất kỳ quốc gia nào.
+        // Các kí tự tiếng việt đều nằm trong Unicode, nên Java có thể xử lý mà không sai lệch với Locale.ROOT
+        // Locale.getDefault() (mặc định) phụ thuộc vào Locale mặc định của server (ví dụ: ở Thổ Nhĩ Kỳ chữ 'i' viết hoa thành 'İ').
         String titleCaseFullName = Arrays.stream(dividedFullName)
             .map((word) -> word.substring(0, 1).toUpperCase(Locale.ROOT) + word.substring(1).toLowerCase(Locale.ROOT))
             .collect(Collectors.joining(" "));
