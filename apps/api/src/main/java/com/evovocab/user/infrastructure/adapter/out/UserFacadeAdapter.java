@@ -5,7 +5,6 @@ import com.evovocab.user.application.port.in.CreateUserByEmailCommand;
 import com.evovocab.user.application.port.out.CreateUserByEmailData;
 import com.evovocab.user.application.port.out.UserFacadePort;
 import com.evovocab.user.application.port.out.UserResult;
-import java.util.UUID;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 
@@ -13,7 +12,7 @@ import org.springframework.stereotype.Component;
 @RequiredArgsConstructor
 public class UserFacadeAdapter implements UserFacadePort {
 
-    private CreateUserAccountUseCase createUserAccountUseCase;
+    private final CreateUserAccountUseCase createUserAccountUseCase;
 
     @Override
     public UserResult createUserAccountByEmail(CreateUserByEmailData data) {
