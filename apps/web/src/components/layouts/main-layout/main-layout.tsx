@@ -1,8 +1,6 @@
-import { BrandIcon, BrandName } from '@/components/brand';
-import { ModeToggle } from '@/components/customs';
-import { Button } from '@/components/ui';
+import { Button, ModeToggle, BrandIcon, BrandName } from '@evovocab/ui';
 import { isProduction } from '@evovocab/shared-utils';
-import { Link } from '@tanstack/react-router';
+import { Link, useMatchRoute } from '@tanstack/react-router';
 import { cn } from 'cn';
 
 type MainLayoutProps = {
@@ -10,9 +8,13 @@ type MainLayoutProps = {
 };
 
 const MainLayout = ({ children }: MainLayoutProps) => {
+  const matchRoute = useMatchRoute();
+
+  const showRegister = !matchRoute({ to: '/register' });
+
   return (
     <div className="bg-background container mx-auto grid w-full max-w-360 min-w-[320px] grid-rows-[56px_1fr] sm:grid-rows-[96px_1fr]">
-      <header className="border-border sticky top-0 z-10 flex h-full w-full items-center justify-between border-b px-4 sm:px-8 lg:px-28">
+      <header className="border-border bg-background/95 sticky top-0 z-10 flex h-full w-full items-center justify-between border-b px-4 sm:px-8 lg:px-28">
         <div className="flex items-center gap-2 sm:gap-4">
           <Link className="flex items-center gap-2" to="/">
             <BrandIcon className="h-6 w-auto sm:h-7 lg:h-8" />
@@ -20,8 +22,8 @@ const MainLayout = ({ children }: MainLayoutProps) => {
           </Link>
 
           <Button
-            variant="link"
             size="sm"
+            variant="link"
             className={cn('sm:h-10 sm:px-3 sm:text-sm lg:h-11 lg:px-8 lg:text-base', {
               hidden: isProduction(import.meta.env),
             })}
@@ -30,7 +32,15 @@ const MainLayout = ({ children }: MainLayoutProps) => {
           </Button>
         </div>
 
-        <div className="flex items-center">
+        <div className="flex items-center gap-2">
+          {showRegister && (
+            <Button
+              className="sm:block sm:h-10 sm:px-3 sm:text-sm lg:h-11 lg:px-8 lg:text-base"
+              size="sm"
+            >
+              <Link to="/register">Đăng ký</Link>
+            </Button>
+          )}
           <ModeToggle />
         </div>
       </header>

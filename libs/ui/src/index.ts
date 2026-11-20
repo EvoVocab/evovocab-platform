@@ -6,4 +6,4 @@ export * from './components/icons';
 export * from './contexts/theme-provider';
 export * from './components/ui';
 export * from './components/customs';
-export * from './components/layouts';
+export * from './hooks';
