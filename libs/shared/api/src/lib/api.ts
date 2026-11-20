@@ -29,6 +29,12 @@ export interface ApiResponseDtoListTask {
     'data'?: Array<Task>;
     'timestamp'?: number;
 }
+export interface ApiResponseDtoRegisterResponse {
+    'status'?: number;
+    'message'?: string;
+    'data'?: RegisterResponse;
+    'timestamp'?: number;
+}
 export interface ApiResponseDtoTask {
     'status'?: number;
     'message'?: string;
@@ -57,6 +63,14 @@ export interface ErrorResponseDto {
 export interface Link {
     'href'?: string;
     'templated'?: boolean;
+}
+export interface RegisterRequest {
+    'fullName'?: string;
+    'email'?: string;
+    'password'?: string;
+}
+export interface RegisterResponse {
+    'email'?: string;
 }
 export interface Task {
     'id'?: number;
@@ -555,6 +569,104 @@ export class ActuatorApi extends BaseAPI {
      */
     public metric(requiredMetricName: string, tag?: string, options?: RawAxiosRequestConfig) {
         return ActuatorApiFp(this.configuration).metric(requiredMetricName, tag, options).then((request) => request(this.axios, this.basePath));
+    }
+}
+
+
+
+/**
+ * AuthControllerApi - axios parameter creator
+ */
+export const AuthControllerApiAxiosParamCreator = function (configuration?: Configuration) {
+    return {
+        /**
+         * 
+         * @param {RegisterRequest} registerRequest 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        register: async (registerRequest: RegisterRequest, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'registerRequest' is not null or undefined
+            assertParamExists('register', 'registerRequest', registerRequest)
+            const localVarPath = `/v1/auth/register`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+            localVarHeaderParameter['Accept'] = '*/*';
+
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.data = serializeDataIfNeeded(registerRequest, localVarRequestOptions, configuration)
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+    }
+};
+
+/**
+ * AuthControllerApi - functional programming interface
+ */
+export const AuthControllerApiFp = function(configuration?: Configuration) {
+    const localVarAxiosParamCreator = AuthControllerApiAxiosParamCreator(configuration)
+    return {
+        /**
+         * 
+         * @param {RegisterRequest} registerRequest 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async register(registerRequest: RegisterRequest, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<ApiResponseDtoRegisterResponse>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.register(registerRequest, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['AuthControllerApi.register']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+    }
+};
+
+/**
+ * AuthControllerApi - factory interface
+ */
+export const AuthControllerApiFactory = function (configuration?: Configuration, basePath?: string, axios?: AxiosInstance) {
+    const localVarFp = AuthControllerApiFp(configuration)
+    return {
+        /**
+         * 
+         * @param {RegisterRequest} registerRequest 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        register(registerRequest: RegisterRequest, options?: RawAxiosRequestConfig): AxiosPromise<ApiResponseDtoRegisterResponse> {
+            return localVarFp.register(registerRequest, options).then((request) => request(axios, basePath));
+        },
+    };
+};
+
+/**
+ * AuthControllerApi - object-oriented interface
+ */
+export class AuthControllerApi extends BaseAPI {
+    /**
+     * 
+     * @param {RegisterRequest} registerRequest 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     */
+    public register(registerRequest: RegisterRequest, options?: RawAxiosRequestConfig) {
+        return AuthControllerApiFp(this.configuration).register(registerRequest, options).then((request) => request(this.axios, this.basePath));
     }
 }
 

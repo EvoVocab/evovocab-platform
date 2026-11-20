@@ -4,11 +4,15 @@ common.ts
 configuration.ts
 docs/ActuatorApi.md
 docs/ApiResponseDtoListTask.md
+docs/ApiResponseDtoRegisterResponse.md
 docs/ApiResponseDtoTask.md
 docs/ApiResponseDtoVoid.md
+docs/AuthControllerApi.md
 docs/CreateTaskRequest.md
 docs/ErrorResponseDto.md
 docs/Link.md
+docs/RegisterRequest.md
+docs/RegisterResponse.md
 docs/Task.md
 docs/TaskControllerApi.md
 docs/UpdateTaskRequest.md
