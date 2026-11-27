@@ -17,8 +17,8 @@ public class EmailDeserializer extends StdDeserializer<String> {
         if (value == null) {
             return null;
         }
-
-        String trimmed = value.trim();
+        String lowerCaseEmail = value.toLowerCase();
+        String trimmed = lowerCaseEmail.trim();
         if (trimmed.isEmpty()) {
             return trimmed;
         }
