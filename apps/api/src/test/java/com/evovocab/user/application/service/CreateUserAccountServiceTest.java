@@ -76,7 +76,7 @@ class CreateUserAccountServiceTest {
         assertAll(
             () -> assertNotNull(account.getId()),
             () -> assertEquals(command.email(), account.getEmail()),
-            () -> assertEquals(VALID_HASH, account.getPassword().getHashedValue()),
+            () -> assertEquals(VALID_HASH, account.getPassword().getHashedValue()), // Kiểm tra đã hash mật khẩu ở service layer
             () -> assertEquals(UserAccountStatus.INACTIVE, account.getStatus()),
             () -> assertEquals(UserAccountProvider.EMAIL, account.getProvider()),
             () -> assertNull(account.getProviderId()),
