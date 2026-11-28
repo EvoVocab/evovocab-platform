@@ -48,7 +48,7 @@ public class RegisterRequestValidator implements ConstraintValidator<ValidRegist
             return ConstraintValidatorUtils.fail(ctx, "email", "Email không được để trống");
         }
 
-        if (email.length() > 100 || !EMAIL_PATTERN.matcher(email).matches()) {
+        if (email.length() > 255 || !EMAIL_PATTERN.matcher(email).matches()) {
             return ConstraintValidatorUtils.fail(ctx, "email", "Email không hợp lệ");
         }
 
